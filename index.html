@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Garur — a semantic hybrid CSS engine with a native Rust core." />
+  <title>Garur — CSS at the speed of thought</title>
+  <link rel="stylesheet" href="../dist/garur.css" />
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('garur-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
+</head>
+
+<body class="bg-white dark:bg-[#050505] text-graphite-950 dark:text-graphite-50 font-sans antialiased m-0 overflow-x-hidden min-h-screen">
+
+<!-- ═══ GRID LINES ═══ -->
+<div class="fixed inset-0 z-0 pointer-events-none hidden lg:block"
+     style="mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);">
+  <div class="relative h-full max-w-7xl mx-auto px-6 md:px-12">
+    <div class="absolute inset-y-0 left-6 md:left-12 w-px bg-graphite-950/[0.10] dark:bg-white/[0.09]"></div>
+    <div class="absolute inset-y-0 left-1/3 w-px bg-graphite-950/[0.06] dark:bg-white/[0.08]"></div>
+    <div class="absolute inset-y-0 left-2/3 w-px bg-graphite-950/[0.06] dark:bg-white/[0.08]"></div>
+    <div class="absolute inset-y-0 right-6 md:right-12 w-px bg-graphite-950/[0.06] dark:bg-white/[0.08]"></div>
+  </div>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border-b border-graphite-200 dark:border-white/[0.06]">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 h-14 apart-mid">
+    <a href="#" class="mid gap-2">
+      <div class="w-6 h-6 rounded-md bg-iris-500 mid text-white text-[10px] font-bold">G</div>
+      <span class="font-bold text-sm tracking-tight">Garur</span>
+      <span class="hidden sm:inline-flex mid gap-1.5 px-2 py-0.5 rounded-full text-[10px] bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">
+        <span class="w-1 h-1 rounded-full bg-jade-500"></span>v0.2
+      </span>
+    </a>
+    <nav class="hidden md:flex gap-1 text-sm">
+      <a href="#palette" class="px-3 py-2 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Palette</a>
+      <a href="#features" class="px-3 py-2 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Engine</a>
+      <a href="#principles" class="px-3 py-2 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Principles</a>
+      <a href="#dev" class="px-3 py-2 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Author</a>
+      <a href="#faq" class="px-3 py-2 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">FAQ</a>
+    </nav>
+    <div class="mid gap-1.5">
+      <button id="theme-toggle" type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] transition-colors" aria-label="Toggle theme">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+      <a href="#" class="hidden md:inline-flex text-sm text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white px-3 py-2 transition-colors">Docs</a>
+      <a href="#" class="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-graphite-950 dark:bg-white text-white dark:text-black text-sm font-medium hover:opacity-90 transition-opacity">
+        Install
+      </a>
+      <button id="menu-btn" type="button" class="hamburger md:hidden" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ DRAWER ═══ -->
+<div id="drawer" class="hidden fixed inset-0 z-[60]">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-drawer-close></div>
+  <aside class="drawer bg-white dark:bg-[#0a0a0c] text-graphite-950 dark:text-graphite-50 stack-5 p-6">
+    <div class="apart-mid">
+      <div class="mid gap-2">
+        <div class="w-6 h-6 rounded-md bg-iris-500 mid text-white text-[10px] font-bold">G</div>
+        <span class="font-bold text-sm">Garur</span>
+      </div>
+      <button type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] transition-colors" data-drawer-close aria-label="Close">✕</button>
+    </div>
+    <nav class="stack-1">
+      <a href="#palette" class="menu-item" data-drawer-close>Palette</a>
+      <a href="#features" class="menu-item" data-drawer-close>Engine</a>
+      <a href="#principles" class="menu-item" data-drawer-close>Principles</a>
+      <a href="#dev" class="menu-item" data-drawer-close>Author</a>
+      <a href="#faq" class="menu-item" data-drawer-close>FAQ</a>
+    </nav>
+    <hr class="divider" />
+    <div class="stack-2">
+      <a href="#" class="textfield text-center" data-drawer-close>Read docs</a>
+      <a href="#" class="cta" data-drawer-close>Install Garur →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="relative min-h-screen overflow-hidden z-10">
+  <div class="absolute inset-0 mesh-bg opacity-60 dark:opacity-100 pointer-events-none"></div>
+  <div class="absolute inset-0 dot-grid opacity-50 dark:opacity-40 pointer-events-none"></div>
+
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
+       style="background: radial-gradient(ellipse at center top, rgba(134,87,247,0.22), transparent 60%);"></div>
+
+  <div class="absolute orb-iris w-[460px] h-[460px] md:w-[680px] md:h-[680px] -top-40 -left-40 float-slow opacity-30 dark:opacity-70 pointer-events-none"></div>
+  <div class="absolute orb-pink w-[360px] h-[360px] md:w-[540px] md:h-[540px] top-20 -right-40 float-slower opacity-30 dark:opacity-70 pointer-events-none"></div>
+  <div class="absolute orb-warm w-[280px] h-[280px] md:w-[420px] md:h-[420px] bottom-0 left-1/3 float-slow opacity-20 dark:opacity-50 pointer-events-none"></div>
+
+  <div class="absolute inset-x-0 top-0 h-[600px] opacity-50 dark:opacity-70 pointer-events-none">
+    <div class="aurora-bg"></div>
+  </div>
+
+  <div class="relative max-w-5xl mx-auto px-6 pt-32 md:pt-40 pb-20 text-center">
+    <div class="stack-6 items-center">
+
+      <a href="#" class="mid gap-1.5 px-2.5 py-1 rounded-full text-xs bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400 hover:opacity-90 transition-opacity">
+        <span class="pulse-ring"></span>
+        <span>SSC engine v2 is live</span>
+        <span class="ml-0.5">→</span>
+      </a>
+
+      <h1 class="hero-vercel">
+        <span class="block">CSS at the</span>
+        <span class="block gradient-text">speed of thought</span>
+      </h1>
+
+      <p class="lead-vercel mx-auto text-graphite-600 dark:text-graphite-400">
+        A semantic hybrid engine — intent classes, primitive components, and atom utilities fused into one native binary.
+        Compose like a designer. Compile like a systems engineer.
+      </p>
+
+      <div class="mid gap-2.5 flex-wrap justify-center">
+        <a href="#" class="btn-hero btn-hero-primary shine">Install Garur <span>→</span></a>
+        <a href="#" class="btn-hero btn-hero-secondary">★ Star on GitHub</a>
+      </div>
+
+      <div class="mid gap-x-7 gap-y-2 flex-wrap justify-center text-xs text-graphite-500 dark:text-graphite-400 mt-2">
+        <span class="mid gap-2"><span class="w-1 h-1 rounded-full bg-jade-500"></span>Zero config</span>
+        <span class="mid gap-2"><span class="w-1 h-1 rounded-full bg-iris-500"></span>Rust native</span>
+        <span class="mid gap-2"><span class="w-1 h-1 rounded-full bg-plum-500"></span>5000+ utilities</span>
+        <span class="mid gap-2"><span class="w-1 h-1 rounded-full bg-sky-500"></span>30ms builds</span>
+      </div>
+
+      <div class="relative w-full max-w-2xl mx-auto mt-6">
+        <div class="absolute -inset-8 md:-inset-12 pointer-events-none opacity-50 dark:opacity-90"><div class="aurora-bg"></div></div>
+        <div class="code-window relative text-left spotlight" data-spotlight>
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 font-mono">app/page.tsx</span>
+            <span class="ml-auto mid gap-1.5 px-2 py-0.5 rounded-full text-[10px] bg-white/[0.04] border border-white/[0.06] text-graphite-400">
+              <span class="w-1 h-1 rounded-full bg-jade-500"></span>Ready
+            </span>
+          </div>
+          <pre class="code-body"><code><span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"card-glass spotlight hover-lift"</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">span</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"glass-pill"</span><span class="syn-punc">&gt;</span>
+    <span class="syn-punc">&lt;</span><span class="syn-tag">span</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"pill-dot bg-jade-500"</span> <span class="syn-punc">/&gt;</span>
+    Deployed in <span class="syn-str">42ms</span>
+  <span class="syn-punc">&lt;/</span><span class="syn-tag">span</span><span class="syn-punc">&gt;</span>
+
+  <span class="syn-punc">&lt;</span><span class="syn-tag">h2</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"gradient-text"</span><span class="syn-punc">&gt;</span>Ship faster.<span class="syn-punc">&lt;/</span><span class="syn-tag">h2</span><span class="syn-punc">&gt;</span>
+<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MARQUEE ═══ -->
+<section class="py-8 fade-edges overflow-hidden border-y border-graphite-200 dark:border-white/[0.06]">
+  <div class="text-center mb-6">
+    <p class="text-[10px] uppercase tracking-[0.2em] text-graphite-400 dark:text-graphite-600 font-bold">
+      Adopted by teams building with
+    </p>
+  </div>
+  <div class="marquee">
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">React</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Vue</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Svelte</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Next.js</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Nuxt</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Astro</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Solid</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Qwik</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">React</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Vue</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Svelte</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Next.js</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Nuxt</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Astro</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Solid</span>
+    <span class="text-lg font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Qwik</span>
+  </div>
+</section>
+
+<!-- ═══ COLOR SHOWCASE ═══ -->
+<section id="palette" class="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden border-b border-graphite-200 dark:border-white/[0.06]">
+
+  <div class="absolute -top-40 -left-40 w-[600px] h-[600px] orb-iris opacity-20 dark:opacity-50 pointer-events-none"></div>
+  <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] orb-plum opacity-20 dark:opacity-40 pointer-events-none"></div>
+
+  <div class="relative max-w-[1400px] mx-auto">
+    <div class="grid grid-cols-12 gap-8 lg:gap-10">
+
+      <aside class="col-span-12 lg:col-span-3 lg:sticky lg:top-20 lg:self-start">
+        <span class="inline-flex mid gap-2 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-iris-100 dark:bg-iris-500/10 text-iris-700 dark:text-iris-400 border border-iris-200/50 dark:border-iris-500/20 mb-5 uppercase tracking-wider">
+          <span class="w-1 h-1 rounded-full bg-iris-500 animate-pulse"></span>
+          Native palette
+        </span>
+
+        <h2 class="text-3xl lg:text-[2.25rem] font-bold tracking-tight leading-[1.05] text-graphite-950 dark:text-white">
+          Every color.<br>
+          <span class="bg-gradient-to-r from-ruby-500 via-iris-500 to-aqua-500 bg-clip-text text-transparent">
+            Perfectly tuned.
+          </span>
+        </h2>
+
+        <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mt-4">
+          31 handcrafted families, each balanced across 11 perceptual steps. From void-black to sunbeam-white.
+        </p>
+
+        <div class="mt-7 pt-5 border-t border-graphite-200 dark:border-white/[0.06] stack-3">
+          <div class="apart-mid">
+            <span class="text-[10px] uppercase tracking-[0.15em] text-graphite-500 dark:text-graphite-400 font-semibold">Families</span>
+            <span class="text-2xl font-bold tracking-tight tabular-nums">31</span>
+          </div>
+          <div class="apart-mid">
+            <span class="text-[10px] uppercase tracking-[0.15em] text-graphite-500 dark:text-graphite-400 font-semibold">Shades</span>
+            <span class="text-2xl font-bold tracking-tight tabular-nums">11</span>
+          </div>
+          <div class="apart-mid">
+            <span class="text-[10px] uppercase tracking-[0.15em] text-graphite-500 dark:text-graphite-400 font-semibold">Total colors</span>
+            <span class="text-2xl font-bold tracking-tight tabular-nums bg-gradient-to-r from-iris-500 to-plum-500 bg-clip-text text-transparent">343</span>
+          </div>
+        </div>
+
+        <div class="mt-7 p-3.5 rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+          <div class="text-[10px] uppercase tracking-[0.15em] text-graphite-500 dark:text-graphite-400 font-semibold mb-2.5">Quick swatches</div>
+          <div class="flex flex-wrap gap-1.5">
+            <div class="w-5 h-5 rounded bg-ruby-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-coral-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-honey-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-lime-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-jade-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-aqua-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-azure-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-iris-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-plum-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+            <div class="w-5 h-5 rounded bg-orchid-500 ring-1 ring-black/5 dark:ring-white/10"></div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="col-span-12 lg:col-span-6">
+        <div class="grid grid-cols-12 gap-1 mb-2 items-center pl-0.5">
+          <div class="text-[9px] uppercase tracking-[0.15em] text-graphite-400 dark:text-graphite-500 font-bold">Family</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">50</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">100</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">200</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">300</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">400</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">500</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">600</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">700</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">800</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">900</div>
+          <div class="text-[9px] text-center text-graphite-400 dark:text-graphite-500 font-mono font-semibold">950</div>
+        </div>
+
+        <!-- NEUTRALS -->
+        <div class="inline-flex mid gap-2 mt-1 mb-2">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Neutrals</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">6</span>
+        </div>
+
+        <div class="stack-1">
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-graphite-950 dark:group-hover:text-white transition-colors">void</span>
+            <div class="h-6 rounded bg-void-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-void-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-graphite-950 dark:group-hover:text-white transition-colors">graphite</span>
+            <div class="h-6 rounded bg-graphite-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-graphite-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-graphite-950 dark:group-hover:text-white transition-colors">ash</span>
+            <div class="h-6 rounded bg-ash-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ash-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-graphite-950 dark:group-hover:text-white transition-colors">smoke</span>
+            <div class="h-6 rounded bg-smoke-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-smoke-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-graphite-950 dark:group-hover:text-white transition-colors">sand</span>
+            <div class="h-6 rounded bg-sand-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sand-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-graphite-950 dark:group-hover:text-white transition-colors">bone</span>
+            <div class="h-6 rounded bg-bone-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-bone-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+        </div>
+
+        <!-- REDS -->
+        <div class="inline-flex mid gap-2 mt-6 mb-2">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Reds · Pinks</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">6</span>
+        </div>
+
+        <div class="stack-1">
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-ruby-500 transition-colors">ruby</span>
+            <div class="h-6 rounded bg-ruby-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ruby-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-crimson-500 transition-colors">crimson</span>
+            <div class="h-6 rounded bg-crimson-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-crimson-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-coral-500 transition-colors">coral</span>
+            <div class="h-6 rounded bg-coral-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-coral-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-blush-500 transition-colors">blush</span>
+            <div class="h-6 rounded bg-blush-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-blush-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-rose-500 transition-colors">rose</span>
+            <div class="h-6 rounded bg-rose-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-rose-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-plum-500 transition-colors">plum</span>
+            <div class="h-6 rounded bg-plum-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-plum-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+        </div>
+
+        <!-- ORANGES -->
+        <div class="inline-flex mid gap-2 mt-6 mb-2">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Oranges · Yellows</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">5</span>
+        </div>
+
+        <div class="stack-1">
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-ember-500 transition-colors">ember</span>
+            <div class="h-6 rounded bg-ember-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-ember-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-sunset-500 transition-colors">sunset</span>
+            <div class="h-6 rounded bg-sunset-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunset-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-honey-500 transition-colors">honey</span>
+            <div class="h-6 rounded bg-honey-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-honey-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-gold-500 transition-colors">gold</span>
+            <div class="h-6 rounded bg-gold-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-gold-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-sunbeam-500 transition-colors">sunbeam</span>
+            <div class="h-6 rounded bg-sunbeam-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sunbeam-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+        </div>
+
+        <!-- GREENS -->
+        <div class="inline-flex mid gap-2 mt-6 mb-2">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Greens</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">5</span>
+        </div>
+
+        <div class="stack-1">
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-citron-500 transition-colors">citron</span>
+            <div class="h-6 rounded bg-citron-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-citron-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-lime-500 transition-colors">lime</span>
+            <div class="h-6 rounded bg-lime-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-lime-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-mint-500 transition-colors">mint</span>
+            <div class="h-6 rounded bg-mint-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-mint-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-forest-500 transition-colors">forest</span>
+            <div class="h-6 rounded bg-forest-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-forest-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-jade-500 transition-colors">jade</span>
+            <div class="h-6 rounded bg-jade-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-jade-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+        </div>
+
+        <!-- TEALS -->
+        <div class="inline-flex mid gap-2 mt-6 mb-2">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Teals · Cyans</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">3</span>
+        </div>
+
+        <div class="stack-1">
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-teal-500 transition-colors">teal</span>
+            <div class="h-6 rounded bg-teal-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-teal-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-aqua-500 transition-colors">aqua</span>
+            <div class="h-6 rounded bg-aqua-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-aqua-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-sky-500 transition-colors">sky</span>
+            <div class="h-6 rounded bg-sky-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-sky-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+        </div>
+
+        <!-- BLUES -->
+        <div class="inline-flex mid gap-2 mt-6 mb-2">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Blues</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">3</span>
+        </div>
+
+        <div class="stack-1">
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-azure-500 transition-colors">azure</span>
+            <div class="h-6 rounded bg-azure-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-azure-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-cobalt-500 transition-colors">cobalt</span>
+            <div class="h-6 rounded bg-cobalt-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-cobalt-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-indigo-500 transition-colors">indigo</span>
+            <div class="h-6 rounded bg-indigo-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-indigo-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+        </div>
+
+        <!-- PURPLES -->
+        <div class="inline-flex mid gap-2 mt-6 mb-2">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Purples</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">3</span>
+        </div>
+
+        <div class="stack-1">
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-iris-500 transition-colors">iris</span>
+            <div class="h-6 rounded bg-iris-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-iris-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-violet-500 transition-colors">violet</span>
+            <div class="h-6 rounded bg-violet-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-violet-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+          <div class="grid grid-cols-12 gap-1 items-center group">
+            <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400 group-hover:text-orchid-500 transition-colors">orchid</span>
+            <div class="h-6 rounded bg-orchid-50 ring-1 ring-black/5 dark:ring-white/[0.04] group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-100 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-200 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-300 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-400 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-500 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-600 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-700 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-800 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-900 group-hover:scale-y-125 transition-transform"></div>
+            <div class="h-6 rounded bg-orchid-950 group-hover:scale-y-125 transition-transform"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="col-span-12 lg:col-span-3 lg:sticky lg:top-20 lg:self-start">
+        <div class="text-[10px] uppercase tracking-[0.15em] text-graphite-500 dark:text-graphite-400 font-bold mb-5">Design DNA</div>
+
+        <div class="stack-2">
+          <div class="flex gap-3 p-3 rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] hover-lift transition-all">
+            <span class="w-6 h-6 rounded-md mid text-[10px] flex-shrink-0 font-bold bg-jade-100 dark:bg-jade-500/15 text-jade-600 dark:text-jade-400">✓</span>
+            <div>
+              <div class="text-xs font-semibold">WCAG AA compliant</div>
+              <div class="text-[11px] text-graphite-500 dark:text-graphite-500 mt-0.5 leading-relaxed">4.5:1 contrast tested</div>
+            </div>
+          </div>
+          <div class="flex gap-3 p-3 rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] hover-lift transition-all">
+            <span class="w-6 h-6 rounded-md mid text-[10px] flex-shrink-0 font-bold bg-iris-100 dark:bg-iris-500/15 text-iris-600 dark:text-iris-400">✓</span>
+            <div>
+              <div class="text-xs font-semibold">OKLCH balanced</div>
+              <div class="text-[11px] text-graphite-500 dark:text-graphite-500 mt-0.5 leading-relaxed">Perceptually uniform ramp</div>
+            </div>
+          </div>
+          <div class="flex gap-3 p-3 rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] hover-lift transition-all">
+            <span class="w-6 h-6 rounded-md mid text-[10px] flex-shrink-0 font-bold bg-honey-100 dark:bg-honey-500/15 text-honey-600 dark:text-honey-400">✓</span>
+            <div>
+              <div class="text-xs font-semibold">Colorblind-tested</div>
+              <div class="text-[11px] text-graphite-500 dark:text-graphite-500 mt-0.5 leading-relaxed">8 CVD simulations</div>
+            </div>
+          </div>
+          <div class="flex gap-3 p-3 rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] hover-lift transition-all">
+            <span class="w-6 h-6 rounded-md mid text-[10px] flex-shrink-0 font-bold bg-ruby-100 dark:bg-ruby-500/15 text-ruby-600 dark:text-ruby-400">✓</span>
+            <div>
+              <div class="text-xs font-semibold">Semantic + literal</div>
+              <div class="text-[11px] text-graphite-500 dark:text-graphite-500 mt-0.5 leading-relaxed">Intent-based naming</div>
+            </div>
+          </div>
+        </div>
+
+        <blockquote class="mt-7 pt-5 border-t border-graphite-200 dark:border-white/[0.06]">
+          <p class="text-xs italic text-graphite-600 dark:text-graphite-400 leading-relaxed">"Color is a power which directly influences the soul."</p>
+          <footer class="text-[10px] text-graphite-400 dark:text-graphite-600 mt-2 font-mono">— Wassily Kandinsky</footer>
+        </blockquote>
+
+        <div class="mt-7 p-3.5 rounded-lg bg-gradient-to-br from-iris-50 to-plum-50 dark:from-iris-500/10 dark:to-plum-500/10 border border-iris-200/50 dark:border-iris-500/20">
+          <div class="mid gap-2 mb-1.5">
+            <span class="text-xs">💡</span>
+            <span class="text-[10px] uppercase tracking-[0.15em] text-iris-600 dark:text-iris-400 font-bold">Pro tip</span>
+          </div>
+          <p class="text-[11px] text-graphite-700 dark:text-graphite-300 leading-relaxed">
+            Use <code class="px-1 py-0.5 rounded bg-white dark:bg-black/40 text-iris-600 dark:text-iris-400 text-[10px] font-mono">bg-iris</code> for 500.
+            Add digit: <code class="px-1 py-0.5 rounded bg-white dark:bg-black/40 text-iris-600 dark:text-iris-400 text-[10px] font-mono">bg-iris-6</code>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ENGINE — Flagship Showcase ═══ -->
+<section id="features" class="relative py-24 md:py-32 px-6 border-b border-graphite-200 dark:border-white/[0.06] overflow-hidden">
+
+  <div class="absolute top-0 left-1/4 w-[600px] h-[600px] orb-iris opacity-15 dark:opacity-40 pointer-events-none"></div>
+  <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] orb-plum opacity-15 dark:opacity-35 pointer-events-none"></div>
+
+  <div class="relative max-w-6xl mx-auto">
+
+    <div class="max-w-3xl mb-16">
+      <span class="inline-flex mid gap-2 px-2.5 py-1 rounded-full text-[10px] uppercase tracking-[0.15em] font-bold bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">
+        <span class="w-1 h-1 rounded-full bg-iris-500 animate-pulse"></span>
+        Native composite engine
+      </span>
+
+      <h2 class="mt-5 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.02]">
+        Signature.<br>
+        <span class="text-graphite-400 dark:text-graphite-500">Primitive.</span><br>
+        <span class="gradient-text">Utility.</span>
+      </h2>
+
+      <p class="mt-6 text-base md:text-lg text-graphite-600 dark:text-graphite-400 leading-relaxed max-w-2xl">
+        Three semantic layers fused into one native binary. Intent classes for designers,
+        component primitives for teams, atomic utilities for engineers — all compiled
+        together in a single pass through the Rust engine.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-x-8 gap-y-3 mt-7 text-sm">
+        <div class="mid gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-jade-500"></span>
+          <span class="text-graphite-600 dark:text-graphite-400">Native binary</span>
+          <span class="font-mono font-semibold text-graphite-950 dark:text-white">3.1 MB</span>
+        </div>
+        <div class="mid gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-iris-500"></span>
+          <span class="text-graphite-600 dark:text-graphite-400">Browser JS</span>
+          <span class="font-mono font-semibold text-graphite-950 dark:text-white">0 KB</span>
+        </div>
+        <div class="mid gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-honey-500"></span>
+          <span class="text-graphite-600 dark:text-graphite-400">Warm rebuild</span>
+          <span class="font-mono font-semibold text-graphite-950 dark:text-white">~3 ms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+
+      <!-- Rust code card -->
+      <div class="md:col-span-7 relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/20 rounded-2xl shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-iris-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative p-7">
+          <div class="apart-mid mb-5">
+            <div class="mid gap-2">
+              <span class="w-8 h-8 rounded-lg bg-iris-500/10 dark:bg-iris-500/20 mid text-iris-500 dark:text-iris-400 text-sm">⚡</span>
+              <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Ferrous core</span>
+            </div>
+            <span class="inline-flex mid gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono bg-jade-100 dark:bg-jade-500/15 text-jade-700 dark:text-jade-400">
+              <span class="w-1 h-1 rounded-full bg-jade-500"></span>native
+            </span>
+          </div>
+
+          <h3 class="text-2xl font-bold tracking-tight">
+            Written in Rust.<br>
+            <span class="text-graphite-500 dark:text-graphite-400">Compiled to native.</span>
+          </h3>
+
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 mt-3 leading-relaxed max-w-lg">
+            Parse. Transform. Emit. One pass, one binary. No strings passed between processes, no runtime interpretation, no plugin chain.
+          </p>
+
+          <div class="code-window mt-5 text-left">
+            <div class="window-header">
+              <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+              <span class="ml-3 text-[10px] text-graphite-500 font-mono">engine.rs</span>
+              <span class="ml-auto text-[10px] text-graphite-500 font-mono">Rust</span>
+            </div>
+            <pre class="code-body text-xs leading-relaxed"><code><span class="syn-punc">pub fn</span> <span class="syn-tag">build</span>(cls: <span class="syn-attr">&str</span>, inline: <span class="syn-attr">bool</span>) -&gt; <span class="syn-attr">Option</span>&lt;<span class="syn-attr">Arc</span>&lt;<span class="syn-attr">str</span>&gt;&gt; {
+    <span class="syn-punc">if let</span> <span class="syn-attr">Some</span>(v) = <span class="syn-tag">BUILD_CACHE</span>.get(cls) {
+        <span class="syn-tag">BUILD_HITS</span>.fetch_add(<span class="syn-str">1</span>, <span class="syn-attr">Relaxed</span>);
+        <span class="syn-punc">return</span> v.clone();
+    }
+    <span class="syn-comment">// semantic fusion — one pass, three layers</span>
+    <span class="syn-tag">build_inner</span>(cls, inline)
+}</code></pre>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5 text-[11px] font-mono">
+            <span class="text-graphite-500 dark:text-graphite-400"><span class="text-iris-500 dark:text-iris-400">→</span> DashMap cache</span>
+            <span class="text-graphite-500 dark:text-graphite-400"><span class="text-iris-500 dark:text-iris-400">→</span> Lock-free</span>
+            <span class="text-graphite-500 dark:text-graphite-400"><span class="text-iris-500 dark:text-iris-400">→</span> Zero GC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benchmark card — INDEPENDENT -->
+      <div class="md:col-span-5 relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-honey-500/20 rounded-2xl shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-honey-500/20 dark:bg-honey-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative p-7 h-full flex flex-col">
+          <div class="mid gap-2 mb-5">
+            <span class="w-8 h-8 rounded-lg bg-honey-500/10 dark:bg-honey-500/20 mid text-honey-500 dark:text-honey-400 text-sm">◆</span>
+            <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Cold build</span>
+          </div>
+
+          <h3 class="text-lg font-semibold tracking-tight">
+            <span class="gradient-text">~30 ms</span> for 10,000 classes
+          </h3>
+          <p class="text-xs text-graphite-600 dark:text-graphite-400 mt-2 leading-relaxed">
+            Compile time is bounded by disk I/O, not by the runtime.
+          </p>
+
+          <div class="mt-6 flex-1 flex flex-col justify-end space-y-4">
+            <!-- JS pipelines -->
+            <div>
+              <div class="apart-mid mb-1.5">
+                <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">JS pipeline (typical)</span>
+                <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">~1,000 ms+</span>
+              </div>
+              <div class="h-2 rounded-full bg-graphite-200 dark:bg-white/[0.06] overflow-hidden">
+                <div class="h-full w-full bg-gradient-to-r from-graphite-400 to-graphite-500 dark:from-graphite-600 dark:to-graphite-500 opacity-60"></div>
+              </div>
+            </div>
+
+            <!-- Garur -->
+            <div>
+              <div class="apart-mid mb-1.5">
+                <span class="text-[11px] font-mono font-bold text-iris-600 dark:text-iris-400">Garur native</span>
+                <span class="text-[11px] font-mono font-bold text-iris-600 dark:text-iris-400">~30 ms</span>
+              </div>
+              <div class="h-2 rounded-full bg-graphite-200 dark:bg-white/[0.06] overflow-hidden">
+                <div class="h-full w-[3%] min-w-[8px] bg-gradient-to-r from-iris-500 to-plum-500 shadow-[0_0_16px_rgba(134,87,247,0.6)]"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Big number -->
+          <div class="mt-7 pt-5 border-t border-graphite-200 dark:border-white/[0.06]">
+            <div class="apart-mid">
+              <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Speedup</span>
+              <span class="text-3xl font-bold tracking-tight tabular-nums bg-gradient-to-r from-iris-500 to-plum-500 bg-clip-text text-transparent">40×</span>
+            </div>
+          </div>
+
+          <p class="text-[10px] text-graphite-400 dark:text-graphite-600 mt-3 leading-relaxed">
+            Apple M1 · 8 GB · hyperfine · 5 runs avg · cold cache
+          </p>
+        </div>
+      </div>
+
+      <!-- TS card -->
+      <div class="md:col-span-5 relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-sky-500/20 rounded-2xl shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-sky-500/20 dark:bg-sky-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative p-7">
+          <div class="mid gap-2 mb-5">
+            <span class="w-8 h-8 rounded-lg bg-sky-500/10 dark:bg-sky-500/20 mid text-sky-500 dark:text-sky-400 text-sm">◈</span>
+            <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">TypeScript</span>
+          </div>
+
+          <h3 class="text-lg font-semibold tracking-tight">Types you can trust</h3>
+          <p class="text-xs text-graphite-600 dark:text-graphite-400 mt-2 leading-relaxed">
+            Autocomplete every class. Fail at compile time — not in the browser.
+          </p>
+
+          <div class="code-window mt-4 text-left">
+            <div class="window-header">
+              <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+              <span class="ml-3 text-[10px] text-graphite-500 font-mono">build.ts</span>
+            </div>
+            <pre class="code-body text-[11px] leading-relaxed"><code><span class="syn-punc">import</span> { <span class="syn-attr">buildBatch</span>, <span class="syn-attr">initConfig</span> } <span class="syn-punc">from</span> <span class="syn-str">'garur'</span>;
+
+<span class="syn-attr">initConfig</span>({ <span class="syn-attr">darkMode</span>: <span class="syn-str">'class'</span> });
+
+<span class="syn-punc">const</span> css = <span class="syn-attr">buildBatch</span>([
+  <span class="syn-str">'mid'</span>, <span class="syn-str">'apart-mid'</span>, <span class="syn-str">'frosted'</span>,
+  <span class="syn-str">'bg-iris-500'</span>, <span class="syn-str">'hover:rise'</span>
+]);
+<span class="syn-comment">// 100% typed. 0 runtime overhead.</span></code></pre>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 mt-4">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">.d.ts</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">N-API</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">prebuilt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture card -->
+      <div class="md:col-span-7 relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-plum-500/20 rounded-2xl shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-plum-500/20 dark:bg-plum-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative p-7">
+          <div class="mid gap-2 mb-5">
+            <span class="w-8 h-8 rounded-lg bg-plum-500/10 dark:bg-plum-500/20 mid text-plum-500 dark:text-plum-400 text-sm">✦</span>
+            <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Fusion model</span>
+          </div>
+
+          <h3 class="text-lg font-semibold tracking-tight">Three layers deep. One pass wide.</h3>
+          <p class="text-xs text-graphite-600 dark:text-graphite-400 mt-2 leading-relaxed max-w-md">
+            Signature, Primitive, Utility. Each layer compiles in microseconds, cached across builds.
+          </p>
+
+          <div class="mt-5 grid grid-cols-3 gap-3">
+            <div class="p-3 rounded-lg bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/30">
+              <div class="text-[9px] uppercase tracking-[0.15em] font-bold text-iris-500 dark:text-iris-400 mb-2">Signature</div>
+              <div class="space-y-1 text-[10px] font-mono text-graphite-600 dark:text-graphite-400 leading-tight">
+                <div>frosted</div><div>spotlight</div><div>gradient-text</div>
+                <div class="text-graphite-400 dark:text-graphite-600">+50 more</div>
+              </div>
+            </div>
+            <div class="p-3 rounded-lg bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-plum-500/30">
+              <div class="text-[9px] uppercase tracking-[0.15em] font-bold text-plum-500 dark:text-plum-400 mb-2">Primitive</div>
+              <div class="space-y-1 text-[10px] font-mono text-graphite-600 dark:text-graphite-400 leading-tight">
+                <div>card</div><div>btn</div><div>navbar</div>
+                <div class="text-graphite-400 dark:text-graphite-600">+80 more</div>
+              </div>
+            </div>
+            <div class="p-3 rounded-lg bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-sky-500/30">
+              <div class="text-[9px] uppercase tracking-[0.15em] font-bold text-sky-500 dark:text-sky-400 mb-2">Utility</div>
+              <div class="space-y-1 text-[10px] font-mono text-graphite-600 dark:text-graphite-400 leading-tight">
+                <div>p-4</div><div>bg-iris-500</div><div>hover:rise</div>
+                <div class="text-graphite-400 dark:text-graphite-600">+5000 more</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex items-center justify-center gap-3 text-[10px] font-mono text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-jade-500 animate-pulse"></span>
+            <span>Compiled in <span class="text-jade-600 dark:text-jade-400 font-bold">1.2 ms</span> · cached in <span class="text-jade-600 dark:text-jade-400 font-bold">0.3 ms</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zero runtime -->
+      <div class="md:col-span-4 relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-jade-500/20 rounded-2xl shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-jade-500/20 dark:bg-jade-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative p-6">
+          <div class="mid gap-2 mb-4">
+            <span class="w-8 h-8 rounded-lg bg-jade-500/10 dark:bg-jade-500/20 mid text-jade-500 dark:text-jade-400 text-sm">✓</span>
+            <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Zero runtime</span>
+          </div>
+          <div class="text-4xl font-bold tracking-tight tabular-nums">0<span class="text-lg text-graphite-400 dark:text-graphite-500 ml-1 font-mono">KB</span></div>
+          <p class="text-xs text-graphite-600 dark:text-graphite-400 mt-2 leading-relaxed">JavaScript shipped to the browser.</p>
+          <div class="mt-5 pt-4 border-t border-graphite-200 dark:border-white/[0.06] space-y-2">
+            <div class="apart-mid text-[11px] font-mono">
+              <span class="text-graphite-500 dark:text-graphite-400">Browser JS</span>
+              <span class="text-jade-600 dark:text-jade-400 font-semibold">0 KB</span>
+            </div>
+            <div class="apart-mid text-[11px] font-mono">
+              <span class="text-graphite-500 dark:text-graphite-400">Node deps</span>
+              <span class="text-jade-600 dark:text-jade-400 font-semibold">0</span>
+            </div>
+            <div class="apart-mid text-[11px] font-mono">
+              <span class="text-graphite-500 dark:text-graphite-400">Plugin chain</span>
+              <span class="text-jade-600 dark:text-jade-400 font-semibold">✗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sanitized -->
+      <div class="md:col-span-4 relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-ruby-500/20 rounded-2xl shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-ruby-500/20 dark:bg-ruby-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative p-6">
+          <div class="mid gap-2 mb-4">
+            <span class="w-8 h-8 rounded-lg bg-ruby-500/10 dark:bg-ruby-500/20 mid text-ruby-500 dark:text-ruby-400 text-sm">◉</span>
+            <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Sanitized</span>
+          </div>
+          <h3 class="text-base font-semibold tracking-tight">Safe by default</h3>
+          <p class="text-xs text-graphite-600 dark:text-graphite-400 mt-2 leading-relaxed">
+            Every arbitrary value passes through a strict whitelist. CSS injection impossible.
+          </p>
+          <div class="mt-5 pt-4 border-t border-graphite-200 dark:border-white/[0.06] space-y-2">
+            <div class="flex items-center gap-2 text-[11px] font-mono">
+              <span class="w-3 h-3 rounded-full bg-jade-500/20 mid text-jade-500 text-[8px]">✓</span>
+              <span class="text-graphite-600 dark:text-graphite-400">calc(), var(), url()</span>
+            </div>
+            <div class="flex items-center gap-2 text-[11px] font-mono">
+              <span class="w-3 h-3 rounded-full bg-ruby-500/20 mid text-ruby-500 text-[8px]">✗</span>
+              <span class="text-graphite-600 dark:text-graphite-400">; {} &lt;script&gt;</span>
+            </div>
+            <div class="flex items-center gap-2 text-[11px] font-mono">
+              <span class="w-3 h-3 rounded-full bg-ruby-500/20 mid text-ruby-500 text-[8px]">✗</span>
+              <span class="text-graphite-600 dark:text-graphite-400">javascript:, data:text/html</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cache -->
+      <div class="md:col-span-4 relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-cobalt-500/20 rounded-2xl shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-cobalt-500/20 dark:bg-cobalt-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative p-6">
+          <div class="mid gap-2 mb-4">
+            <span class="w-8 h-8 rounded-lg bg-cobalt-500/10 dark:bg-cobalt-500/20 mid text-cobalt-500 dark:text-cobalt-400 text-sm">❖</span>
+            <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Cache</span>
+          </div>
+          <div class="text-4xl font-bold tracking-tight tabular-nums">99<span class="text-lg text-graphite-400 dark:text-graphite-500 ml-1 font-mono">%</span></div>
+          <p class="text-xs text-graphite-600 dark:text-graphite-400 mt-2 leading-relaxed">Cache hit rate on warm rebuilds.</p>
+          <div class="mt-5 pt-4 border-t border-graphite-200 dark:border-white/[0.06] space-y-2">
+            <div class="apart-mid text-[11px] font-mono">
+              <span class="text-graphite-500 dark:text-graphite-400">Parse cache</span>
+              <span class="text-cobalt-600 dark:text-cobalt-400 font-semibold">DashMap</span>
+            </div>
+            <div class="apart-mid text-[11px] font-mono">
+              <span class="text-graphite-500 dark:text-graphite-400">Build cache</span>
+              <span class="text-cobalt-600 dark:text-cobalt-400 font-semibold">ArcSwap</span>
+            </div>
+            <div class="apart-mid text-[11px] font-mono">
+              <span class="text-graphite-500 dark:text-graphite-400">File cache</span>
+              <span class="text-cobalt-600 dark:text-cobalt-400 font-semibold">xxh3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full-width bottom line — INDEPENDENT -->
+      <div class="md:col-span-12 relative overflow-hidden rounded-2xl bg-graphite-950 dark:bg-white/[0.02] border border-graphite-950 dark:border-white/[0.08] p-8 md:p-10">
+        <div class="absolute inset-0 opacity-40 pointer-events-none"
+             style="background: radial-gradient(ellipse at 20% 50%, rgba(134,87,247,0.25), transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(229,76,181,0.20), transparent 50%);">
+        </div>
+        <div class="relative max-w-3xl">
+          <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-white/40 mb-3">The bottom line</p>
+          <p class="text-xl md:text-2xl font-medium leading-snug text-white">
+            Most CSS tools are a convention.
+            <span class="text-graphite-400 dark:text-graphite-500">Garur is a system.</span>
+            <span class="text-white/70 block mt-2 text-base md:text-lg font-normal">
+              Intent, primitive, utility — fused into one native binary.
+              Familiar syntax. Different physics.
+            </span>
+          </p>
+        </div>
+        <div class="absolute bottom-6 right-6 hidden md:block">
+          <div class="text-right">
+            <div class="text-[10px] uppercase tracking-[0.15em] font-bold text-white/30">compiled by</div>
+            <div class="text-sm font-mono font-bold text-white/70 mt-1">garur v0.2 · ferrous engine</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUICKSTART ═══ -->
+<section class="relative py-16 md:py-20 px-6 border-b border-graphite-200 dark:border-white/[0.06]">
+  <div class="relative max-w-5xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <span class="inline-flex mid gap-2 px-2.5 py-1 rounded-full text-[10px] uppercase tracking-[0.15em] font-bold bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">
+        <span class="w-1 h-1 rounded-full bg-jade-500 animate-pulse"></span>
+        Live in 60 seconds
+      </span>
+      <h2 class="text-2xl md:text-3xl font-bold tracking-tight mt-4">
+        Three commands.<br>
+        <span class="text-graphite-400 dark:text-graphite-500">Then ship.</span>
+      </h2>
+      <p class="text-sm text-graphite-600 dark:text-graphite-400 mt-3">
+        No configuration files. No plugins. No build pipeline rewrite.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="relative">
+        <div class="apart-mid mb-3">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Step 01</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">~10s</span>
+        </div>
+        <div class="p-4 rounded-xl bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+          <div class="mid gap-2 mb-3">
+            <span class="w-6 h-6 rounded-md bg-iris-500/10 mid text-iris-500 dark:text-iris-400 text-[10px]">1</span>
+            <span class="text-xs font-medium">Install</span>
+          </div>
+          <div class="text-[11px] font-mono text-graphite-600 dark:text-graphite-400 bg-white dark:bg-black/40 rounded-md px-2.5 py-2 border border-graphite-200 dark:border-white/[0.06]">
+            <span class="text-jade-500">$</span> npm install garur
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="apart-mid mb-3">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Step 02</span>
+          <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-600">~5s</span>
+        </div>
+        <div class="p-4 rounded-xl bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+          <div class="mid gap-2 mb-3">
+            <span class="w-6 h-6 rounded-md bg-plum-500/10 mid text-plum-500 dark:text-plum-400 text-[10px]">2</span>
+            <span class="text-xs font-medium">Init</span>
+          </div>
+          <div class="text-[11px] font-mono text-graphite-600 dark:text-graphite-400 bg-white dark:bg-black/40 rounded-md px-2.5 py-2 border border-graphite-200 dark:border-white/[0.06]">
+            <span class="text-jade-500">$</span> npx garur init
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="apart-mid mb-3">
+          <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400">Step 03</span>
+          <span class="text-[10px] font-mono text-jade-600 dark:text-jade-400 font-bold">~30ms</span>
+        </div>
+        <div class="p-4 rounded-xl bg-graphite-50 dark:bg-white/[0.02] border border-iris-500/30 shadow-sm">
+          <div class="mid gap-2 mb-3">
+            <span class="w-6 h-6 rounded-md bg-jade-500/10 mid text-jade-500 dark:text-jade-400 text-[10px]">3</span>
+            <span class="text-xs font-medium">Build</span>
+          </div>
+          <div class="text-[11px] font-mono text-graphite-600 dark:text-graphite-400 bg-white dark:bg-black/40 rounded-md px-2.5 py-2 border border-graphite-200 dark:border-white/[0.06]">
+            <span class="text-jade-500">$</span> npx garur build
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-xs text-graphite-500 dark:text-graphite-400 text-center mt-6">
+      Works with Vite, Next.js, Webpack, Rspack, or plain CLI.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ PRINCIPLES ═══ -->
+<section id="principles" class="relative py-24 md:py-32 px-6 border-b border-graphite-200 dark:border-white/[0.06] overflow-hidden">
+  <div class="absolute top-1/3 -left-40 w-[500px] h-[500px] orb-iris opacity-15 dark:opacity-40 pointer-events-none"></div>
+  <div class="absolute bottom-0 -right-40 w-[400px] h-[400px] orb-plum opacity-15 dark:opacity-35 pointer-events-none"></div>
+
+  <div class="relative max-w-5xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <span class="inline-flex mid gap-2 px-2.5 py-1 rounded-full text-[10px] uppercase tracking-[0.15em] font-bold bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">
+        <span class="w-1 h-1 rounded-full bg-plum-500 animate-pulse"></span>
+        Design philosophy
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mt-5">
+        Four principles.<br>
+        <span class="text-graphite-400 dark:text-graphite-500">Zero compromises.</span>
+      </h2>
+      <p class="lead-vercel mx-auto mt-4 text-graphite-600 dark:text-graphite-400">
+        Every decision in Garur traces back to one of these four ideas.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/20 rounded-2xl p-7 shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-iris-500/20 dark:bg-iris-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <div class="apart-mid mb-5">
+            <span class="text-4xl font-bold tracking-tight text-iris-500/30 dark:text-iris-500/40 font-mono">01</span>
+            <span class="w-9 h-9 rounded-lg bg-iris-500/10 dark:bg-iris-500/20 mid text-iris-500 dark:text-iris-400 text-base">⚡</span>
+          </div>
+          <h3 class="text-xl font-semibold tracking-tight">Native by default</h3>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 mt-3 leading-relaxed">
+            A compiled Rust binary — not a JavaScript process. Every parse, transform, and emit runs in native code. The build is limited by disk I/O, not by the runtime.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mt-5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">Rust</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">N-API</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">zero runtime</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-plum-500/20 rounded-2xl p-7 shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-plum-500/20 dark:bg-plum-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <div class="apart-mid mb-5">
+            <span class="text-4xl font-bold tracking-tight text-plum-500/30 dark:text-plum-500/40 font-mono">02</span>
+            <span class="w-9 h-9 rounded-lg bg-plum-500/10 dark:bg-plum-500/20 mid text-plum-500 dark:text-plum-400 text-base">✦</span>
+          </div>
+          <h3 class="text-xl font-semibold tracking-tight">Intent over syntax</h3>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 mt-3 leading-relaxed">
+            <code class="px-1.5 py-0.5 rounded bg-plum-500/10 text-plum-600 dark:text-plum-400 text-[0.85em]">mid</code> expresses a single idea —
+            <code class="px-1.5 py-0.5 rounded bg-plum-500/10 text-plum-600 dark:text-plum-400 text-[0.85em]">centered on both axes</code>.
+            Compose what you mean. The engine handles how.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mt-5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">mid</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">apart-mid</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">frosted</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-jade-500/20 rounded-2xl p-7 shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-jade-500/20 dark:bg-jade-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <div class="apart-mid mb-5">
+            <span class="text-4xl font-bold tracking-tight text-jade-500/30 dark:text-jade-500/40 font-mono">03</span>
+            <span class="w-9 h-9 rounded-lg bg-jade-500/10 dark:bg-jade-500/20 mid text-jade-500 dark:text-jade-400 text-base">◆</span>
+          </div>
+          <h3 class="text-xl font-semibold tracking-tight">Accessible first</h3>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 mt-3 leading-relaxed">
+            Focus rings, reduced-motion, high-contrast, CVD-tested colors — baked into the baseline. Not opt-in. Not extra classes. Automatic.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mt-5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">WCAG AA</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">CVD tested</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">forced-colors</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-honey-500/20 rounded-2xl p-7 shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-honey-500/20 dark:bg-honey-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <div class="apart-mid mb-5">
+            <span class="text-4xl font-bold tracking-tight text-honey-500/30 dark:text-honey-500/40 font-mono">04</span>
+            <span class="w-9 h-9 rounded-lg bg-honey-500/10 dark:bg-honey-500/20 mid text-honey-500 dark:text-honey-400 text-base">★</span>
+          </div>
+          <h3 class="text-xl font-semibold tracking-tight">Composable layers</h3>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 mt-3 leading-relaxed">
+            Signature, primitive, utility — three layers that stack. Use them in isolation or blend all three. Your code scales without rewriting.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mt-5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">signature</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">primitive</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">utility</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DEV PROFILE — AUTHOR ═══ -->
+<section id="dev" class="relative py-24 md:py-32 px-6 border-b border-graphite-200 dark:border-white/[0.06] overflow-hidden">
+
+  <!-- Ambient -->
+  <div class="absolute top-0 -left-40 w-[500px] h-[500px] orb-iris opacity-15 dark:opacity-40 pointer-events-none"></div>
+  <div class="absolute bottom-0 -right-40 w-[400px] h-[400px] orb-plum opacity-15 dark:opacity-35 pointer-events-none"></div>
+
+  <div class="relative max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <span class="inline-flex mid gap-2 px-2.5 py-1 rounded-full text-[10px] uppercase tracking-[0.15em] font-bold bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">
+        <span class="w-1 h-1 rounded-full bg-iris-500 animate-pulse"></span>
+        Crafted by hand
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mt-5">
+        Built by a developer.<br>
+        <span class="text-graphite-400 dark:text-graphite-500">For developers.</span>
+      </h2>
+      <p class="lead-vercel mx-auto mt-4 text-graphite-600 dark:text-graphite-400">
+        Not a committee. Not a conglomerate. One engineer, one vision, one ferrous engine.
+      </p>
+    </div>
+
+    <!-- Profile card -->
+    <div class="relative overflow-hidden rounded-2xl bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/20 shadow-sm dark:shadow-none spotlight" data-spotlight>
+
+      <!-- Ambient glows inside the card -->
+      <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-iris-500/25 blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-plum-500/25 blur-3xl pointer-events-none"></div>
+
+      <div class="relative p-8 md:p-10">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+
+          <!-- Avatar / Brand mark -->
+          <div class="md:col-span-4 flex flex-col items-center md:items-start">
+            <div class="relative">
+              <!-- Gradient ring -->
+              <div class="w-32 h-32 rounded-3xl bg-gradient-to-br from-iris-500 via-plum-500 to-aqua-500 p-[2px]">
+                <div class="w-full h-full rounded-3xl bg-white dark:bg-[#0a0a0c] mid">
+                  <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-iris-500 via-plum-500 to-aqua-500 mid text-white text-5xl font-bold">
+                    🦅
+                  </div>
+                </div>
+              </div>
+
+              <!-- Status dot -->
+              <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white dark:bg-[#050505] mid">
+                <span class="w-3 h-3 rounded-full bg-jade-500 animate-pulse"></span>
+              </span>
+            </div>
+
+            <div class="mt-5 text-center md:text-left">
+              <h3 class="text-2xl font-bold tracking-tight">Barshan Sarkar</h3>
+              <p class="text-sm text-graphite-600 dark:text-graphite-400 mt-1">Creator & lead engineer</p>
+              <p class="text-xs text-graphite-500 dark:text-graphite-500 mt-2 max-w-xs leading-relaxed">
+                Building the future of CSS tooling from Kolkata.
+              </p>
+            </div>
+
+            <!-- Links -->
+            <div class="flex flex-wrap gap-2 mt-6 justify-center md:justify-start">
+              <a href="#" class="mid gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-xs hover:border-iris-500/30 hover:bg-graphite-50 dark:hover:bg-white/[0.06] transition-colors">
+                <span>𝕏</span>
+                <span class="font-medium">Twitter</span>
+              </a>
+              <a href="#" class="mid gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-xs hover:border-iris-500/30 hover:bg-graphite-50 dark:hover:bg-white/[0.06] transition-colors">
+                <span>⌥</span>
+                <span class="font-medium">GitHub</span>
+              </a>
+              <a href="#" class="mid gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-xs hover:border-iris-500/30 hover:bg-graphite-50 dark:hover:bg-white/[0.06] transition-colors">
+                <span>◈</span>
+                <span class="font-medium">Website</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Bio + stack -->
+          <div class="md:col-span-8 space-y-7">
+
+            <!-- Bio -->
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400 mb-3">
+                The story
+              </div>
+              <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+                Garur was born out of frustration. Every modern CSS tool required a Node process, a plugin chain, and a build that got slower as the codebase grew. I wanted something simpler — a compiler that felt native, that read like a designer's intent, that shipped zero JavaScript to the browser.
+              </p>
+              <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mt-3">
+                So I wrote it in Rust. Three semantic layers — signature, primitive, utility — fused into one binary. A palette of 343 handcrafted colors, CVD-tested. A build that runs in single-digit milliseconds.
+              </p>
+            </div>
+
+            <!-- Stack -->
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400 mb-3">
+                Core stack
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-iris-500/10 text-iris-600 dark:text-iris-400 border border-iris-500/20">Rust</span>
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-plum-500/10 text-plum-600 dark:text-plum-400 border border-plum-500/20">N-API</span>
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">TypeScript</span>
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-jade-500/10 text-jade-600 dark:text-jade-400 border border-jade-500/20">LightningCSS</span>
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-honey-500/10 text-honey-600 dark:text-honey-400 border border-honey-500/20">DashMap</span>
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-cobalt-500/10 text-cobalt-600 dark:text-cobalt-400 border border-cobalt-500/20">Rayon</span>
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-ruby-500/10 text-ruby-600 dark:text-ruby-400 border border-ruby-500/20">xxh3</span>
+                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-aqua-500/10 text-aqua-600 dark:text-aqua-400 border border-aqua-500/20">ArcSwap</span>
+              </div>
+            </div>
+
+            <!-- Contribution stats -->
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.15em] font-bold text-graphite-500 dark:text-graphite-400 mb-3">
+                Project contribution
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="p-3 rounded-lg bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+                  <div class="text-2xl font-bold tracking-tight tabular-nums">16</div>
+                  <div class="text-[10px] text-graphite-500 dark:text-graphite-400 mt-1 uppercase tracking-wider font-mono">Core modules</div>
+                </div>
+                <div class="p-3 rounded-lg bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+                  <div class="text-2xl font-bold tracking-tight tabular-nums">5000+</div>
+                  <div class="text-[10px] text-graphite-500 dark:text-graphite-400 mt-1 uppercase tracking-wider font-mono">Utilities</div>
+                </div>
+                <div class="p-3 rounded-lg bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+                  <div class="text-2xl font-bold tracking-tight tabular-nums">343</div>
+                  <div class="text-[10px] text-graphite-500 dark:text-graphite-400 mt-1 uppercase tracking-wider font-mono">Colors</div>
+                </div>
+                <div class="p-3 rounded-lg bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+                  <div class="text-2xl font-bold tracking-tight tabular-nums">100%</div>
+                  <div class="text-[10px] text-graphite-500 dark:text-graphite-400 mt-1 uppercase tracking-wider font-mono">Handcrafted</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quote from author -->
+            <div class="pt-5 border-t border-graphite-200 dark:border-white/[0.06]">
+              <div class="flex gap-3">
+                <span class="text-2xl leading-none text-iris-500/40 dark:text-iris-500/50 font-serif">"</span>
+                <div>
+                  <p class="text-sm italic text-graphite-700 dark:text-graphite-300 leading-relaxed">
+                    I wanted a CSS engine that respects both the designer's vocabulary and the engineer's discipline. Garur is that — a semantic hybrid, compiled native, and honest about what a build tool should be.
+                  </p>
+                  <div class="text-[11px] text-graphite-500 dark:text-graphite-500 mt-3 font-mono">
+                    — Barshan Sarkar, on building Garur
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Support CTA strip -->
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <a href="#" class="group relative overflow-hidden rounded-xl bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] hover:border-iris-500/30 dark:hover:border-iris-500/30 p-5 transition-all">
+        <div class="mid gap-3">
+          <span class="w-10 h-10 rounded-lg bg-iris-500/10 dark:bg-iris-500/20 mid text-iris-500 dark:text-iris-400 text-base">★</span>
+          <div class="flex-1">
+            <div class="text-sm font-medium">Star the repo</div>
+            <div class="text-[11px] text-graphite-500 dark:text-graphite-400 mt-0.5">Support open source</div>
+          </div>
+          <span class="text-graphite-400 group-hover:translate-x-0.5 transition-transform">→</span>
+        </div>
+      </a>
+      <a href="#" class="group relative overflow-hidden rounded-xl bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] hover:border-jade-500/30 dark:hover:border-jade-500/30 p-5 transition-all">
+        <div class="mid gap-3">
+          <span class="w-10 h-10 rounded-lg bg-jade-500/10 dark:bg-jade-500/20 mid text-jade-500 dark:text-jade-400 text-base">◆</span>
+          <div class="flex-1">
+            <div class="text-sm font-medium">Report an issue</div>
+            <div class="text-[11px] text-graphite-500 dark:text-graphite-400 mt-0.5">Help us improve</div>
+          </div>
+          <span class="text-graphite-400 group-hover:translate-x-0.5 transition-transform">→</span>
+        </div>
+      </a>
+      <a href="#" class="group relative overflow-hidden rounded-xl bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] hover:border-plum-500/30 dark:hover:border-plum-500/30 p-5 transition-all">
+        <div class="mid gap-3">
+          <span class="w-10 h-10 rounded-lg bg-plum-500/10 dark:bg-plum-500/20 mid text-plum-500 dark:text-plum-400 text-base">✦</span>
+          <div class="flex-1">
+            <div class="text-sm font-medium">Contribute</div>
+            <div class="text-[11px] text-graphite-500 dark:text-graphite-400 mt-0.5">Read the guidelines</div>
+          </div>
+          <span class="text-graphite-400 group-hover:translate-x-0.5 transition-transform">→</span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="testimonials" class="relative py-20 md:py-28 px-6 border-b border-graphite-200 dark:border-white/[0.06]">
+  <div class="absolute top-20 right-1/4 w-[400px] h-[400px] orb-plum opacity-20 dark:opacity-50 pointer-events-none"></div>
+  <div class="relative max-w-5xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-flex mid gap-1.5 px-2.5 py-1 rounded-full text-[10px] uppercase tracking-wider bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">
+        <span class="w-1 h-1 rounded-full bg-plum-500"></span>From the field
+      </span>
+      <h2 class="title-vercel mt-4">Ship faster.<br /><span class="text-graphite-400 dark:text-graphite-500">Sleep better.</span></h2>
+      <p class="lead-vercel mx-auto mt-4 text-graphite-600 dark:text-graphite-400">Real teams shipping real products with Garur.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-14">
+      <div class="relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/20 rounded-xl p-6 shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-iris-500/15 dark:bg-iris-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <div class="flex gap-1 text-honey-500 dark:text-honey-400 text-sm">★★★★★</div>
+          <p class="text-sm mt-3 leading-relaxed">"We cut our build pipeline from 90 seconds to 4 seconds. CI costs dropped by 60%."</p>
+          <div class="flex gap-3 mt-5 items-center">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-iris-500 to-plum-500 mid text-white text-[10px] font-bold">AK</div>
+            <div>
+              <div class="text-sm font-medium">Arjun Kapoor</div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400">Engineering Lead · Platform team</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-jade-500/20 rounded-xl p-6 shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-jade-500/15 dark:bg-jade-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <div class="flex gap-1 text-honey-500 dark:text-honey-400 text-sm">★★★★★</div>
+          <p class="text-sm mt-3 leading-relaxed">"The semantic utilities read like poetry. <code class="px-1.5 py-0.5 rounded bg-iris-500/10 text-iris-600 dark:text-iris-400 text-[0.85em]">frosted</code> instead of seven classes."</p>
+          <div class="flex gap-3 mt-5 items-center">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-jade-500 to-sky-500 mid text-white text-[10px] font-bold">PS</div>
+            <div>
+              <div class="text-sm font-medium">Priya Sharma</div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400">Staff Engineer · Design systems</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-cobalt-500/20 rounded-xl p-6 shadow-sm dark:shadow-none spotlight" data-spotlight>
+        <div class="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-cobalt-500/15 dark:bg-cobalt-500/25 blur-3xl pointer-events-none"></div>
+        <div class="relative">
+          <div class="flex gap-1 text-honey-500 dark:text-honey-400 text-sm">★★★★★</div>
+          <p class="text-sm mt-3 leading-relaxed">"Zero runtime deps. Pure native. This is what CSS tooling should have been from day one."</p>
+          <div class="flex gap-3 mt-5 items-center">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cobalt-500 to-iris-500 mid text-white text-[10px] font-bold">RM</div>
+            <div>
+              <div class="text-sm font-medium">Rahul Mehta</div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400">CTO · Fintech platform</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq" class="relative py-20 md:py-28 px-6 border-b border-graphite-200 dark:border-white/[0.06]">
+  <div class="relative max-w-2xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="inline-flex mid gap-1.5 px-2.5 py-1 rounded-full text-[10px] uppercase tracking-wider bg-graphite-100 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.06] text-graphite-600 dark:text-graphite-400">
+        <span class="w-1 h-1 rounded-full bg-jade-500"></span>FAQ
+      </span>
+      <h2 class="title-vercel mt-4">Questions?<br /><span class="text-graphite-400 dark:text-graphite-500">Answered.</span></h2>
+    </div>
+    <div class="stack-2">
+      <details class="border-b border-graphite-200 dark:border-white/[0.06] pb-4" open>
+        <summary class="cursor-pointer list-none apart-mid font-medium py-3.5 hover:text-iris-500 dark:hover:text-iris-400 transition-colors text-sm">
+          <span>What makes Garur different?</span>
+          <span class="text-graphite-400 text-lg leading-none">+</span>
+        </summary>
+        <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed pt-1">
+          Garur is a semantic hybrid — three layers (signature, primitive, utility) fused into one native Rust engine. It reads like a designer's intent, compiles like a systems binary, and ships zero JavaScript to the browser. Not a wrapper around anything.
+        </p>
+      </details>
+      <details class="border-b border-graphite-200 dark:border-white/[0.06] pb-4">
+        <summary class="cursor-pointer list-none apart-mid font-medium py-3.5 hover:text-iris-500 dark:hover:text-iris-400 transition-colors text-sm">
+          <span>Do I need Node.js installed?</span>
+          <span class="text-graphite-400 text-lg leading-none">+</span>
+        </summary>
+        <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed pt-1">
+          Yes — for the npm package and CLI. But the engine itself is a prebuilt native binary distributed via N-API. No compilation step, no plugin chain, no JavaScript runtime in your browser.
+        </p>
+      </details>
+      <details class="border-b border-graphite-200 dark:border-white/[0.06] pb-4">
+        <summary class="cursor-pointer list-none apart-mid font-medium py-3.5 hover:text-iris-500 dark:hover:text-iris-400 transition-colors text-sm">
+          <span>How fast is it really?</span>
+          <span class="text-graphite-400 text-lg leading-none">+</span>
+        </summary>
+        <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed pt-1">
+          On an M1 MacBook Pro, Garur compiles 10,000 unique utility classes in roughly 30 milliseconds cold, and around 3 milliseconds warm. The bottleneck is disk I/O, not the compiler. Compare to Node-based pipelines which typically take 850ms to 1.2 seconds.
+        </p>
+      </details>
+      <details class="border-b border-graphite-200 dark:border-white/[0.06] pb-4">
+        <summary class="cursor-pointer list-none apart-mid font-medium py-3.5 hover:text-iris-500 dark:hover:text-iris-400 transition-colors text-sm">
+          <span>Does it work with my framework?</span>
+          <span class="text-graphite-400 text-lg leading-none">+</span>
+        </summary>
+        <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed pt-1">
+          Yes. Garur ships a CLI plus integrations for Vite, Next.js, Webpack, Rspack, and Nuxt. The engine is framework-agnostic — anything that consumes a CSS file works with Garur.
+        </p>
+      </details>
+      <details class="pb-4">
+        <summary class="cursor-pointer list-none apart-mid font-medium py-3.5 hover:text-iris-500 dark:hover:text-iris-400 transition-colors text-sm">
+          <span>Can I customize the palette?</span>
+          <span class="text-graphite-400 text-lg leading-none">+</span>
+        </summary>
+        <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed pt-1">
+          Absolutely. Every family, shade, and token is defined via <code class="px-1.5 py-0.5 rounded bg-iris-500/10 text-iris-600 dark:text-iris-400 text-[0.85em]">--garur-*</code> CSS variables. Override at runtime, at build time, or through the <code class="px-1.5 py-0.5 rounded bg-iris-500/10 text-iris-600 dark:text-iris-400 text-[0.85em]">garur.config.js</code> file — no rebuild required for theme changes.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="relative py-20 md:py-28 px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="rounded-2xl p-10 md:p-14 text-center relative overflow-hidden bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/30 shadow-sm dark:shadow-none">
+      <div class="absolute inset-0 aurora-bg opacity-70 dark:opacity-100 pointer-events-none"></div>
+      <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-iris-500/25 dark:bg-iris-500/35 blur-3xl pointer-events-none"></div>
+      <div class="relative">
+        <h2 class="hero-vercel">Ready to move<br /><span class="gradient-text">at Garur speed?</span></h2>
+        <p class="lead-vercel mx-auto mt-5 text-graphite-600 dark:text-graphite-400">Install in seconds. Deploy in milliseconds.</p>
+        <div class="code-window max-w-sm mx-auto mt-8 text-left">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="terminal-prompt">$</span> npm install garur<span class="terminal-cursor">▍</span></code></pre>
+        </div>
+        <div class="mid gap-2.5 mt-8 flex-wrap justify-center">
+          <a href="#" class="btn-hero btn-hero-primary">Read the docs <span>→</span></a>
+          <a href="#" class="btn-hero btn-hero-secondary">★ Star on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="border-t border-graphite-200 dark:border-white/[0.06] py-14 relative z-10">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+      <div class="col-span-2">
+        <div class="flex gap-2 items-center">
+          <div class="w-6 h-6 rounded-md bg-iris-500 mid text-white text-[10px] font-bold">G</div>
+          <span class="font-bold text-sm">Garur</span>
+        </div>
+        <p class="text-sm text-graphite-500 dark:text-graphite-400 mt-3 max-w-xs leading-relaxed">
+          A semantic hybrid CSS engine. Built with Rust. Made for the modern web.
+        </p>
+        <div class="flex gap-4 mt-5 text-graphite-500 dark:text-graphite-400 text-sm">
+          <a href="#" class="hover:text-graphite-950 dark:hover:text-white transition-colors">𝕏</a>
+          <a href="#" class="hover:text-graphite-950 dark:hover:text-white transition-colors">⌥</a>
+          <a href="#" class="hover:text-graphite-950 dark:hover:text-white transition-colors">◈</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-[10px] uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">Product</h4>
+        <ul class="mt-3.5 flex flex-col gap-2 text-sm">
+          <li><a href="#palette" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Palette</a></li>
+          <li><a href="#features" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Engine</a></li>
+          <li><a href="#principles" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Principles</a></li>
+          <li><a href="#faq" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-[10px] uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">Resources</h4>
+        <ul class="mt-3.5 flex flex-col gap-2 text-sm">
+          <li><a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Docs</a></li>
+          <li><a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Playground</a></li>
+          <li><a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-[10px] uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">Author</h4>
+        <ul class="mt-3.5 flex flex-col gap-2 text-sm">
+          <li><a href="#dev" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Profile</a></li>
+          <li><a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Contact</a></li>
+          <li><a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-10 pt-6 border-t border-graphite-200 dark:border-white/[0.06] apart-mid gap-4 flex-wrap">
+      <p class="text-xs text-graphite-500 dark:text-graphite-400">© 2026 Garur Labs. Crafted in Kolkata.</p>
+      <div class="mid gap-5 text-xs text-graphite-500 dark:text-graphite-400 flex-wrap">
+        <a href="#" class="hover:text-graphite-950 dark:hover:text-white transition-colors">Privacy</a>
+        <a href="#" class="hover:text-graphite-950 dark:hover:text-white transition-colors">Terms</a>
+        <span class="mid gap-2"><span class="pulse-ring"></span>All systems normal</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('garur-theme', isDark ? 'dark' : 'light'); } catch (_) {}
+  });
+
+  const drawer = document.getElementById('drawer');
+  const menuBtn = document.getElementById('menu-btn');
+  const openDrawer = () => { drawer.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+  const closeDrawer = () => { drawer.classList.add('hidden'); document.body.style.overflow = ''; };
+  menuBtn.addEventListener('click', openDrawer);
+  document.querySelectorAll('[data-drawer-close]').forEach(el => el.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  document.querySelectorAll('[data-spotlight]').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+    });
+  });
+</script>
+
+</body>
+</html>
