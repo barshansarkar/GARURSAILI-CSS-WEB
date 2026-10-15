@@ -1,0 +1,2449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GarurSaili utility layer — 5,000+ atomic utilities across layout, spacing, typography, colors, effects, transforms, and modern CSS." />
+  <title>Utility layer — GarurSaili Documentation</title>
+  <link rel="stylesheet" href="../build/garur.css" />
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('garur-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
+</head>
+
+<body class="bg-bone-50 dark:bg-[#07070a] text-graphite-950 dark:text-graphite-50 font-sans antialiased m-0 min-h-screen">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TOP BAR
+     ═══════════════════════════════════════════════════════════════ -->
+<header class="pinned-blur h-14">
+  <div class="max-w-[1440px] mx-auto px-4 md:px-6 apart-mid h-full">
+    <div class="mid gap-4">
+      <a href="./index.html" class="mid gap-2 flex-shrink-0">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 via-plum-500 to-honey-500 mid text-white text-[13px] font-black">ग</span>
+        <span class="font-semibold small tracking-tight hidden sm:block">GarurSaili</span>
+      </a>
+      <span class="hidden md:block w-px h-5 bg-graphite-200 dark:bg-white/[0.08]"></span>
+      <nav class="hidden md:flex items-center gap-1.5 small">
+        <a href="./index.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <a href="./a.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Docs</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <span class="px-2 py-1 text-graphite-950 dark:text-white font-medium">Utility layer</span>
+      </nav>
+      <span class="hidden md:inline-flex mid gap-1.5 px-2 py-0.5 rounded-full tiny font-mono font-medium bg-jade-500/10 text-jade-700 dark:text-jade-400 border border-jade-500/20">
+        <span class="w-1 h-1 rounded-full bg-jade-500 pulse-ring"></span>
+        v1.4.1
+      </span>
+    </div>
+    <div class="mid gap-2">
+      <button type="button" class="hidden md:flex mid gap-2 w-56 h-8 px-3 rounded-md small bg-bone-50 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.08] text-graphite-500 dark:text-graphite-400 hover:border-graphite-300 dark:hover:border-white/[0.15] smooth">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="flex-1 text-left">Search utilities...</span>
+        <span class="kbd text-[9px] h-5 min-w-[1.25rem]">⌘K</span>
+      </button>
+      <button id="menu-btn" type="button" class="md:hidden w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth" aria-label="Open navigation">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="https://github.com/barshansarkar/Garursaili-CSS" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-1.5 h-8 px-3 rounded-md small font-medium bg-graphite-950 dark:bg-white text-white dark:text-black hover:opacity-90 smooth">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        GitHub
+      </a>
+      <button id="theme-toggle" type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth" aria-label="Toggle theme">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOBILE DRAWER
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="drawer" class="hidden fixed inset-0 z-[60] md:hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-drawer-close></div>
+  <aside class="absolute top-0 left-0 bottom-0 w-72 bg-bone-50 dark:bg-[#0a0a0f] border-r border-graphite-200 dark:border-white/[0.08] overflow-y-auto p-5 stack-6">
+    <div class="apart-mid">
+      <div class="mid gap-2">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 to-plum-500 mid text-white text-sm font-black">ग</span>
+        <span class="font-semibold small">GarurSaili</span>
+      </div>
+      <button type="button" class="w-7 h-7 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06]" data-drawer-close>✕</button>
+    </div>
+    <nav class="stack-5 small">
+      <div class="stack-1">
+        <div class="menu-label">Overview</div>
+        <a href="#overview" class="menu-item" data-drawer-close>What is utility</a>
+        <a href="#scales" class="menu-item" data-drawer-close>Scales</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Layout & space</div>
+        <a href="#display" class="menu-item" data-drawer-close>Display</a>
+        <a href="#position" class="menu-item" data-drawer-close>Position</a>
+        <a href="#overflow" class="menu-item" data-drawer-close>Overflow</a>
+        <a href="#spacing" class="menu-item" data-drawer-close>Spacing</a>
+        <a href="#sizing" class="menu-item" data-drawer-close>Sizing</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Type & flex</div>
+        <a href="#font" class="menu-item" data-drawer-close>Font</a>
+        <a href="#text" class="menu-item" data-drawer-close>Text</a>
+        <a href="#flexbox" class="menu-item" data-drawer-close>Flexbox</a>
+        <a href="#grid" class="menu-item" data-drawer-close>Grid</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Colors & effects</div>
+        <a href="#colors" class="menu-item" data-drawer-close>Colors</a>
+        <a href="#gradients" class="menu-item" data-drawer-close>Gradients</a>
+        <a href="#borders" class="menu-item" data-drawer-close>Borders</a>
+        <a href="#shadows" class="menu-item" data-drawer-close>Shadows & rings</a>
+        <a href="#filters" class="menu-item" data-drawer-close>Filters</a>
+        <a href="#transforms" class="menu-item" data-drawer-close>Transforms</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Interaction</div>
+        <a href="#animation" class="menu-item" data-drawer-close>Animation</a>
+        <a href="#transition" class="menu-item" data-drawer-close>Transition</a>
+        <a href="#cursor" class="menu-item" data-drawer-close>Cursor & select</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Modern & misc</div>
+        <a href="#masks" class="menu-item" data-drawer-close>Masks</a>
+        <a href="#modern" class="menu-item" data-drawer-close>Modern CSS</a>
+        <a href="#3d" class="menu-item" data-drawer-close>3D transforms</a>
+        <a href="#a11y" class="menu-item" data-drawer-close>Accessibility</a>
+      </div>
+    </nav>
+  </aside>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE SHELL
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="max-w-[1440px] mx-auto grid grid-cols-12 pt-14">
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="hidden md:block md:col-span-3 lg:col-span-2 border-r border-graphite-200 dark:border-white/[0.06]">
+    <nav class="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto p-6 stack-7 small">
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Overview</div>
+        <a href="#overview" class="menu-item menu-item-active">What is utility</a>
+        <a href="#scales" class="menu-item">Scales</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Layout & space</div>
+        <a href="#display" class="menu-item">Display</a>
+        <a href="#position" class="menu-item">Position</a>
+        <a href="#inset" class="menu-item">Inset & z-index</a>
+        <a href="#overflow" class="menu-item">Overflow</a>
+        <a href="#spacing" class="menu-item">Spacing</a>
+        <a href="#sizing" class="menu-item">Sizing</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Type & flex</div>
+        <a href="#font" class="menu-item">Font</a>
+        <a href="#text" class="menu-item">Text</a>
+        <a href="#leading" class="menu-item">Leading & tracking</a>
+        <a href="#truncate" class="menu-item">Truncation</a>
+        <a href="#flexbox" class="menu-item">Flexbox</a>
+        <a href="#grid" class="menu-item">Grid</a>
+        <a href="#columns" class="menu-item">Columns</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Colors & effects</div>
+        <a href="#colors" class="menu-item">Colors</a>
+        <a href="#gradients" class="menu-item">Gradients</a>
+        <a href="#borders" class="menu-item">Borders & radius</a>
+        <a href="#shadows" class="menu-item">Shadows & rings</a>
+        <a href="#filters" class="menu-item">Filters</a>
+        <a href="#transforms" class="menu-item">Transforms</a>
+        <a href="#3d" class="menu-item">3D transforms</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Interaction</div>
+        <a href="#animation" class="menu-item">Animation</a>
+        <a href="#transition" class="menu-item">Transition</a>
+        <a href="#cursor" class="menu-item">Cursor & select</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Modern & misc</div>
+        <a href="#masks" class="menu-item">Masks</a>
+        <a href="#modern" class="menu-item">Modern CSS</a>
+        <a href="#a11y" class="menu-item">Accessibility</a>
+        <a href="#variants" class="menu-item">Variants recap</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Next</div>
+        <a href="./varients.html" class="menu-item">Variants →</a>
+        <a href="./shorthand.html" class="menu-item">Shorthands →</a>
+      </div>
+
+    </nav>
+  </aside>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="col-span-12 md:col-span-9 lg:col-span-8">
+    <article class="max-w-[720px] mx-auto px-6 py-12 md:py-16">
+
+      <!-- ═══════════════════════════════════════════════
+           HEADER
+           ═══════════════════════════════════════════════ -->
+      <header class="mb-14">
+        <div class="mid gap-2 mb-4">
+          <a href="./index.html" class="tiny text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+          <span class="tiny text-graphite-300 dark:text-graphite-600">/</span>
+          <a href="./a.html" class="tiny text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Docs</a>
+          <span class="tiny text-graphite-300 dark:text-graphite-600">/</span>
+          <span class="tiny text-graphite-950 dark:text-white font-medium">Utility layer</span>
+        </div>
+
+        <h1 class="hero-vercel leading-[0.98]">
+          <span class="block text-4xl md:text-5xl">The utility layer</span>
+          <span class="block gradient-text text-4xl md:text-5xl">5,000 atomic utilities.</span>
+        </h1>
+
+        <p class="lead text-graphite-600 dark:text-graphite-400 leading-relaxed mt-6">
+          The utility layer is the foundation of GarurSaili. Every class here maps to one (or a
+          few) CSS properties. Combined with 50+ variants, 31 palette families, and 21 opacity
+          steps, the engine can express tens of thousands of class names — all resolved at
+          build time, with only the ones you use landing in the output.
+        </p>
+
+        <div class="mid gap-3 mt-6 tiny flex-wrap">
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-jade-500"></span>
+            <span>5,000+ utilities</span>
+          </div>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-iris-500"></span>
+            <span>14 color prefixes</span>
+          </div>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-graphite-500 dark:text-graphite-400">Updated October 2026</span>
+        </div>
+      </header>
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 01 — OVERVIEW
+           ═══════════════════════════════════════════════ -->
+      <section id="overview" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 01</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Overview</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">What is a utility?</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          A utility is an atomic class. One class, one CSS declaration (or a small group of related
+          declarations). <code class="inline-code">p-4</code> sets <code class="inline-code">padding: 1rem</code>.
+          <code class="inline-code">bg-iris-500</code> sets <code class="inline-code">background-color: #8657f7</code>.
+          <code class="inline-code">flex</code> sets <code class="inline-code">display: flex</code>.
+        </p>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Utilities are the bottom of GarurSaili's vocabulary stack. The intent layer
+          (<code class="inline-code">mid</code>, <code class="inline-code">apart-mid</code>) and the
+          primitive layer (<code class="inline-code">card</code>, <code class="inline-code">btn</code>)
+          sit above it. Utilities win the cascade where they overlap, so writing
+          <code class="inline-code">card p-2</code> overrides the card's default padding.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <div class="tiny uppercase tracking-wider font-semibold text-iris-600 dark:text-iris-400">Intent</div>
+            <code class="inline-code tiny">mid</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Semantic. Reads like a description.</p>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <div class="tiny uppercase tracking-wider font-semibold text-plum-600 dark:text-plum-400">Primitive</div>
+            <code class="inline-code tiny">card</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Component-level. Groups related properties.</p>
+          </div>
+          <div class="p-4 rounded-lg border border-iris-500/40 bg-iris-500/[0.06] stack-2">
+            <div class="tiny uppercase tracking-wider font-semibold text-iris-600 dark:text-iris-400">Utility</div>
+            <code class="inline-code tiny">p-4</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Atomic. One property per class.</p>
+          </div>
+        </div>
+
+        <!-- Composition example -->
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">composition</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-comment">&lt;!-- The full stack: intent + primitive + utility --&gt;</span>
+<span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"mid card p-8 stack-4 hover:rise"</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">h2</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"headline text-iris-600 dark:text-iris-400"</span><span class="syn-punc">&gt;</span>
+    Hello
+  <span class="syn-punc">&lt;/</span><span class="syn-tag">h2</span><span class="syn-punc">&gt;</span>
+<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span></code></pre>
+        </div>
+
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mt-4">
+          Read left to right: <code class="inline-code">mid</code> (intent — centered),
+          <code class="inline-code">card</code> (primitive — full surface),
+          <code class="inline-code">p-8</code> (utility — overrides card padding),
+          <code class="inline-code">stack-4</code> (intent — vertical with gap),
+          <code class="inline-code">hover:rise</code> (utility with variant — lift on hover).
+        </p>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 02 — SCALES
+           ═══════════════════════════════════════════════ -->
+      <section id="scales" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 02</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Scales</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Scales</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Nearly every utility accepts a scale value. The same numeric token powers spacing,
+          sizing, positioning, and gap — so <code class="inline-code">p-4</code>,
+          <code class="inline-code">m-4</code>, <code class="inline-code">gap-4</code>,
+          <code class="inline-code">w-4</code>, and <code class="inline-code">top-4</code> all
+          expand to the same <code class="inline-code">1rem</code>.
+        </p>
+
+        <h3 class="body font-semibold mb-3">The spacing scale</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">0</span>
+          <span class="chip tiny">0.5</span>
+          <span class="chip tiny">1</span>
+          <span class="chip tiny">1.5</span>
+          <span class="chip tiny">2</span>
+          <span class="chip tiny">2.5</span>
+          <span class="chip tiny">3</span>
+          <span class="chip tiny">3.5</span>
+          <span class="chip tiny">4</span>
+          <span class="chip tiny">5</span>
+          <span class="chip tiny">6</span>
+          <span class="chip tiny">8</span>
+          <span class="chip tiny">10</span>
+          <span class="chip tiny">12</span>
+          <span class="chip tiny">16</span>
+          <span class="chip tiny">20</span>
+          <span class="chip tiny">24</span>
+          <span class="chip tiny">32</span>
+          <span class="chip tiny">40</span>
+          <span class="chip tiny">48</span>
+          <span class="chip tiny">64</span>
+          <span class="chip tiny">96</span>
+        </div>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-5">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-24">Token</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Value</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2"><code class="inline-code">0</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">0</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">1</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">0.25rem · 4px</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">2</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">0.5rem · 8px</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">4</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">1rem · 16px</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">8</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">2rem · 32px</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">16</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">4rem · 64px</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">96</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">24rem · 384px</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] bg-graphite-50 dark:bg-white/[0.02] flex gap-3 mb-6">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="small">
+            <span class="font-medium">The scale is not linear.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Small increments use 0.25rem steps, mid-range uses 0.5rem and 1rem, and large values jump in bigger leaps. This matches how designers think about spacing.</span>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Named extended scale</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Beyond the numeric tokens, GarurSaili includes an extended named scale for
+          typography and section rhythm:
+        </p>
+        <div class="chips">
+          <span class="chip tiny">3xs · 0.125rem</span>
+          <span class="chip tiny">2xs · 0.1875rem</span>
+          <span class="chip tiny">xs · 0.25rem</span>
+          <span class="chip tiny">3xl · 4.5rem</span>
+          <span class="chip tiny">4xl · 5rem</span>
+          <span class="chip tiny">5xl · 6rem</span>
+          <span class="chip tiny">6xl · 7rem</span>
+          <span class="chip tiny">7xl · 8rem</span>
+          <span class="chip tiny">8xl · 10rem</span>
+          <span class="chip tiny">9xl · 12rem</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 03 — DISPLAY
+           ═══════════════════════════════════════════════ -->
+      <section id="display" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 03</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Display</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Display</h2>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Expands to</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-24">Live</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2"><code class="inline-code">block</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: block</td><td class="px-4 py-2"><span class="block w-6 h-3 rounded bg-iris-500"></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">inline-block</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: inline-block</td><td class="px-4 py-2"><span class="inline-block w-4 h-3 rounded bg-iris-500"></span><span class="inline-block w-4 h-3 rounded bg-plum-500"></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">inline</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: inline</td><td class="px-4 py-2"><span class="inline tiny px-1 rounded bg-iris-500 text-white">inline</span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">flex</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: flex</td><td class="px-4 py-2"><span class="flex gap-1"><span class="w-2 h-2 rounded bg-iris-500"></span><span class="w-2 h-2 rounded bg-plum-500"></span></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">inline-flex</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: inline-flex</td><td class="px-4 py-2"><span class="inline-flex gap-1"><span class="w-2 h-2 rounded bg-iris-500"></span><span class="w-2 h-2 rounded bg-plum-500"></span></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">grid</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: grid</td><td class="px-4 py-2"><span class="grid grid-cols-2 gap-0.5"><span class="w-3 h-3 rounded bg-iris-500"></span><span class="w-3 h-3 rounded bg-plum-500"></span></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">inline-grid</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: inline-grid</td><td class="px-4 py-2"><span class="inline-grid grid-cols-2 gap-0.5"><span class="w-2 h-2 rounded bg-iris-500"></span><span class="w-2 h-2 rounded bg-plum-500"></span></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">contents</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: contents</td><td class="px-4 py-2"><span class="faded tiny">transparent</span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">hidden</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: none</td><td class="px-4 py-2"><span class="faded tiny">(not rendered)</span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">table</code> · <code class="inline-code">table-cell</code> · <code class="inline-code">table-row</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">table display values</td><td class="px-4 py-2"><span class="faded tiny">table</span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">flow-root</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: flow-root</td><td class="px-4 py-2"><span class="faded tiny">BFC</span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">list-item</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">display: list-item</td><td class="px-4 py-2"><span class="faded tiny">list</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Other layout utilities</h3>
+        <div class="chips">
+          <span class="chip tiny">box-border</span>
+          <span class="chip tiny">box-content</span>
+          <span class="chip tiny">float-start</span>
+          <span class="chip tiny">float-end</span>
+          <span class="chip tiny">float-none</span>
+          <span class="chip tiny">clear-both</span>
+          <span class="chip tiny">clear-start</span>
+          <span class="chip tiny">clear-end</span>
+          <span class="chip tiny">isolate</span>
+          <span class="chip tiny">isolation-auto</span>
+          <span class="chip tiny">box-decoration-clone</span>
+          <span class="chip tiny">box-decoration-slice</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Object fit & position</h3>
+        <div class="chips">
+          <span class="chip tiny">object-contain</span>
+          <span class="chip tiny">object-cover</span>
+          <span class="chip tiny">object-fill</span>
+          <span class="chip tiny">object-none</span>
+          <span class="chip tiny">object-scale-down</span>
+          <span class="chip tiny">object-bottom</span>
+          <span class="chip tiny">object-center</span>
+          <span class="chip tiny">object-left</span>
+          <span class="chip tiny">object-right</span>
+          <span class="chip tiny">object-top</span>
+          <span class="chip tiny">object-left-bottom</span>
+          <span class="chip tiny">object-right-top</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Aspect ratio</h3>
+        <div class="chips">
+          <span class="chip tiny">aspect-auto</span>
+          <span class="chip tiny">aspect-square</span>
+          <span class="chip tiny">aspect-video</span>
+          <span class="chip tiny">aspect-1/1</span>
+          <span class="chip tiny">aspect-4/3</span>
+          <span class="chip tiny">aspect-16/9</span>
+          <span class="chip tiny">aspect-21/9</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 04 — POSITION
+           ═══════════════════════════════════════════════ -->
+      <section id="position" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 04</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Position</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Position</h2>
+
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] overflow-hidden mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Expands to</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2"><code class="inline-code">static</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">position: static</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">relative</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">position: relative</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">absolute</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">position: absolute</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">fixed</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">position: fixed</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">sticky</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">position: sticky</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Inset & z-index</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          The inset family positions an element along one or more edges. All accept
+          the spacing scale, negative values, fractions (<code class="inline-code">1/2</code>),
+          and <code class="inline-code">auto</code> / <code class="inline-code">full</code>.
+        </p>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">inset-0</span>
+          <span class="chip tiny">inset-4</span>
+          <span class="chip tiny">inset-x-N</span>
+          <span class="chip tiny">inset-y-N</span>
+          <span class="chip tiny">top-N</span>
+          <span class="chip tiny">right-N</span>
+          <span class="chip tiny">bottom-N</span>
+          <span class="chip tiny">left-N</span>
+          <span class="chip tiny">start-N</span>
+          <span class="chip tiny">end-N</span>
+          <span class="chip tiny">top-1/2</span>
+          <span class="chip tiny">left-1/3</span>
+          <span class="chip tiny">inset-auto</span>
+          <span class="chip tiny">top-full</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Z-index</h3>
+        <div class="chips">
+          <span class="chip tiny">z-0</span>
+          <span class="chip tiny">z-10</span>
+          <span class="chip tiny">z-20</span>
+          <span class="chip tiny">z-30</span>
+          <span class="chip tiny">z-40</span>
+          <span class="chip tiny">z-50</span>
+          <span class="chip tiny">z-auto</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 05 — INSET (merged above)
+           ═══════════════════════════════════════════════ -->
+      <section id="inset" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Inset specifics</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Every inset utility has a full family: the shorthand (<code class="inline-code">inset-N</code>),
+          both axes, and each individual edge. Negative values work too:
+          <code class="inline-code">-top-4</code>, <code class="inline-code">-left-2</code>.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">inset-0</code>
+            <div class="relative h-16 rounded bg-graphite-50 dark:bg-white/[0.02] border border-dashed border-graphite-300 dark:border-white/10">
+              <span class="absolute inset-0 rounded bg-iris-500/30"></span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">top-2 left-2</code>
+            <div class="relative h-16 rounded bg-graphite-50 dark:bg-white/[0.02] border border-dashed border-graphite-300 dark:border-white/10">
+              <span class="absolute top-2 left-2 w-6 h-6 rounded bg-iris-500"></span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">bottom-0 right-0</code>
+            <div class="relative h-16 rounded bg-graphite-50 dark:bg-white/[0.02] border border-dashed border-graphite-300 dark:border-white/10">
+              <span class="absolute bottom-0 right-0 w-6 h-6 rounded bg-plum-500"></span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">inset-x-0</code>
+            <div class="relative h-16 rounded bg-graphite-50 dark:bg-white/[0.02] border border-dashed border-graphite-300 dark:border-white/10">
+              <span class="absolute inset-x-0 bottom-2 h-3 rounded bg-jade-500"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 06 — OVERFLOW
+           ═══════════════════════════════════════════════ -->
+      <section id="overflow" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 06</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Overflow</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Overflow & visibility</h2>
+
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] overflow-hidden">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Pattern</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Values</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2"><code class="inline-code">overflow-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">auto · hidden · clip · visible · scroll</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">overflow-x-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">same values, one axis</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">overflow-y-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">same values, one axis</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">overscroll-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">auto · contain · none</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">overscroll-x-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">x-axis overscroll</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">overscroll-y-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">y-axis overscroll</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">visible</code> · <code class="inline-code">invisible</code> · <code class="inline-code">collapse</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">visibility values</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 07 — SPACING
+           ═══════════════════════════════════════════════ -->
+      <section id="spacing" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 07</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Spacing</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Spacing</h2>
+
+        <h3 class="body font-semibold mb-3">Padding</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-5">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-32">Pattern</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Property</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-32">Live</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2"><code class="inline-code">p-N</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">padding</td><td class="px-4 py-2"><span class="inline-block p-2 rounded bg-iris-500/20"><span class="block w-4 h-4 rounded bg-iris-500"></span></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">px-N</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">padding-left · right</td><td class="px-4 py-2"><span class="inline-block px-4 py-1 rounded bg-iris-500/20"><span class="block w-4 h-4 rounded bg-iris-500"></span></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">py-N</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">padding-top · bottom</td><td class="px-4 py-2"><span class="inline-block px-1 py-4 rounded bg-iris-500/20"><span class="block w-4 h-4 rounded bg-iris-500"></span></span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">pt-N</code> · <code class="inline-code">pr-N</code> · <code class="inline-code">pb-N</code> · <code class="inline-code">pl-N</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">single edge</td><td class="px-4 py-2"><span class="faded tiny">single edge</span></td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">ps-N</code> · <code class="inline-code">pe-N</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">padding-inline-start/end</td><td class="px-4 py-2"><span class="faded tiny">logical</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Margin</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Same pattern as padding, plus <code class="inline-code">auto</code> and negative prefix
+          (<code class="inline-code">-m-4</code>, <code class="inline-code">-mt-2</code>).
+        </p>
+        <div class="chips mb-5">
+          <span class="chip tiny">m-N</span>
+          <span class="chip tiny">mx-N</span>
+          <span class="chip tiny">my-N</span>
+          <span class="chip tiny">mt-N</span>
+          <span class="chip tiny">mr-N</span>
+          <span class="chip tiny">mb-N</span>
+          <span class="chip tiny">ml-N</span>
+          <span class="chip tiny">mx-auto</span>
+          <span class="chip tiny">-m-4</span>
+          <span class="chip tiny">-mt-2</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Gap</h3>
+        <div class="grid grid-cols-3 gap-3 mb-5">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">gap-2</code>
+            <div class="flex gap-2">
+              <span class="w-2 h-2 rounded bg-iris-500"></span>
+              <span class="w-2 h-2 rounded bg-plum-500"></span>
+              <span class="w-2 h-2 rounded bg-jade-500"></span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">gap-4</code>
+            <div class="flex gap-4">
+              <span class="w-2 h-2 rounded bg-iris-500"></span>
+              <span class="w-2 h-2 rounded bg-plum-500"></span>
+              <span class="w-2 h-2 rounded bg-jade-500"></span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">gap-6</code>
+            <div class="flex gap-6">
+              <span class="w-2 h-2 rounded bg-iris-500"></span>
+              <span class="w-2 h-2 rounded bg-plum-500"></span>
+            </div>
+          </div>
+        </div>
+        <div class="chips mb-5">
+          <span class="chip tiny">gap-N</span>
+          <span class="chip tiny">gap-x-N</span>
+          <span class="chip tiny">gap-y-N</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Space between</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          <code class="inline-code">space-x-N</code> and <code class="inline-code">space-y-N</code>
+          add margin between children without touching the first one. Accepts the
+          <code class="inline-code">-space-*</code> negative forms and the
+          <code class="inline-code">-reverse</code> modifiers.
+        </p>
+        <div class="chips">
+          <span class="chip tiny">space-x-N</span>
+          <span class="chip tiny">space-y-N</span>
+          <span class="chip tiny">-space-x-N</span>
+          <span class="chip tiny">-space-y-N</span>
+          <span class="chip tiny">space-x-reverse</span>
+          <span class="chip tiny">space-y-reverse</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Scroll margin & padding</h3>
+        <div class="chips">
+          <span class="chip tiny">scroll-m-N</span>
+          <span class="chip tiny">scroll-mx-N</span>
+          <span class="chip tiny">scroll-my-N</span>
+          <span class="chip tiny">scroll-mt-N</span>
+          <span class="chip tiny">scroll-mr-N</span>
+          <span class="chip tiny">scroll-mb-N</span>
+          <span class="chip tiny">scroll-ml-N</span>
+          <span class="chip tiny">scroll-p-N</span>
+          <span class="chip tiny">scroll-px-N</span>
+          <span class="chip tiny">scroll-py-N</span>
+          <span class="chip tiny">scroll-pt-N</span>
+          <span class="chip tiny">scroll-pr-N</span>
+          <span class="chip tiny">scroll-pb-N</span>
+          <span class="chip tiny">scroll-pl-N</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 08 — SIZING
+           ═══════════════════════════════════════════════ -->
+      <section id="sizing" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 08</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Sizing</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Sizing</h2>
+
+        <h3 class="body font-semibold mb-3">Width & height</h3>
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] overflow-hidden mb-5">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-32">Pattern</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Values</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2"><code class="inline-code">w-N</code> · <code class="inline-code">h-N</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">spacing scale (0–128)</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">size-N</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">width: N; height: N</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">w-1/2</code> … <code class="inline-code">w-11/12</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">percentage fractions</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">w-auto</code> · <code class="inline-code">w-full</code> · <code class="inline-code">w-screen</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">auto · 100% · 100vw</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">w-svw</code> · <code class="inline-code">w-lvw</code> · <code class="inline-code">w-dvw</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">small/large/dynamic viewport</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">w-min</code> · <code class="inline-code">w-max</code> · <code class="inline-code">w-fit</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">intrinsic sizing</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Min & max</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">min-w-0</span>
+          <span class="chip tiny">min-w-full</span>
+          <span class="chip tiny">min-h-0</span>
+          <span class="chip tiny">min-h-full</span>
+          <span class="chip tiny">min-h-screen</span>
+          <span class="chip tiny">max-w-xs</span>
+          <span class="chip tiny">max-w-sm</span>
+          <span class="chip tiny">max-w-md</span>
+          <span class="chip tiny">max-w-lg</span>
+          <span class="chip tiny">max-w-xl</span>
+          <span class="chip tiny">max-w-2xl</span>
+          <span class="chip tiny">max-w-3xl</span>
+          <span class="chip tiny">max-w-4xl</span>
+          <span class="chip tiny">max-w-5xl</span>
+          <span class="chip tiny">max-w-6xl</span>
+          <span class="chip tiny">max-w-7xl</span>
+          <span class="chip tiny">max-w-prose</span>
+          <span class="chip tiny">max-w-screen-lg</span>
+          <span class="chip tiny">max-w-none</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Basis</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          <code class="inline-code">basis-N</code> sets <code class="inline-code">flex-basis</code>.
+          Accepts the spacing scale and the fraction scale.
+        </p>
+        <div class="chips">
+          <span class="chip tiny">basis-0</span>
+          <span class="chip tiny">basis-4</span>
+          <span class="chip tiny">basis-1/2</span>
+          <span class="chip tiny">basis-1/3</span>
+          <span class="chip tiny">basis-2/3</span>
+          <span class="chip tiny">basis-full</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 09 — FONT
+           ═══════════════════════════════════════════════ -->
+      <section id="font" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 09</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Font</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Font size & weight</h2>
+
+        <h3 class="body font-semibold mb-3">Size</h3>
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] divide-y divide-graphite-100 dark:divide-white/[0.06] mb-6">
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-xs</code><span class="tiny">0.75rem / 1rem</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-sm</code><span class="small">0.875rem / 1.25rem</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-base</code><span class="body">1rem / 1.5rem</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-lg</code><span class="lead">1.125rem / 1.75rem</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-xl</code><span class="title">1.25rem / 1.75rem</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-2xl</code><span class="headline">1.5rem / 2rem</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-3xl</code><span class="display">1.875rem / 2.25rem</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">text-4xl</code><span class="banner">2.25rem / 2.5rem</span></div>
+        </div>
+        <p class="small text-graphite-500 dark:text-graphite-400 mb-6">
+          Also: <code class="inline-code">text-5xl</code> through <code class="inline-code">text-9xl</code>.
+        </p>
+
+        <h3 class="body font-semibold mb-3">Weight</h3>
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] divide-y divide-graphite-100 dark:divide-white/[0.06] mb-6">
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-thin</code><span class="font-thin">100</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-extralight</code><span class="font-extralight">200</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-light</code><span class="font-light">300</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-normal</code><span>400</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-medium</code><span class="font-medium">500</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-semibold</code><span class="font-semibold">600</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-bold</code><span class="font-bold">700</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-extrabold</code><span class="font-extrabold">800</span></div>
+          <div class="p-4 apart-mid"><code class="inline-code tiny">font-black</code><span class="font-black">900</span></div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Family & style</h3>
+        <div class="chips">
+          <span class="chip tiny">font-sans</span>
+          <span class="chip tiny">font-serif</span>
+          <span class="chip tiny">font-mono</span>
+          <span class="chip tiny">italic</span>
+          <span class="chip tiny">not-italic</span>
+          <span class="chip tiny">antialiased</span>
+          <span class="chip tiny">subpixel-antialiased</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Numeric variants</h3>
+        <div class="chips">
+          <span class="chip tiny">normal-nums</span>
+          <span class="chip tiny">ordinal</span>
+          <span class="chip tiny">slashed-zero</span>
+          <span class="chip tiny">lining-nums</span>
+          <span class="chip tiny">oldstyle-nums</span>
+          <span class="chip tiny">proportional-nums</span>
+          <span class="chip tiny">tabular-nums</span>
+          <span class="chip tiny">diagonal-fractions</span>
+          <span class="chip tiny">stacked-fractions</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 10 — TEXT
+           ═══════════════════════════════════════════════ -->
+      <section id="text" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 10</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Text</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Text alignment & decoration</h2>
+
+        <h3 class="body font-semibold mb-3">Alignment</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">text-left</span>
+          <span class="chip tiny">text-center</span>
+          <span class="chip tiny">text-right</span>
+          <span class="chip tiny">text-justify</span>
+          <span class="chip tiny">text-start</span>
+          <span class="chip tiny">text-end</span>
+          <span class="chip tiny">align-baseline</span>
+          <span class="chip tiny">align-middle</span>
+          <span class="chip tiny">align-top</span>
+          <span class="chip tiny">align-bottom</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Transform</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">uppercase</span>
+          <span class="chip tiny">lowercase</span>
+          <span class="chip tiny">capitalize</span>
+          <span class="chip tiny">normal-case</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Decoration</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">underline</span>
+          <span class="chip tiny">overline</span>
+          <span class="chip tiny">line-through</span>
+          <span class="chip tiny">no-underline</span>
+          <span class="chip tiny">decoration-solid</span>
+          <span class="chip tiny">decoration-dashed</span>
+          <span class="chip tiny">decoration-dotted</span>
+          <span class="chip tiny">decoration-double</span>
+          <span class="chip tiny">decoration-wavy</span>
+          <span class="chip tiny">decoration-0/1/2/4/8</span>
+          <span class="chip tiny">underline-offset-N</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">List styles</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">list-none</span>
+          <span class="chip tiny">list-disc</span>
+          <span class="chip tiny">list-decimal</span>
+          <span class="chip tiny">list-circle</span>
+          <span class="chip tiny">list-square</span>
+          <span class="chip tiny">list-inside</span>
+          <span class="chip tiny">list-outside</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Hyphens & whitespace</h3>
+        <div class="chips">
+          <span class="chip tiny">hyphens-none</span>
+          <span class="chip tiny">hyphens-manual</span>
+          <span class="chip tiny">hyphens-auto</span>
+          <span class="chip tiny">whitespace-normal</span>
+          <span class="chip tiny">whitespace-nowrap</span>
+          <span class="chip tiny">whitespace-pre</span>
+          <span class="chip tiny">whitespace-pre-line</span>
+          <span class="chip tiny">whitespace-pre-wrap</span>
+          <span class="chip tiny">whitespace-break-spaces</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── LEADING & TRACKING ─── -->
+      <section id="leading" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Leading & tracking</h2>
+
+        <h3 class="body font-semibold mb-3">Line height</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">leading-none</span>
+          <span class="chip tiny">leading-tight</span>
+          <span class="chip tiny">leading-snug</span>
+          <span class="chip tiny">leading-normal</span>
+          <span class="chip tiny">leading-relaxed</span>
+          <span class="chip tiny">leading-loose</span>
+          <span class="chip tiny">leading-3</span>
+          <span class="chip tiny">leading-4</span>
+          <span class="chip tiny">leading-6</span>
+          <span class="chip tiny">leading-10</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Letter spacing</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">tracking-tighter</span>
+          <span class="chip tiny">tracking-tight</span>
+          <span class="chip tiny">tracking-normal</span>
+          <span class="chip tiny">tracking-wide</span>
+          <span class="chip tiny">tracking-wider</span>
+          <span class="chip tiny">tracking-widest</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Text indent</h3>
+        <div class="chips">
+          <span class="chip tiny">indent-4</span>
+          <span class="chip tiny">indent-8</span>
+          <span class="chip tiny">-indent-4</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── TRUNCATION ─── -->
+      <section id="truncate" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Truncation & wrapping</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">truncate</code>
+            <div class="small truncate w-full">This is a long line of text that will be truncated with an ellipsis</div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Single-line ellipsis</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">line-clamp-2</code>
+            <div class="small line-clamp-2 w-full">This is a longer paragraph that will be clamped to exactly two lines and then hidden behind an ellipsis character.</div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Multi-line clamp</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">text-balance</code>
+            <div class="small text-balance w-full">Headings look better when balanced</div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Even out line lengths</div>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">truncate</span>
+          <span class="chip tiny">text-ellipsis</span>
+          <span class="chip tiny">text-clip</span>
+          <span class="chip tiny">line-clamp-1</span>
+          <span class="chip tiny">line-clamp-2</span>
+          <span class="chip tiny">line-clamp-3</span>
+          <span class="chip tiny">line-clamp-4</span>
+          <span class="chip tiny">line-clamp-5</span>
+          <span class="chip tiny">line-clamp-6</span>
+          <span class="chip tiny">line-clamp-none</span>
+          <span class="chip tiny">break-normal</span>
+          <span class="chip tiny">break-words</span>
+          <span class="chip tiny">break-all</span>
+          <span class="chip tiny">break-keep</span>
+          <span class="chip tiny">break-anywhere</span>
+          <span class="chip tiny">text-wrap</span>
+          <span class="chip tiny">text-nowrap</span>
+          <span class="chip tiny">text-balance</span>
+          <span class="chip tiny">text-pretty</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 11 — FLEXBOX
+           ═══════════════════════════════════════════════ -->
+      <section id="flexbox" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 11</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Flexbox</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Flexbox</h2>
+
+        <h3 class="body font-semibold mb-3">Direction & wrap</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">flex-row</span>
+          <span class="chip tiny">flex-row-reverse</span>
+          <span class="chip tiny">flex-col</span>
+          <span class="chip tiny">flex-col-reverse</span>
+          <span class="chip tiny">flex-wrap</span>
+          <span class="chip tiny">flex-wrap-reverse</span>
+          <span class="chip tiny">flex-nowrap</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Flex shorthand</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">flex-1</span>
+          <span class="chip tiny">flex-auto</span>
+          <span class="chip tiny">flex-initial</span>
+          <span class="chip tiny">flex-none</span>
+          <span class="chip tiny">grow</span>
+          <span class="chip tiny">grow-0</span>
+          <span class="chip tiny">shrink</span>
+          <span class="chip tiny">shrink-0</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Alignment</h3>
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] overflow-hidden">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-32">Family</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Values</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2"><code class="inline-code">justify-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · between · around · evenly · stretch</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">items-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · baseline · stretch</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">content-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · between · around · evenly · baseline · stretch</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">self-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">auto · start · end · center · stretch · baseline</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">justify-items-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · stretch</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">justify-self-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · stretch</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">place-items-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · stretch</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">place-content-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · stretch</td></tr>
+              <tr><td class="px-4 py-2"><code class="inline-code">place-self-*</code></td><td class="px-4 py-2 tiny font-mono text-graphite-600 dark:text-graphite-400">start · end · center · stretch</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 12 — GRID
+           ═══════════════════════════════════════════════ -->
+      <section id="grid" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 12</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Grid</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Grid</h2>
+
+        <h3 class="body font-semibold mb-3">Columns & rows</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          The grid-cols and grid-rows families extend to <strong class="font-semibold text-graphite-950 dark:text-white">24 columns</strong>.
+          Span and start/end families extend to <strong class="font-semibold text-graphite-950 dark:text-white">25</strong>.
+        </p>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">grid-cols-1</span>
+          <span class="chip tiny">grid-cols-2</span>
+          <span class="chip tiny">grid-cols-3</span>
+          <span class="chip tiny">grid-cols-4</span>
+          <span class="chip tiny">grid-cols-6</span>
+          <span class="chip tiny">grid-cols-12</span>
+          <span class="chip tiny">grid-cols-24</span>
+          <span class="chip tiny">grid-cols-none</span>
+          <span class="chip tiny">grid-cols-subgrid</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">grid-rows-1</span>
+          <span class="chip tiny">grid-rows-2</span>
+          <span class="chip tiny">grid-rows-3</span>
+          <span class="chip tiny">grid-rows-6</span>
+          <span class="chip tiny">grid-rows-12</span>
+          <span class="chip tiny">grid-rows-24</span>
+          <span class="chip tiny">grid-rows-none</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Span & placement</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">col-span-1</span>
+          <span class="chip tiny">col-span-2</span>
+          <span class="chip tiny">col-span-3</span>
+          <span class="chip tiny">col-span-12</span>
+          <span class="chip tiny">col-span-24</span>
+          <span class="chip tiny">col-span-full</span>
+          <span class="chip tiny">row-span-1</span>
+          <span class="chip tiny">row-span-2</span>
+          <span class="chip tiny">row-span-full</span>
+          <span class="chip tiny">col-start-N</span>
+          <span class="chip tiny">col-end-N</span>
+          <span class="chip tiny">row-start-N</span>
+          <span class="chip tiny">row-end-N</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Auto flow</h3>
+        <div class="chips">
+          <span class="chip tiny">grid-flow-row</span>
+          <span class="chip tiny">grid-flow-col</span>
+          <span class="chip tiny">grid-flow-dense</span>
+          <span class="chip tiny">grid-flow-row-dense</span>
+          <span class="chip tiny">grid-flow-col-dense</span>
+          <span class="chip tiny">auto-cols-auto</span>
+          <span class="chip tiny">auto-cols-min</span>
+          <span class="chip tiny">auto-cols-max</span>
+          <span class="chip tiny">auto-cols-fr</span>
+          <span class="chip tiny">auto-rows-auto</span>
+          <span class="chip tiny">auto-rows-min</span>
+          <span class="chip tiny">auto-rows-max</span>
+          <span class="chip tiny">auto-rows-fr</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── COLUMNS ─── -->
+      <section id="columns" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Columns</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          CSS multi-column layout. Great for text-heavy content like docs and articles.
+        </p>
+
+        <div class="chips">
+          <span class="chip tiny">columns-1</span>
+          <span class="chip tiny">columns-2</span>
+          <span class="chip tiny">columns-3</span>
+          <span class="chip tiny">columns-4</span>
+          <span class="chip tiny">columns-6</span>
+          <span class="chip tiny">columns-12</span>
+          <span class="chip tiny">columns-auto</span>
+          <span class="chip tiny">columns-3xs</span>
+          <span class="chip tiny">columns-2xs</span>
+          <span class="chip tiny">columns-xs</span>
+          <span class="chip tiny">columns-sm</span>
+          <span class="chip tiny">columns-md</span>
+          <span class="chip tiny">columns-lg</span>
+          <span class="chip tiny">columns-xl</span>
+          <span class="chip tiny">columns-7xl</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 13 — COLORS (pointer to full reference)
+           ═══════════════════════════════════════════════ -->
+      <section id="colors" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 13</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Colors</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Colors</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Every palette color is available through 14 utility prefixes. The full reference —
+          31 families, 343 colors, opacity modifiers, gradients, semantic colors, and runtime
+          theming — lives on its own page.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <span class="w-full h-8 rounded bg-iris-500 block"></span>
+            <code class="inline-code tiny">bg-*</code>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <span class="w-full h-8 rounded mid bg-graphite-100 dark:bg-white/[0.04]">
+              <span class="font-bold text-iris-500">Aa</span>
+            </span>
+            <code class="inline-code tiny">text-*</code>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <span class="w-full h-8 rounded border-2 border-plum-500 block"></span>
+            <code class="inline-code tiny">border-*</code>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <span class="w-full h-8 rounded bg-gradient-to-r from-iris-500 via-plum-500 to-honey-500 block"></span>
+            <code class="inline-code tiny">from · via · to</code>
+          </div>
+        </div>
+
+        <a href="./colour.html" class="link">
+          Full palette reference →
+        </a>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 14 — GRADIENTS
+           ═══════════════════════════════════════════════ -->
+      <section id="gradients" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 14</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Gradients</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Gradients</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Combine a direction utility with color stops. GarurSaili supports both the legacy
+          <code class="inline-code">bg-gradient-to-*</code> family and the v4
+          <code class="inline-code">bg-linear-to-*</code> / <code class="inline-code">bg-radial</code> /
+          <code class="inline-code">bg-conic</code> families.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-5">
+          <div class="stack-1">
+            <div class="h-16 rounded-md bg-gradient-to-r from-iris-500 to-plum-500"></div>
+            <code class="inline-code tiny text-center">bg-gradient-to-r</code>
+          </div>
+          <div class="stack-1">
+            <div class="h-16 rounded-md bg-gradient-to-b from-iris-500 to-plum-500"></div>
+            <code class="inline-code tiny text-center">bg-gradient-to-b</code>
+          </div>
+          <div class="stack-1">
+            <div class="h-16 rounded-md bg-linear-to-br from-iris-500 to-plum-500"></div>
+            <code class="inline-code tiny text-center">bg-linear-to-br</code>
+          </div>
+          <div class="stack-1">
+            <div class="h-16 rounded-md bg-gradient-to-r from-iris-500 via-honey-500 to-plum-500"></div>
+            <code class="inline-code tiny text-center">via</code>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">bg-gradient-to-t</span>
+          <span class="chip tiny">bg-gradient-to-tr</span>
+          <span class="chip tiny">bg-gradient-to-r</span>
+          <span class="chip tiny">bg-gradient-to-br</span>
+          <span class="chip tiny">bg-gradient-to-b</span>
+          <span class="chip tiny">bg-gradient-to-bl</span>
+          <span class="chip tiny">bg-gradient-to-l</span>
+          <span class="chip tiny">bg-gradient-to-tl</span>
+          <span class="chip tiny">bg-linear-to-*</span>
+          <span class="chip tiny">bg-linear-45</span>
+          <span class="chip tiny">bg-linear-90</span>
+          <span class="chip tiny">bg-radial</span>
+          <span class="chip tiny">bg-radial-at-center</span>
+          <span class="chip tiny">bg-conic</span>
+          <span class="chip tiny">bg-conic-180</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 15 — BORDERS & RADIUS
+           ═══════════════════════════════════════════════ -->
+      <section id="borders" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 15</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Borders</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Borders & radius</h2>
+
+        <h3 class="body font-semibold mb-3">Radius</h3>
+        <div class="grid grid-cols-3 md:grid-cols-5 gap-3 mb-6">
+          <div class="stack-1"><div class="h-12 rounded-none bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">none</span></div>
+          <div class="stack-1"><div class="h-12 rounded-sm bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">sm</span></div>
+          <div class="stack-1"><div class="h-12 rounded bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">DEFAULT</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">md</span></div>
+          <div class="stack-1"><div class="h-12 rounded-lg bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">lg</span></div>
+          <div class="stack-1"><div class="h-12 rounded-xl bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">xl</span></div>
+          <div class="stack-1"><div class="h-12 rounded-2xl bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">2xl</span></div>
+          <div class="stack-1"><div class="h-12 rounded-3xl bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">3xl</span></div>
+          <div class="stack-1"><div class="h-12 rounded-full bg-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">full</span></div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Directional radius</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">rounded-t-*</span>
+          <span class="chip tiny">rounded-r-*</span>
+          <span class="chip tiny">rounded-b-*</span>
+          <span class="chip tiny">rounded-l-*</span>
+          <span class="chip tiny">rounded-tl-*</span>
+          <span class="chip tiny">rounded-tr-*</span>
+          <span class="chip tiny">rounded-br-*</span>
+          <span class="chip tiny">rounded-bl-*</span>
+          <span class="chip tiny">rounded-s-*</span>
+          <span class="chip tiny">rounded-e-*</span>
+          <span class="chip tiny">rounded-ss-*</span>
+          <span class="chip tiny">rounded-se-*</span>
+          <span class="chip tiny">rounded-es-*</span>
+          <span class="chip tiny">rounded-ee-*</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Border width</h3>
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-5">
+          <div class="stack-1"><div class="h-12 rounded border border-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">border</span></div>
+          <div class="stack-1"><div class="h-12 rounded border-2 border-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">border-2</span></div>
+          <div class="stack-1"><div class="h-12 rounded border-4 border-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">border-4</span></div>
+          <div class="stack-1"><div class="h-12 rounded border-8 border-iris-500"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">border-8</span></div>
+          <div class="stack-1"><div class="h-12 rounded border-0 border-iris-500 bg-graphite-50 dark:bg-white/[0.02]"></div><span class="tiny font-mono text-center text-graphite-500 dark:text-graphite-400">border-0</span></div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Border style</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">border-solid</span>
+          <span class="chip tiny">border-dashed</span>
+          <span class="chip tiny">border-dotted</span>
+          <span class="chip tiny">border-double</span>
+          <span class="chip tiny">border-hidden</span>
+          <span class="chip tiny">border-none</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Divide</h3>
+        <div class="chips">
+          <span class="chip tiny">divide-x-N</span>
+          <span class="chip tiny">divide-y-N</span>
+          <span class="chip tiny">divide-s-N</span>
+          <span class="chip tiny">divide-e-N</span>
+          <span class="chip tiny">divide-x-reverse</span>
+          <span class="chip tiny">divide-y-reverse</span>
+          <span class="chip tiny">divide-solid</span>
+          <span class="chip tiny">divide-dashed</span>
+          <span class="chip tiny">divide-{color}</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 16 — SHADOWS & RINGS
+           ═══════════════════════════════════════════════ -->
+      <section id="shadows" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 16</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Shadows</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Shadows & rings</h2>
+
+        <h3 class="body font-semibold mb-3">Box shadow</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 rounded-md bg-white dark:bg-[#0f0f0f] shadow-sm"></div>
+            <code class="inline-code tiny text-center">shadow-sm</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 rounded-md bg-white dark:bg-[#0f0f0f] shadow"></div>
+            <code class="inline-code tiny text-center">shadow</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 rounded-md bg-white dark:bg-[#0f0f0f] shadow-lg"></div>
+            <code class="inline-code tiny text-center">shadow-lg</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 rounded-md bg-white dark:bg-[#0f0f0f] shadow-2xl"></div>
+            <code class="inline-code tiny text-center">shadow-2xl</code>
+          </div>
+        </div>
+
+        <div class="chips mb-6">
+          <span class="chip tiny">shadow-sm</span>
+          <span class="chip tiny">shadow</span>
+          <span class="chip tiny">shadow-md</span>
+          <span class="chip tiny">shadow-lg</span>
+          <span class="chip tiny">shadow-xl</span>
+          <span class="chip tiny">shadow-2xl</span>
+          <span class="chip tiny">shadow-inner</span>
+          <span class="chip tiny">shadow-none</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Text shadow</h3>
+        <div class="chips mb-6">
+          <span class="chip tiny">text-shadow-sm</span>
+          <span class="chip tiny">text-shadow</span>
+          <span class="chip tiny">text-shadow-md</span>
+          <span class="chip tiny">text-shadow-lg</span>
+          <span class="chip tiny">text-shadow-xl</span>
+          <span class="chip tiny">text-shadow-none</span>
+          <span class="chip tiny">text-shadow-{color}</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Ring</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Rings are a focus outline pattern. Combine <code class="inline-code">ring-N</code> (width)
+          with <code class="inline-code">ring-{color}</code> (color) and
+          <code class="inline-code">ring-offset-N</code> / <code class="inline-code">ring-offset-{color}</code>.
+        </p>
+        <div class="grid grid-cols-3 gap-3 mb-5">
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-12 rounded-md ring-1 ring-iris-500"></div>
+            <code class="inline-code tiny">ring-1</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-12 rounded-md ring-2 ring-iris-500"></div>
+            <code class="inline-code tiny">ring-2</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-12 rounded-md ring-4 ring-iris-500 ring-offset-2 ring-offset-bone-50 dark:ring-offset-[#07070a]"></div>
+            <code class="inline-code tiny">ring-4 + offset</code>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">ring</span>
+          <span class="chip tiny">ring-0</span>
+          <span class="chip tiny">ring-1</span>
+          <span class="chip tiny">ring-2</span>
+          <span class="chip tiny">ring-4</span>
+          <span class="chip tiny">ring-8</span>
+          <span class="chip tiny">ring-inset</span>
+          <span class="chip tiny">ring-offset-N</span>
+          <span class="chip tiny">ring-offset-{color}</span>
+          <span class="chip tiny">ring-{color}</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Opacity</h3>
+        <div class="chips">
+          <span class="chip tiny">opacity-0</span>
+          <span class="chip tiny">opacity-25</span>
+          <span class="chip tiny">opacity-50</span>
+          <span class="chip tiny">opacity-75</span>
+          <span class="chip tiny">opacity-100</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Mix blend</h3>
+        <div class="chips">
+          <span class="chip tiny">mix-blend-normal</span>
+          <span class="chip tiny">mix-blend-multiply</span>
+          <span class="chip tiny">mix-blend-screen</span>
+          <span class="chip tiny">mix-blend-overlay</span>
+          <span class="chip tiny">mix-blend-darken</span>
+          <span class="chip tiny">mix-blend-lighten</span>
+          <span class="chip tiny">mix-blend-difference</span>
+          <span class="chip tiny">bg-blend-*</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Background properties</h3>
+        <div class="chips">
+          <span class="chip tiny">bg-fixed</span>
+          <span class="chip tiny">bg-local</span>
+          <span class="chip tiny">bg-scroll</span>
+          <span class="chip tiny">bg-origin-border</span>
+          <span class="chip tiny">bg-origin-padding</span>
+          <span class="chip tiny">bg-origin-content</span>
+          <span class="chip tiny">bg-clip-border</span>
+          <span class="chip tiny">bg-clip-padding</span>
+          <span class="chip tiny">bg-clip-content</span>
+          <span class="chip tiny">bg-clip-text</span>
+          <span class="chip tiny">bg-repeat</span>
+          <span class="chip tiny">bg-no-repeat</span>
+          <span class="chip tiny">bg-repeat-x</span>
+          <span class="chip tiny">bg-repeat-y</span>
+          <span class="chip tiny">bg-cover</span>
+          <span class="chip tiny">bg-contain</span>
+          <span class="chip tiny">bg-none</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 17 — FILTERS
+           ═══════════════════════════════════════════════ -->
+      <section id="filters" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 17</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Filters</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Filters</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 blur-sm"></div>
+            <code class="inline-code tiny text-center">blur-sm</code>
+          </div>
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 grayscale"></div>
+            <code class="inline-code tiny text-center">grayscale</code>
+          </div>
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 brightness-125"></div>
+            <code class="inline-code tiny text-center">brightness-125</code>
+          </div>
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 saturate-150"></div>
+            <code class="inline-code tiny text-center">saturate-150</code>
+          </div>
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 invert"></div>
+            <code class="inline-code tiny text-center">invert</code>
+          </div>
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 sepia"></div>
+            <code class="inline-code tiny text-center">sepia</code>
+          </div>
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 hue-rotate-90"></div>
+            <code class="inline-code tiny text-center">hue-rotate-90</code>
+          </div>
+          <div class="stack-2">
+            <div class="h-20 rounded-md bg-gradient-to-br from-iris-500 to-plum-500 contrast-150"></div>
+            <code class="inline-code tiny text-center">contrast-150</code>
+          </div>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">blur-none</span>
+          <span class="chip tiny">blur-sm</span>
+          <span class="chip tiny">blur</span>
+          <span class="chip tiny">blur-md</span>
+          <span class="chip tiny">blur-lg</span>
+          <span class="chip tiny">blur-xl</span>
+          <span class="chip tiny">blur-2xl</span>
+          <span class="chip tiny">blur-3xl</span>
+          <span class="chip tiny">backdrop-blur-*</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">brightness-*</span>
+          <span class="chip tiny">contrast-*</span>
+          <span class="chip tiny">saturate-*</span>
+          <span class="chip tiny">hue-rotate-*</span>
+          <span class="chip tiny">-hue-rotate-*</span>
+          <span class="chip tiny">backdrop-brightness-*</span>
+          <span class="chip tiny">backdrop-contrast-*</span>
+          <span class="chip tiny">backdrop-saturate-*</span>
+          <span class="chip tiny">backdrop-hue-rotate-*</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">grayscale</span>
+          <span class="chip tiny">grayscale-0</span>
+          <span class="chip tiny">invert</span>
+          <span class="chip tiny">invert-0</span>
+          <span class="chip tiny">sepia</span>
+          <span class="chip tiny">sepia-0</span>
+          <span class="chip tiny">backdrop-grayscale</span>
+          <span class="chip tiny">backdrop-invert</span>
+          <span class="chip tiny">backdrop-sepia</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">drop-shadow-2xs</span>
+          <span class="chip tiny">drop-shadow-xs</span>
+          <span class="chip tiny">drop-shadow-sm</span>
+          <span class="chip tiny">drop-shadow</span>
+          <span class="chip tiny">drop-shadow-md</span>
+          <span class="chip tiny">drop-shadow-lg</span>
+          <span class="chip tiny">drop-shadow-xl</span>
+          <span class="chip tiny">drop-shadow-2xl</span>
+          <span class="chip tiny">drop-shadow-none</span>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">filter-none</span>
+          <span class="chip tiny">backdrop-filter-none</span>
+          <span class="chip tiny">backdrop-opacity-*</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 18 — TRANSFORMS
+           ═══════════════════════════════════════════════ -->
+      <section id="transforms" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 18</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Transforms</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Transforms</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-16 rounded-md bg-iris-500 rotate-12"></div>
+            <code class="inline-code tiny text-center">rotate-12</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-16 rounded-md bg-iris-500 scale-75"></div>
+            <code class="inline-code tiny text-center">scale-75</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-16 rounded-md bg-iris-500 scale-125"></div>
+            <code class="inline-code tiny text-center">scale-125</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-16 rounded-md bg-iris-500 -rotate-45"></div>
+            <code class="inline-code tiny text-center">-rotate-45</code>
+          </div>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">transform</span>
+          <span class="chip tiny">transform-none</span>
+          <span class="chip tiny">transform-gpu</span>
+          <span class="chip tiny">transform-cpu</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">rotate-0</span>
+          <span class="chip tiny">rotate-1</span>
+          <span class="chip tiny">rotate-2</span>
+          <span class="chip tiny">rotate-3</span>
+          <span class="chip tiny">rotate-6</span>
+          <span class="chip tiny">rotate-12</span>
+          <span class="chip tiny">rotate-45</span>
+          <span class="chip tiny">rotate-90</span>
+          <span class="chip tiny">rotate-180</span>
+          <span class="chip tiny">-rotate-N</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">scale-0</span>
+          <span class="chip tiny">scale-50</span>
+          <span class="chip tiny">scale-75</span>
+          <span class="chip tiny">scale-90</span>
+          <span class="chip tiny">scale-95</span>
+          <span class="chip tiny">scale-100</span>
+          <span class="chip tiny">scale-105</span>
+          <span class="chip tiny">scale-110</span>
+          <span class="chip tiny">scale-125</span>
+          <span class="chip tiny">scale-150</span>
+          <span class="chip tiny">scale-x-N</span>
+          <span class="chip tiny">scale-y-N</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">translate-x-N</span>
+          <span class="chip tiny">translate-y-N</span>
+          <span class="chip tiny">-translate-x-N</span>
+          <span class="chip tiny">-translate-y-N</span>
+          <span class="chip tiny">translate-x-full</span>
+          <span class="chip tiny">translate-y-full</span>
+          <span class="chip tiny">translate-x-1/2</span>
+          <span class="chip tiny">translate-y-1/2</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">skew-x-N</span>
+          <span class="chip tiny">skew-y-N</span>
+          <span class="chip tiny">-skew-x-N</span>
+          <span class="chip tiny">-skew-y-N</span>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">origin-center</span>
+          <span class="chip tiny">origin-top</span>
+          <span class="chip tiny">origin-top-right</span>
+          <span class="chip tiny">origin-right</span>
+          <span class="chip tiny">origin-bottom-right</span>
+          <span class="chip tiny">origin-bottom</span>
+          <span class="chip tiny">origin-bottom-left</span>
+          <span class="chip tiny">origin-left</span>
+          <span class="chip tiny">origin-top-left</span>
+          <span class="chip tiny">origin-x-center</span>
+          <span class="chip tiny">origin-y-center</span>
+          <span class="chip tiny">origin-z-center</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── 3D TRANSFORMS ─── -->
+      <section id="3d" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">3D transforms</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] perspective-dramatic">
+            <div class="h-16 rounded-md bg-iris-500 rotate-x-45"></div>
+            <code class="inline-code tiny text-center">rotate-x-45</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] perspective-dramatic">
+            <div class="h-16 rounded-md bg-iris-500 rotate-y-45"></div>
+            <code class="inline-code tiny text-center">rotate-y-45</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] perspective-dramatic">
+            <div class="h-16 rounded-md bg-iris-500 translate-z-8"></div>
+            <code class="inline-code tiny text-center">translate-z-8</code>
+          </div>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">perspective-dramatic</span>
+          <span class="chip tiny">perspective-near</span>
+          <span class="chip tiny">perspective-normal</span>
+          <span class="chip tiny">perspective-midrange</span>
+          <span class="chip tiny">perspective-distant</span>
+          <span class="chip tiny">perspective-none</span>
+          <span class="chip tiny">perspective-0</span>
+          <span class="chip tiny">perspective-origin-*</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">rotate-x-N</span>
+          <span class="chip tiny">rotate-y-N</span>
+          <span class="chip tiny">rotate-z-N</span>
+          <span class="chip tiny">-rotate-x-N</span>
+          <span class="chip tiny">-rotate-y-N</span>
+          <span class="chip tiny">-rotate-z-N</span>
+          <span class="chip tiny">translate-z-N</span>
+          <span class="chip tiny">scale-z-N</span>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">transform-3d</span>
+          <span class="chip tiny">transform-flat</span>
+          <span class="chip tiny">transform-style-3d</span>
+          <span class="chip tiny">transform-style-flat</span>
+          <span class="chip tiny">transform-3d-compose</span>
+          <span class="chip tiny">backface-visible</span>
+          <span class="chip tiny">backface-hidden</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 19 — ANIMATION
+           ═══════════════════════════════════════════════ -->
+      <section id="animation" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 19</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Animation</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Animation</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 mid">
+              <span class="inline-block w-8 h-8 border-2 border-iris-500/30 border-t-iris-500 rounded-full animate-spin"></span>
+            </div>
+            <code class="inline-code tiny text-center">animate-spin</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 mid">
+              <span class="inline-block w-8 h-8 rounded-full bg-iris-500 animate-pulse"></span>
+            </div>
+            <code class="inline-code tiny text-center">animate-pulse</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 mid">
+              <span class="inline-block w-8 h-8 rounded-full bg-iris-500 animate-bounce"></span>
+            </div>
+            <code class="inline-code tiny text-center">animate-bounce</code>
+          </div>
+          <div class="stack-2 p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+            <div class="h-14 mid">
+              <span class="inline-block w-8 h-8 rounded-full bg-iris-500 animate-ping"></span>
+            </div>
+            <code class="inline-code tiny text-center">animate-ping</code>
+          </div>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">animate-none</span>
+          <span class="chip tiny">animate-spin</span>
+          <span class="chip tiny">animate-ping</span>
+          <span class="chip tiny">animate-pulse</span>
+          <span class="chip tiny">animate-bounce</span>
+          <span class="chip tiny">animate-wiggle</span>
+          <span class="chip tiny">animate-float</span>
+          <span class="chip tiny">animate-shake</span>
+          <span class="chip tiny">animate-fade-in</span>
+          <span class="chip tiny">animate-fade-out</span>
+          <span class="chip tiny">animate-slide-in-top</span>
+          <span class="chip tiny">animate-slide-in-bottom</span>
+          <span class="chip tiny">animate-slide-in-left</span>
+          <span class="chip tiny">animate-slide-in-right</span>
+          <span class="chip tiny">animate-zoom-in</span>
+          <span class="chip tiny">animate-zoom-out</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── TRANSITION ─── -->
+      <section id="transition" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Transitions</h2>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">transition</span>
+          <span class="chip tiny">transition-none</span>
+          <span class="chip tiny">transition-all</span>
+          <span class="chip tiny">transition-colors</span>
+          <span class="chip tiny">transition-opacity</span>
+          <span class="chip tiny">transition-shadow</span>
+          <span class="chip tiny">transition-transform</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Duration</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">duration-0</span>
+          <span class="chip tiny">duration-75</span>
+          <span class="chip tiny">duration-100</span>
+          <span class="chip tiny">duration-150</span>
+          <span class="chip tiny">duration-200</span>
+          <span class="chip tiny">duration-300</span>
+          <span class="chip tiny">duration-500</span>
+          <span class="chip tiny">duration-700</span>
+          <span class="chip tiny">duration-1000</span>
+          <span class="chip tiny">duration-1500</span>
+          <span class="chip tiny">duration-2000</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Delay</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">delay-0</span>
+          <span class="chip tiny">delay-100</span>
+          <span class="chip tiny">delay-200</span>
+          <span class="chip tiny">delay-300</span>
+          <span class="chip tiny">delay-500</span>
+          <span class="chip tiny">delay-1000</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Timing function</h3>
+        <div class="chips">
+          <span class="chip tiny">ease-linear</span>
+          <span class="chip tiny">ease-in</span>
+          <span class="chip tiny">ease-out</span>
+          <span class="chip tiny">ease-in-out</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 20 — CURSOR & SELECT
+           ═══════════════════════════════════════════════ -->
+      <section id="cursor" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 20</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Cursor</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Cursor & selection</h2>
+
+        <h3 class="body font-semibold mb-3">Cursor</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">cursor-auto</span>
+          <span class="chip tiny">cursor-default</span>
+          <span class="chip tiny">cursor-pointer</span>
+          <span class="chip tiny">cursor-wait</span>
+          <span class="chip tiny">cursor-text</span>
+          <span class="chip tiny">cursor-move</span>
+          <span class="chip tiny">cursor-help</span>
+          <span class="chip tiny">cursor-not-allowed</span>
+          <span class="chip tiny">cursor-none</span>
+          <span class="chip tiny">cursor-grab</span>
+          <span class="chip tiny">cursor-grabbing</span>
+          <span class="chip tiny">cursor-zoom-in</span>
+          <span class="chip tiny">cursor-zoom-out</span>
+          <span class="chip tiny">cursor-col-resize</span>
+          <span class="chip tiny">cursor-row-resize</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">User select</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">select-none</span>
+          <span class="chip tiny">select-text</span>
+          <span class="chip tiny">select-all</span>
+          <span class="chip tiny">select-auto</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Interaction</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">pointer-events-none</span>
+          <span class="chip tiny">pointer-events-auto</span>
+          <span class="chip tiny">appearance-none</span>
+          <span class="chip tiny">appearance-auto</span>
+          <span class="chip tiny">resize</span>
+          <span class="chip tiny">resize-none</span>
+          <span class="chip tiny">resize-x</span>
+          <span class="chip tiny">resize-y</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Scroll behavior</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">scroll-auto</span>
+          <span class="chip tiny">scroll-smooth</span>
+          <span class="chip tiny">scrollbar-auto</span>
+          <span class="chip tiny">scrollbar-thin</span>
+          <span class="chip tiny">scrollbar-none</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Snap</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">snap-none</span>
+          <span class="chip tiny">snap-x</span>
+          <span class="chip tiny">snap-y</span>
+          <span class="chip tiny">snap-both</span>
+          <span class="chip tiny">snap-start</span>
+          <span class="chip tiny">snap-end</span>
+          <span class="chip tiny">snap-center</span>
+          <span class="chip tiny">snap-align-none</span>
+          <span class="chip tiny">snap-mandatory</span>
+          <span class="chip tiny">snap-proximity</span>
+          <span class="chip tiny">snap-always</span>
+          <span class="chip tiny">snap-normal</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Touch action</h3>
+        <div class="chips">
+          <span class="chip tiny">touch-auto</span>
+          <span class="chip tiny">touch-none</span>
+          <span class="chip tiny">touch-pan-x</span>
+          <span class="chip tiny">touch-pan-y</span>
+          <span class="chip tiny">touch-pan-left</span>
+          <span class="chip tiny">touch-pan-right</span>
+          <span class="chip tiny">touch-pan-up</span>
+          <span class="chip tiny">touch-pan-down</span>
+          <span class="chip tiny">touch-pinch-zoom</span>
+          <span class="chip tiny">touch-manipulation</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-6">Will change</h3>
+        <div class="chips">
+          <span class="chip tiny">will-change-auto</span>
+          <span class="chip tiny">will-change-scroll</span>
+          <span class="chip tiny">will-change-contents</span>
+          <span class="chip tiny">will-change-transform</span>
+          <span class="chip tiny">will-change-opacity</span>
+          <span class="chip tiny">will-change-filter</span>
+          <span class="chip tiny">will-change-backdrop</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 21 — MASKS
+           ═══════════════════════════════════════════════ -->
+      <section id="masks" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 21</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Masks</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Masks</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Mask utilities clip an element's rendered output with a gradient or image. Useful for
+          fade-out edges, radial reveals, and directional truncation.
+        </p>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">mask-none</span>
+          <span class="chip tiny">mask-radial</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">mask-t-from-transparent</span>
+          <span class="chip tiny">mask-b-from-transparent</span>
+          <span class="chip tiny">mask-l-from-transparent</span>
+          <span class="chip tiny">mask-r-from-transparent</span>
+          <span class="chip tiny">mask-t-to-transparent</span>
+          <span class="chip tiny">mask-b-to-transparent</span>
+          <span class="chip tiny">mask-l-to-transparent</span>
+          <span class="chip tiny">mask-r-to-transparent</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">mask-auto</span>
+          <span class="chip tiny">mask-cover</span>
+          <span class="chip tiny">mask-contain</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">mask-repeat</span>
+          <span class="chip tiny">mask-no-repeat</span>
+          <span class="chip tiny">mask-repeat-x</span>
+          <span class="chip tiny">mask-repeat-y</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">mask-add</span>
+          <span class="chip tiny">mask-subtract</span>
+          <span class="chip tiny">mask-intersect</span>
+          <span class="chip tiny">mask-exclude</span>
+        </div>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">mask-position-*</span>
+          <span class="chip tiny">mask-clip-border</span>
+          <span class="chip tiny">mask-clip-padding</span>
+          <span class="chip tiny">mask-clip-content</span>
+          <span class="chip tiny">mask-clip-fill</span>
+          <span class="chip tiny">mask-clip-stroke</span>
+          <span class="chip tiny">mask-clip-view</span>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">mask-origin-border</span>
+          <span class="chip tiny">mask-origin-padding</span>
+          <span class="chip tiny">mask-origin-content</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 22 — MODERN CSS
+           ═══════════════════════════════════════════════ -->
+      <section id="modern" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 22</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Modern CSS</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Modern CSS</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          GarurSaili ships utilities for the newest CSS features — container queries, safe-area,
+          view transitions, anchor positioning, color-scheme, field-sizing, and more. They
+          degrade gracefully: unsupported browsers simply ignore them.
+        </p>
+
+        <h3 class="body font-semibold mb-3">Container queries</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">@container</span>
+          <span class="chip tiny">@container/{name}</span>
+          <span class="chip tiny">container-normal</span>
+          <span class="chip tiny">container-inline-size</span>
+          <span class="chip tiny">container-size</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Safe area</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">p-safe</span>
+          <span class="chip tiny">pt-safe</span>
+          <span class="chip tiny">pr-safe</span>
+          <span class="chip tiny">pb-safe</span>
+          <span class="chip tiny">pl-safe</span>
+          <span class="chip tiny">px-safe</span>
+          <span class="chip tiny">py-safe</span>
+          <span class="chip tiny">m-safe</span>
+          <span class="chip tiny">mt-safe</span>
+          <span class="chip tiny">mb-safe</span>
+          <span class="chip tiny">top-safe</span>
+          <span class="chip tiny">bottom-safe</span>
+          <span class="chip tiny">left-safe</span>
+          <span class="chip tiny">right-safe</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">View transitions</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">view-transition-none</span>
+          <span class="chip tiny">view-transition-auto</span>
+          <span class="chip tiny">view-transition-hero</span>
+          <span class="chip tiny">view-transition-card</span>
+          <span class="chip tiny">view-transition-avatar</span>
+          <span class="chip tiny">view-transition-header</span>
+          <span class="chip tiny">view-transition-footer</span>
+          <span class="chip tiny">view-transition-modal</span>
+          <span class="chip tiny">view-transition-sidebar</span>
+          <span class="chip tiny">view-transition-nav</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Color scheme</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">scheme-normal</span>
+          <span class="chip tiny">scheme-dark</span>
+          <span class="chip tiny">scheme-light</span>
+          <span class="chip tiny">scheme-light-dark</span>
+          <span class="chip tiny">scheme-only-dark</span>
+          <span class="chip tiny">scheme-only-light</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Field sizing & interpolate</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">field-sizing-content</span>
+          <span class="chip tiny">field-sizing-fixed</span>
+          <span class="chip tiny">interpolate-size-allow-keywords</span>
+          <span class="chip tiny">interpolate-size-numeric-only</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Anchor positioning</h3>
+        <div class="chips mb-5">
+          <span class="chip tiny">position-area-top</span>
+          <span class="chip tiny">position-area-bottom</span>
+          <span class="chip tiny">position-area-left</span>
+          <span class="chip tiny">position-area-right</span>
+          <span class="chip tiny">position-area-top-left</span>
+          <span class="chip tiny">position-area-bottom-right</span>
+          <span class="chip tiny">position-area-center</span>
+          <span class="chip tiny">position-area-none</span>
+          <span class="chip tiny">position-visibility-always</span>
+          <span class="chip tiny">position-visibility-anchors-valid</span>
+          <span class="chip tiny">position-visibility-anchors-visible</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Other modern</h3>
+        <div class="chips">
+          <span class="chip tiny">scrollbar-gutter-auto</span>
+          <span class="chip tiny">scrollbar-gutter-stable</span>
+          <span class="chip tiny">scrollbar-gutter-both</span>
+          <span class="chip tiny">overlay-auto</span>
+          <span class="chip tiny">overlay-none</span>
+          <span class="chip tiny">outline-hidden</span>
+          <span class="chip tiny">transition-discrete</span>
+          <span class="chip tiny">transition-normal</span>
+          <span class="chip tiny">list-image-none</span>
+          <span class="chip tiny">content-none</span>
+          <span class="chip tiny">content-normal</span>
+          <span class="chip tiny">decoration-inherit</span>
+          <span class="chip tiny">decoration-current</span>
+          <span class="chip tiny">backdrop-inherit</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 23 — ACCESSIBILITY
+           ═══════════════════════════════════════════════ -->
+      <section id="a11y" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 23</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Accessibility</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Accessibility</h2>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-48">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">sr-only</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Visually hidden but readable by screen readers</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">not-sr-only</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Reverts <code class="inline-code">sr-only</code></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">forced-color-adjust-auto</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Let forced-colors mode override</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">forced-color-adjust-none</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Preserve original colors</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-6 p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="small">
+            <span class="font-medium">Preflight handles the rest.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Focus rings, reduced motion, high contrast, and forced colors are handled automatically by the baseline stylesheet. See the <a href="./a.html#preflight" class="link">preflight section</a>.</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 24 — VARIANTS RECAP
+           ═══════════════════════════════════════════════ -->
+      <section id="variants" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 24</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Variants recap</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Variants recap</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Every utility on this page can be prefixed with any variant. The full reference lives on
+          the <a href="./varients.html" class="link">variants page →</a>.
+        </p>
+
+        <div class="chips mb-5">
+          <span class="chip tiny">hover:</span>
+          <span class="chip tiny">focus:</span>
+          <span class="chip tiny">focus-visible:</span>
+          <span class="chip tiny">active:</span>
+          <span class="chip tiny">disabled:</span>
+          <span class="chip tiny">checked:</span>
+          <span class="chip tiny">dark:</span>
+          <span class="chip tiny">md:</span>
+          <span class="chip tiny">lg:</span>
+          <span class="chip tiny">xl:</span>
+          <span class="chip tiny">2xl:</span>
+          <span class="chip tiny">@sm:</span>
+          <span class="chip tiny">@lg:</span>
+          <span class="chip tiny">group-hover:</span>
+          <span class="chip tiny">peer-checked:</span>
+          <span class="chip tiny">has-[:checked]:</span>
+          <span class="chip tiny">data-[state=open]:</span>
+          <span class="chip tiny">aria-expanded-true:</span>
+          <span class="chip tiny">motion-safe:</span>
+          <span class="chip tiny">print:</span>
+          <span class="chip tiny">rtl:</span>
+          <span class="chip tiny">not-first:</span>
+        </div>
+
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">stacked variants</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-comment">&lt;!-- Variants stack left-to-right, outwards-in --&gt;</span>
+<span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">class</span>=<span class="syn-str">"md:dark:hover:bg-iris-500
+                 focus-visible:ring-2 focus-visible:ring-iris-500"</span><span class="syn-punc">&gt;</span>
+  Save
+<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>
+
+<span class="syn-comment">&lt;!-- Arbitrary values work with variants too --&gt;</span>
+<span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span>=<span class="syn-str">"w-[42rem] bg-[#0a0a0c]"</span><span class="syn-punc">&gt;&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span>
+
+<span class="syn-comment">&lt;!-- Arbitrary opacity on a color --&gt;</span>
+<span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span>=<span class="syn-str">"bg-iris-500/[0.42]"</span><span class="syn-punc">&gt;&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span></code></pre>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           CLOSING CTA
+           ═══════════════════════════════════════════════ -->
+      <section class="mb-14">
+        <div class="jumbo bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] rounded-2xl">
+          <h2 class="headline">One layer. Every property.</h2>
+          <p class="lead text-graphite-600 dark:text-graphite-400 max-w-md">
+            5,000+ utilities, 31 color families, 14 color prefixes, 21 opacity steps, 50+ variants.
+            All resolved at build time — only the ones you use land in the output.
+          </p>
+          <div class="mid gap-2.5 flex-wrap">
+            <a href="#" class="btn-hero btn-hero-primary shine">Install GarurSaili →</a>
+            <a href="./varients.html" class="btn-hero btn-hero-secondary">Variants →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+           PREV / NEXT
+           ═══════════════════════════════════════════════ -->
+      <nav class="grid grid-cols-2 gap-3 pt-8 border-t border-graphite-200 dark:border-white/[0.06]">
+        <a href="./garurintent.html" class="block p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] hover:border-graphite-300 dark:hover:border-white/[0.15] smooth stack-1">
+          <div class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-medium">← Previous</div>
+          <div class="small font-medium">Intent layer</div>
+        </a>
+        <a href="./varients.html" class="block p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] hover:border-graphite-300 dark:hover:border-white/[0.15] smooth stack-1 text-right">
+          <div class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-medium">Next →</div>
+          <div class="small font-medium">Variants</div>
+        </a>
+      </nav>
+
+      <!-- ═══════════════════════════════════════════════
+           FEEDBACK
+           ═══════════════════════════════════════════════ -->
+      <div class="mt-12 pt-8 border-t border-graphite-200 dark:border-white/[0.06]">
+        <div class="apart-mid flex-wrap gap-4">
+          <span class="small text-graphite-500 dark:text-graphite-400">Was this page helpful?</span>
+          <div class="mid gap-2">
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white smooth border border-graphite-200 dark:border-white/[0.06]" aria-label="Helpful">👍</button>
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white smooth border border-graphite-200 dark:border-white/[0.06]" aria-label="Not helpful">👎</button>
+          </div>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ═══ RIGHT SIDEBAR — ON THIS PAGE ═══ -->
+  <aside class="hidden lg:block lg:col-span-2 border-l border-graphite-200 dark:border-white/[0.06]">
+    <div class="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto p-6">
+      <div class="menu-label mb-3">On this page</div>
+      <nav id="toc" class="stack-1 small border-l border-graphite-200 dark:border-white/[0.06]">
+        <a href="#overview" class="block pl-3 py-1 font-medium border-l-2 border-iris-500 -ml-px">What is utility</a>
+        <a href="#scales" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Scales</a>
+        <a href="#display" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Display</a>
+        <a href="#position" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Position</a>
+        <a href="#inset" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Inset</a>
+        <a href="#overflow" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Overflow</a>
+        <a href="#spacing" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Spacing</a>
+        <a href="#sizing" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Sizing</a>
+        <a href="#font" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Font</a>
+        <a href="#text" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Text</a>
+        <a href="#leading" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Leading</a>
+        <a href="#truncate" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Truncation</a>
+        <a href="#flexbox" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Flexbox</a>
+        <a href="#grid" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Grid</a>
+        <a href="#columns" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Columns</a>
+        <a href="#colors" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Colors</a>
+        <a href="#gradients" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Gradients</a>
+        <a href="#borders" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Borders</a>
+        <a href="#shadows" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Shadows</a>
+        <a href="#filters" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Filters</a>
+        <a href="#transforms" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Transforms</a>
+        <a href="#3d" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">3D</a>
+        <a href="#animation" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Animation</a>
+        <a href="#transition" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Transition</a>
+        <a href="#cursor" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Cursor</a>
+        <a href="#masks" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Masks</a>
+        <a href="#modern" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Modern CSS</a>
+        <a href="#a11y" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Accessibility</a>
+        <a href="#variants" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Variants recap</a>
+      </nav>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('garur-theme', isDark ? 'dark' : 'light'); } catch (_) {}
+  });
+
+  const drawer = document.getElementById('drawer');
+  const menuBtn = document.getElementById('menu-btn');
+  const openDrawer = () => { drawer.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+  const closeDrawer = () => { drawer.classList.add('hidden'); document.body.style.overflow = ''; };
+  menuBtn?.addEventListener('click', openDrawer);
+  document.querySelectorAll('[data-drawer-close]').forEach(el => el.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  // TOC active tracking
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('#toc a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => {
+          const active = link.getAttribute('href') === '#' + entry.target.id;
+          link.classList.toggle('text-graphite-950', active);
+          link.classList.toggle('dark:text-white', active);
+          link.classList.toggle('font-medium', active);
+          link.classList.toggle('border-iris-500', active);
+          link.classList.toggle('border-transparent', !active);
+          link.classList.toggle('text-graphite-500', !active);
+          link.classList.toggle('dark:text-graphite-400', !active);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Left sidebar active tracking
+  const sideLinks = document.querySelectorAll('aside nav a.menu-item');
+  const sideObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        sideLinks.forEach(link => {
+          const active = link.getAttribute('href') === '#' + entry.target.id;
+          link.classList.toggle('menu-item-active', active);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  sections.forEach(s => sideObserver.observe(s));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>

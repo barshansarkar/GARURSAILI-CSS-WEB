@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Garur documentation — introduction, reference, and guides in one page." />
+  <title>Garur Documentation</title>
+  <link rel="stylesheet" href="../build/garur.css" />
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('garur-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
+</head>
+
+<body class="bg-white dark:bg-[#0a0a0a] text-graphite-950 dark:text-graphite-50 font-sans antialiased m-0 min-h-screen">
+
+<!-- ═══ TOP BAR ═══ -->
+<header class="fixed top-0 left-0 right-0 z-40 h-14 bg-white/80 dark:bg-graphite-950/80 backdrop-blur-md border-b border-graphite-200 dark:border-white/10">
+  <div class="h-full max-w-[1440px] mx-auto px-4 md:px-6 apart-mid">
+    <div class="mid gap-4">
+      <a href="#introduction" class="mid gap-2 flex-shrink-0">
+        <div class="w-6 h-6 rounded-md bg-graphite-950 dark:bg-white mid"><span class="text-white dark:text-black text-[11px] font-bold">G</span></div>
+        <span class="font-semibold text-sm tracking-tight hidden sm:block">Garur</span>
+      </a>
+      <span class="hidden md:block w-px h-5 bg-graphite-200 dark:bg-white/10"></span>
+      <nav class="hidden md:flex items-center gap-1.5 text-sm">
+        <span class="px-2 py-1 text-graphite-950 dark:text-white font-medium">Docs</span>
+      </nav>
+      <span class="hidden md:inline-flex mid gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-graphite-100 dark:bg-white/[0.06] text-graphite-600 dark:text-graphite-400 border border-graphite-200 dark:border-white/10">v0.2.0</span>
+    </div>
+
+    <div class="mid gap-2">
+      <button type="button" class="hidden md:flex mid gap-2 w-56 h-8 px-3 rounded-md text-sm bg-graphite-50 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/10 text-graphite-500 dark:text-graphite-400 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="flex-1 text-left">Search docs...</span>
+        <span class="kbd text-[9px] h-5 min-w-[1.25rem]">⌘K</span>
+      </button>
+      <button id="menu-btn" type="button" class="md:hidden w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] transition-colors" aria-label="Open navigation">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="#" class="hidden md:inline-flex items-center gap-1.5 h-8 px-3 rounded-md text-sm font-medium bg-graphite-950 dark:bg-white text-white dark:text-black hover:opacity-90 transition-opacity">GitHub</a>
+      <button id="theme-toggle" type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] transition-colors" aria-label="Toggle theme">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MOBILE DRAWER ═══ -->
+<div id="drawer" class="hidden fixed inset-0 z-[60] md:hidden">
+  <div class="absolute inset-0 bg-black/50" data-drawer-close></div>
+  <aside class="absolute top-0 left-0 bottom-0 w-72 bg-white dark:bg-[#0f0f0f] border-r border-graphite-200 dark:border-white/10 overflow-y-auto p-5 stack-6">
+    <div class="apart-mid">
+      <div class="mid gap-2">
+        <div class="w-6 h-6 rounded-md bg-graphite-950 dark:bg-white mid"><span class="text-white dark:text-black text-[11px] font-bold">G</span></div>
+        <span class="font-semibold text-sm">Garur</span>
+      </div>
+      <button type="button" class="w-7 h-7 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06]" data-drawer-close>✕</button>
+    </div>
+    <nav class="stack-5 text-sm">
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Getting Started</div>
+        <a href="#introduction" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Introduction</a>
+        <a href="#installation" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Installation</a>
+        <a href="#quickstart" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Quick start</a>
+      </div>
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Core Concepts</div>
+        <a href="#layers" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Three layers</a>
+        <a href="#intent" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Intent layer</a>
+        <a href="#primitives" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Primitive layer</a>
+        <a href="#variants" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Variants</a>
+      </div>
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Reference</div>
+        <a href="#palette" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Color palette</a>
+        <a href="#semantic" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Semantic colors</a>
+        <a href="#color-utilities" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Color utilities</a>
+      </div>
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Guides</div>
+        <a href="#nextjs" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>With Next.js</a>
+        <a href="#vite" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>With Vite</a>
+        <a href="#themes" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Custom themes</a>
+        <a href="#patterns" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Component patterns</a>
+        <a href="#migrating" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Migrating</a>
+        <a href="#performance" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Performance</a>
+      </div>
+    </nav>
+  </aside>
+</div>
+
+<!-- ═══ FLOATING CHAPTER NAV ═══ -->
+<nav id="chapter-nav" class="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-30 flex-col items-end gap-2 select-none">
+  <button id="prev-chapter" type="button"
+    class="group mid gap-2 h-9 pl-3 pr-2.5 rounded-full bg-white/90 dark:bg-graphite-950/90 backdrop-blur-md border border-graphite-200 dark:border-white/10 text-graphite-600 dark:text-graphite-400 shadow-sm hover:border-graphite-300 dark:hover:border-white/[0.18] hover:text-graphite-950 dark:hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
+    aria-label="Previous chapter">
+    <span class="text-[10px] uppercase tracking-wider font-semibold whitespace-nowrap">Prev</span>
+    <span class="w-5 h-5 rounded-full bg-graphite-100 dark:bg-white/[0.06] mid group-hover:bg-graphite-200 dark:group-hover:bg-white/[0.10] transition-colors">
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
+    </span>
+  </button>
+
+  <div class="mid flex-col gap-2 py-2">
+    <div class="w-px h-12 bg-graphite-200 dark:bg-white/10 relative overflow-hidden rounded-full">
+      <div id="progress-rail" class="absolute inset-x-0 top-0 bg-graphite-950 dark:bg-white rounded-full transition-all duration-500" style="height: 33.3%"></div>
+    </div>
+
+    <div class="mid flex-col gap-1.5">
+      <button data-chapter-target="introduction" class="chapter-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="Introduction"></button>
+      <button data-chapter-target="palette"      class="chapter-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="Reference"></button>
+      <button data-chapter-target="nextjs"       class="chapter-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="Guides"></button>
+    </div>
+
+    <div class="w-px h-12 bg-graphite-200 dark:bg-white/10"></div>
+  </div>
+
+  <button id="next-chapter" type="button"
+    class="group mid gap-2 h-9 pl-3 pr-2.5 rounded-full bg-white/90 dark:bg-graphite-950/90 backdrop-blur-md border border-graphite-200 dark:border-white/10 text-graphite-600 dark:text-graphite-400 shadow-sm hover:border-graphite-300 dark:hover:border-white/[0.18] hover:text-graphite-950 dark:hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
+    aria-label="Next chapter">
+    <span class="text-[10px] uppercase tracking-wider font-semibold whitespace-nowrap">Next</span>
+    <span class="w-5 h-5 rounded-full bg-graphite-100 dark:bg-white/[0.06] mid group-hover:bg-graphite-200 dark:group-hover:bg-white/[0.10] transition-colors">
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+    </span>
+  </button>
+
+  <div id="chapter-label" class="absolute right-14 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 transition-opacity duration-200">
+    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-mono font-medium bg-graphite-950 dark:bg-white text-white dark:text-black shadow-md whitespace-nowrap">
+      <span id="chapter-label-text">Introduction</span>
+    </span>
+  </div>
+</nav>
+
+<!-- ═══ PAGE SHELL ═══ -->
+<div class="max-w-[1440px] mx-auto grid grid-cols-12 pt-14">
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="hidden md:block md:col-span-3 lg:col-span-2 border-r border-graphite-200 dark:border-white/10">
+    <nav class="sticky top-14 max-h-[calc(100vh_-_3.5rem)] overflow-y-auto p-6 stack-6 text-sm">
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Getting Started</div>
+        <a href="#introduction" class="block px-2 py-1.5 rounded-md text-graphite-950 dark:text-white bg-graphite-100 dark:bg-white/[0.06] font-medium">Introduction</a>
+        <a href="#installation" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Installation</a>
+        <a href="#quickstart" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Quick start</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Core Concepts</div>
+        <a href="#layers" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Three layers</a>
+        <a href="#intent" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Intent layer</a>
+        <a href="#primitives" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Primitive layer</a>
+        <a href="#variants" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Variants</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Reference</div>
+        <a href="#palette" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Color palette</a>
+        <a href="#semantic" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Semantic colors</a>
+        <a href="#color-utilities" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Color utilities</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Guides</div>
+        <a href="#nextjs" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">With Next.js</a>
+        <a href="#vite" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">With Vite</a>
+        <a href="#themes" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Custom themes</a>
+        <a href="#patterns" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Component patterns</a>
+        <a href="#migrating" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Migrating from Tailwind</a>
+        <a href="#performance" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Performance tuning</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">API</div>
+        <a href="#cli" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">CLI reference</a>
+        <a href="#config" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Configuration</a>
+        <a href="#tokens" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Design tokens</a>
+      </div>
+
+    </nav>
+  </aside>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="col-span-12 md:col-span-9 lg:col-span-8">
+    <article class="max-w-[720px] mx-auto px-6 py-12 md:py-16">
+
+      <!-- ═══════════════════════════════════════════════
+           CHAPTER 1 — INTRODUCTION
+           ═══════════════════════════════════════════════ -->
+      <div id="chapter-introduction" class="scroll-mt-20">
+
+      <!-- HEADER -->
+      <header class="mb-12">
+        <div class="mid gap-2 mb-4">
+          <span class="text-xs text-graphite-500 dark:text-graphite-400">Docs</span>
+          <span class="text-xs text-graphite-300 dark:text-graphite-600">/</span>
+          <span class="text-xs text-graphite-950 dark:text-white font-medium">Introduction</span>
+        </div>
+        <h1 class="text-4xl font-bold tracking-tight leading-tight">Introduction</h1>
+        <p class="text-lg text-graphite-600 dark:text-graphite-400 leading-relaxed mt-4">
+          Garur is a semantic hybrid CSS engine. It fuses three layers — <strong class="font-medium text-graphite-950 dark:text-white">intent</strong>,
+          <strong class="font-medium text-graphite-950 dark:text-white">primitive</strong>, and
+          <strong class="font-medium text-graphite-950 dark:text-white">utility</strong> — into a single
+          native Rust binary that compiles at the speed of disk I/O.
+        </p>
+        <div class="mid gap-3 mt-6 text-xs">
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-jade-500"></span>
+            <span>Stable · v0.2.0</span>
+          </div>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-graphite-500 dark:text-graphite-400">Last updated October 2026</span>
+        </div>
+      </header>
+
+      <!-- INTRODUCTION -->
+      <section id="introduction" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">What is Garur?</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Garur is a compiler. You write class names in your markup, point Garur at your source files,
+          and it emits exactly the CSS you use — nothing more, nothing less. There is no runtime, no
+          plugin chain, and no JavaScript shipped to the browser.
+        </p>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          What makes Garur different is that its vocabulary spans three layers of abstraction.
+          You can write <code class="inline-code">mid</code> to mean <em>"center on both axes"</em>
+          without remembering whether that's <code class="inline-code">flex</code> or <code class="inline-code">grid</code>.
+          You can write <code class="inline-code">card-glass</code> and get a complete translucent surface
+          with border, radius, shadow, and backdrop blur. You can also write raw utilities like
+          <code class="inline-code">p-4</code> and <code class="inline-code">bg-iris-500</code>
+          when you need precise control.
+        </p>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed">
+          All three coexist. Compose them together. The engine handles the rest.
+        </p>
+
+        <div class="mt-6 p-5 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02]">
+          <div class="mid gap-2 mb-2">
+            <svg class="w-4 h-4 text-iris-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span class="text-sm font-medium">Note</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+            Garur is a build-time tool. It has zero effect on your application's runtime bundle. The output is a plain
+            CSS file — no CSS-in-JS, no injected style tags, no runtime style computation.
+          </p>
+        </div>
+      </section>
+
+      <!-- INSTALLATION -->
+      <section id="installation" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Installation</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur is distributed as a prebuilt native binary via N-API. Installation does not require a
+          Rust toolchain, a build step, or any native compilation on your machine.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3">Install the package</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="terminal-prompt">$</span> npm install garur</code></pre>
+        </div>
+
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur works with <strong class="font-medium text-graphite-950 dark:text-white">npm</strong>,
+          <strong class="font-medium text-graphite-950 dark:text-white">pnpm</strong>,
+          <strong class="font-medium text-graphite-950 dark:text-white">Yarn</strong>, and
+          <strong class="font-medium text-graphite-950 dark:text-white">Bun</strong> without configuration.
+          The package ships precompiled binaries for macOS (x64, arm64), Linux (x64, arm64), and Windows (x64).
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Verify installation</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="terminal-prompt">$</span> npx garur --version
+<span class="terminal-ok">garur/0.2.0</span>
+<span class="terminal-ok">native/ferrous-engine</span>
+<span class="terminal-ok">targets/2023</span></code></pre>
+        </div>
+      </section>
+
+      <!-- QUICKSTART -->
+      <section id="quickstart" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Quick start</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          The fastest way to see Garur work is with the built-in <code class="inline-code">ssc</code> command.
+          It scans your source files, extracts classes, and emits a single stylesheet in one pass.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3">1. Scan and build</h3>
+        <div class="code-window mb-4">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="terminal-prompt">$</span> npx garur ssc ./src
+<span class="terminal-ok">✓</span> Scanned <span class="syn-attr">124</span> files
+<span class="terminal-ok">✓</span> Extracted <span class="syn-attr">842</span> unique classes
+<span class="terminal-ok">✓</span> Built in <span class="terminal-ok">28ms</span>
+<span class="terminal-dim">→ ./build/garur.css · 14.2 KB</span></code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">2. Link the stylesheet</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">index.html</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">&lt;</span><span class="syn-tag">link</span> <span class="syn-attr">rel</span><span class="syn-punc">=</span><span class="syn-str">"stylesheet"</span> <span class="syn-attr">href</span><span class="syn-punc">=</span><span class="syn-str">"./build/garur.css"</span> <span class="syn-punc">/&gt;</span></code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3">3. Write classes</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">page.html</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"mid stack-4 p-8"</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">h1</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"text-3xl font-bold"</span><span class="syn-punc">&gt;</span>Hello<span class="syn-punc">&lt;/</span><span class="syn-tag">h1</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"btn btn-primary"</span><span class="syn-punc">&gt;</span>Get started<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>
+<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span></code></pre>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- LAYERS -->
+      <section id="layers" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Three layers</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur's vocabulary is organized into three layers. Each layer has a distinct purpose.
+          Understanding them helps you decide <em>which</em> class to reach for when.
+        </p>
+
+        <div class="stack-3 mb-8">
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="mid gap-3 mb-2">
+              <span class="w-6 h-6 rounded-md bg-iris-500/10 text-iris-600 dark:text-iris-400 mid text-xs font-bold">1</span>
+              <h3 class="font-semibold text-graphite-950 dark:text-white">Intent layer</h3>
+            </div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Describes <em>what you mean</em> using vocabulary that maps to your mental model. <code class="inline-code">mid</code> means "centered both axes." <code class="inline-code">apart-mid</code> means "space-between, aligned." <code class="inline-code">rise</code> means "elevated with a shadow."
+            </p>
+          </div>
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="mid gap-3 mb-2">
+              <span class="w-6 h-6 rounded-md bg-plum-500/10 text-plum-600 dark:text-plum-400 mid text-xs font-bold">2</span>
+              <h3 class="font-semibold text-graphite-950 dark:text-white">Primitive layer</h3>
+            </div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Component-level shorthands powered by runtime tokens. <code class="inline-code">card</code> gives you a complete surface with border, radius, padding, and shadow. <code class="inline-code">btn</code> gives you a button skeleton. Every token is a CSS variable, so theming works at runtime.
+            </p>
+          </div>
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="mid gap-3 mb-2">
+              <span class="w-6 h-6 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 mid text-xs font-bold">3</span>
+              <h3 class="font-semibold text-graphite-950 dark:text-white">Utility layer</h3>
+            </div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Atomic utilities with a familiar syntax — <code class="inline-code">p-4</code>, <code class="inline-code">bg-iris-500</code>, <code class="inline-code">grid-cols-3</code>, <code class="inline-code">hover:rise</code>. Full variant support, arbitrary values, and opacity modifiers.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-lg bg-iris-50 dark:bg-iris-500/[0.06] border border-iris-100 dark:border-iris-500/20">
+          <div class="text-sm">
+            <span class="font-medium text-iris-700 dark:text-iris-300">Layers compose freely.</span>
+            <span class="text-graphite-700 dark:text-graphite-300"> There is no rule preventing you from mixing a primitive with utilities, or using an intent alongside raw atomic classes. Utilities win the cascade where they overlap, so <code class="inline-code">card p-2</code> overrides the card's default padding.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTENT -->
+      <section id="intent" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Intent layer</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Intents replace combinations of flex, gap, justify, and align declarations with a single class.
+          They read the way you would describe the layout to another engineer.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3">Layout intents</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10 mb-8">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">mid</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Flex · centered both axes</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">apart-mid</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Flex · space-between, vertically centered</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">stack-4</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Column · gap: 1rem</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">row-3</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Row · gap: 0.75rem</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">cluster</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Flex-wrap · for chips and tags</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">auto-grid</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Responsive grid with 16rem min column</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3">Visual intents</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">rise</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Elevated box-shadow (lg)</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">lift</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Hover: translateY(-2px) + shadow</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">faded</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">opacity: 0.5</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">smooth</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">300ms cubic-bezier transition</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">clickable</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Pointer cursor + hover background</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PRIMITIVES -->
+      <section id="primitives" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Primitive layer</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Primitives are complete component shorthands. Every primitive reads its values from
+          <code class="inline-code">--garur-*</code> CSS variables, which means you can retheme
+          the entire system at runtime by overriding those variables on <code class="inline-code">:root</code>.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3">Common primitives</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10 mb-6">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-48">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">card</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Surface with border, radius, padding, shadow</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">card-glass</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Translucent surface with backdrop blur</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">btn</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Button skeleton — pair with <code class="inline-code">btn-primary</code></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">badge</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Inline pill — variants for each semantic color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">alert</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Notice block with border and background tint</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">input</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Form input with focus ring</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">navbar</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Top navigation bar layout</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">example.html</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"card"</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"card-header"</span><span class="syn-punc">&gt;</span>Title<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"card-body"</span><span class="syn-punc">&gt;</span>Content<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"card-footer"</span><span class="syn-punc">&gt;</span>
+    <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">class</span><span class="syn-punc">=</span><span class="syn-str">"btn btn-primary"</span><span class="syn-punc">&gt;</span>Save<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span>
+<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span></code></pre>
+        </div>
+      </section>
+
+      <!-- VARIANTS -->
+      <section id="variants" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Variants</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Any utility, primitive, or intent can be prefixed with a variant. Prefixes stack from left
+          to right — <code class="inline-code">md:dark:hover:bg-iris-500</code> applies on medium screens,
+          in dark mode, on hover.
+        </p>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-44">Variant</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Applies when</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">hover:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Pointer is over the element</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">focus-visible:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Element is keyboard-focused</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">active:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Element is being pressed</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">disabled:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Element has <code class="inline-code">[disabled]</code></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">dark:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Dark mode is active</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">md:</code> · <code class="inline-code">lg:</code> · <code class="inline-code">xl:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Viewport meets breakpoint</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">group-hover:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Parent with <code class="inline-code">.group</code> is hovered</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">has-[:checked]:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Element matches <code class="inline-code">:has()</code> selector</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">motion-safe:</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Reduced-motion is not preferred</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- CLI -->
+      <section id="cli" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">CLI reference</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur ships a single CLI binary. Every command accepts a positional path or uses the
+          current directory by default.
+        </p>
+
+        <div class="stack-4">
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur build</code>
+              <span class="text-xs text-graphite-500 dark:text-graphite-400">— compile stylesheet from config</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur build [--watch] [--minify] [--out ./build/garur.css]</code></pre>
+            </div>
+          </div>
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur ssc</code>
+              <span class="text-xs text-graphite-500 dark:text-graphite-400">— one-shot scan, extract, build</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur ssc ./src [--preflight] [--minify]</code></pre>
+            </div>
+          </div>
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur init</code>
+              <span class="text-xs text-graphite-500 dark:text-graphite-400">— scaffold a config file</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur init [--force]</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONFIG -->
+      <section id="config" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Configuration</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur works with zero configuration. When you need to customize, create
+          <code class="inline-code">garur.config.js</code> at the project root. Only the keys you
+          provide are overridden — the rest inherit sensible defaults.
+        </p>
+
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">garur.config.js</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">content</span><span class="syn-punc">:</span> [<span class="syn-str">'./src/**/*.{html,tsx,jsx,vue}'</span>],
+  <span class="syn-attr">output</span><span class="syn-punc">:</span> <span class="syn-str">'./build/garur.css'</span>,
+  <span class="syn-attr">darkMode</span><span class="syn-punc">:</span> <span class="syn-str">'class'</span>,
+  <span class="syn-attr">breakpoints</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">sm</span><span class="syn-punc">:</span> <span class="syn-str">'640px'</span>,
+    <span class="syn-attr">md</span><span class="syn-punc">:</span> <span class="syn-str">'768px'</span>,
+    <span class="syn-attr">lg</span><span class="syn-punc">:</span> <span class="syn-str">'1024px'</span>,
+    <span class="syn-attr">xl</span><span class="syn-punc">:</span> <span class="syn-str">'1280px'</span>,
+  },
+  <span class="syn-attr">palette</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">brand</span><span class="syn-punc">:</span> {
+      <span class="syn-attr">50</span><span class="syn-punc">:</span>  <span class="syn-str">'#f5f3ff'</span>,
+      <span class="syn-attr">500</span><span class="syn-punc">:</span> <span class="syn-str">'#8657f7'</span>,
+      <span class="syn-attr">900</span><span class="syn-punc">:</span> <span class="syn-str">'#2a0e53'</span>,
+    },
+  },
+  <span class="syn-attr">semanticColors</span><span class="syn-punc">:</span> <span class="syn-str">true</span>,
+};</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3">Options</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Key</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-24">Type</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Default</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">content</code></td><td class="px-4 py-2.5 text-graphite-500 dark:text-graphite-400">string[]</td><td class="px-4 py-2.5 text-graphite-600 dark:text-graphite-400 font-mono text-xs">['./src/**/*']</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">output</code></td><td class="px-4 py-2.5 text-graphite-500 dark:text-graphite-400">string</td><td class="px-4 py-2.5 text-graphite-600 dark:text-graphite-400 font-mono text-xs">'./build/garur.css'</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">darkMode</code></td><td class="px-4 py-2.5 text-graphite-500 dark:text-graphite-400">string</td><td class="px-4 py-2.5 text-graphite-600 dark:text-graphite-400 font-mono text-xs">'class'</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">breakpoints</code></td><td class="px-4 py-2.5 text-graphite-500 dark:text-graphite-400">object</td><td class="px-4 py-2.5 text-graphite-600 dark:text-graphite-400 font-mono text-xs">{ sm, md, lg, xl, 2xl }</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">palette</code></td><td class="px-4 py-2.5 text-graphite-500 dark:text-graphite-400">object</td><td class="px-4 py-2.5 text-graphite-600 dark:text-graphite-400 font-mono text-xs">31 built-in families</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">semanticColors</code></td><td class="px-4 py-2.5 text-graphite-500 dark:text-graphite-400">boolean</td><td class="px-4 py-2.5 text-graphite-600 dark:text-graphite-400 font-mono text-xs">false</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TOKENS -->
+      <section id="tokens" class="mb-16 scroll-mt-20">
+        <h2 class="text-2xl font-semibold tracking-tight mb-4">Design tokens</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Every primitive reads from a CSS variable prefixed with <code class="inline-code">--garur-</code>.
+          This means you can retheme the whole system at runtime without a rebuild — just override the
+          variables on <code class="inline-code">:root</code>.
+        </p>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Token</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Purpose</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-primary</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Primary accent color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-surface</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Base surface background</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-fg</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Default foreground color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-radius</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Default border radius</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-shadow-md</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Medium elevation shadow</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-ring-color</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Focus ring color</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      </div><!-- /chapter-introduction -->
+
+      <!-- ═══════════════════════════════════════════════
+           CHAPTER 2 — REFERENCE
+           ═══════════════════════════════════════════════ -->
+      <div id="chapter-reference" class="scroll-mt-20">
+
+      <hr class="divider" />
+
+      <header class="mb-12 mt-16">
+        <div class="mid gap-2 mb-4">
+          <span class="text-xs text-graphite-500 dark:text-graphite-400">Docs</span>
+          <span class="text-xs text-graphite-300 dark:text-graphite-600">/</span>
+          <span class="text-xs text-graphite-950 dark:text-white font-medium">Reference</span>
+        </div>
+        <h1 class="text-4xl font-bold tracking-tight leading-tight">Reference</h1>
+        <p class="text-lg text-graphite-600 dark:text-graphite-400 leading-relaxed mt-4">
+          The complete color system: 31 families, 11 shades each, plus the semantic layer and every
+          utility that consumes them. Every value on this page maps to a real class in the engine.
+        </p>
+        <div class="mid gap-3 mt-6 text-xs">
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-jade-500"></span>
+            <span>31 families · 341 colors</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- PALETTE -->
+      <section id="palette" class="mb-16 scroll-mt-20">
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Color palette</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Garur ships 31 handcrafted color families. Each family has 11 shades, numbered from
+          <code class="inline-code">50</code> (lightest) to <code class="inline-code">950</code> (darkest).
+          The ramps are perceptually balanced.
+        </p>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-8">
+          Every family maps to a material or element rather than an abstract label —
+          <code class="inline-code">void</code>, <code class="inline-code">iris</code>,
+          <code class="inline-code">plum</code>, <code class="inline-code">jade</code>.
+        </p>
+
+        <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] mb-10">
+          <div class="text-sm font-medium mb-3">Naming rules</div>
+          <div class="stack-3 text-sm">
+            <div class="apart-mid gap-4"><code class="inline-code">bg-iris-500</code><span class="text-xs text-graphite-500 dark:text-graphite-400 text-right">explicit shade</span></div>
+            <div class="apart-mid gap-4"><code class="inline-code">bg-iris</code><span class="text-xs text-graphite-500 dark:text-graphite-400 text-right">= <code class="inline-code">bg-iris-500</code></span></div>
+            <div class="apart-mid gap-4"><code class="inline-code">bg-iris-6</code><span class="text-xs text-graphite-500 dark:text-graphite-400 text-right">→ <code class="inline-code">bg-iris-600</code></span></div>
+            <div class="apart-mid gap-4"><code class="inline-code">bg-iris-95</code><span class="text-xs text-graphite-500 dark:text-graphite-400 text-right">→ <code class="inline-code">bg-iris-950</code></span></div>
+            <div class="apart-mid gap-4"><code class="inline-code">bg-iris-500/50</code><span class="text-xs text-graphite-500 dark:text-graphite-400 text-right">50% opacity</span></div>
+          </div>
+        </div>
+
+        <!-- NEUTRALS -->
+        <div id="neutrals" class="mb-12 scroll-mt-20">
+          <div class="apart-mid mb-4">
+            <h3 class="text-base font-semibold">Neutrals</h3>
+            <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-500">6 families · 66 colors</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-5">
+            Surfaces, text hierarchy, and borders. Cool-tinted to warm-tinted.
+          </p>
+          <div class="stack-3">
+            <div class="grid grid-cols-[68px_1fr] gap-4">
+              <span></span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">50</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">100</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">200</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">300</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">400</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">500</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">600</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">700</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">800</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">900</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">950</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">void</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-void-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-void-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">graphite</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-graphite-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-graphite-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">ash</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-ash-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ash-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">smoke</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-smoke-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-smoke-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">sand</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-sand-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sand-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">bone</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-bone-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-bone-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REDS & PINKS -->
+        <div id="reds-pinks" class="mb-12 scroll-mt-20">
+          <div class="apart-mid mb-4">
+            <h3 class="text-base font-semibold">Reds & Pinks</h3>
+            <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-500">6 families · 66 colors</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-5">
+            Errors, warnings, destructive actions, and warm accents.
+          </p>
+          <div class="stack-3">
+            <div class="grid grid-cols-[68px_1fr] gap-4">
+              <span></span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">50</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">100</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">200</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">300</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">400</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">500</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">600</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">700</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">800</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">900</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">950</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">ruby</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-ruby-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ruby-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">crimson</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-crimson-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-crimson-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">coral</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-coral-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-coral-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">blush</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-blush-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-blush-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">rose</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-rose-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-rose-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">plum</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-plum-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-plum-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORANGES & YELLOWS -->
+        <div id="oranges-yellows" class="mb-12 scroll-mt-20">
+          <div class="apart-mid mb-4">
+            <h3 class="text-base font-semibold">Oranges & Yellows</h3>
+            <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-500">5 families · 55 colors</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-5">
+            Warnings, notices, and warm highlights.
+          </p>
+          <div class="stack-3">
+            <div class="grid grid-cols-[68px_1fr] gap-4">
+              <span></span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">50</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">100</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">200</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">300</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">400</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">500</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">600</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">700</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">800</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">900</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">950</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">ember</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-ember-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-ember-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">sunset</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-sunset-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunset-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">honey</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-honey-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-honey-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">gold</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-gold-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-gold-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">sunbeam</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-sunbeam-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sunbeam-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GREENS -->
+        <div id="greens" class="mb-12 scroll-mt-20">
+          <div class="apart-mid mb-4">
+            <h3 class="text-base font-semibold">Greens</h3>
+            <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-500">5 families · 55 colors</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-5">
+            Success states, confirmations, and natural accents.
+          </p>
+          <div class="stack-3">
+            <div class="grid grid-cols-[68px_1fr] gap-4">
+              <span></span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">50</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">100</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">200</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">300</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">400</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">500</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">600</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">700</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">800</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">900</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">950</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">citron</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-citron-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-citron-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">lime</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-lime-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-lime-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">mint</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-mint-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-mint-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">forest</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-forest-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-forest-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">jade</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-jade-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-jade-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TEALS & CYANS -->
+        <div id="teals-cyans" class="mb-12 scroll-mt-20">
+          <div class="apart-mid mb-4">
+            <h3 class="text-base font-semibold">Teals & Cyans</h3>
+            <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-500">3 families · 33 colors</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-5">
+            Info states and cool accents.
+          </p>
+          <div class="stack-3">
+            <div class="grid grid-cols-[68px_1fr] gap-4">
+              <span></span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">50</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">100</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">200</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">300</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">400</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">500</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">600</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">700</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">800</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">900</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">950</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">teal</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-teal-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-teal-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">aqua</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-aqua-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-aqua-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">sky</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-sky-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-sky-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLUES -->
+        <div id="blues" class="mb-12 scroll-mt-20">
+          <div class="apart-mid mb-4">
+            <h3 class="text-base font-semibold">Blues</h3>
+            <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-500">3 families · 33 colors</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-5">
+            Links, primary actions, and trust signals.
+          </p>
+          <div class="stack-3">
+            <div class="grid grid-cols-[68px_1fr] gap-4">
+              <span></span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">50</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">100</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">200</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">300</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">400</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">500</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">600</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">700</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">800</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">900</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">950</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">azure</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-azure-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-azure-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">cobalt</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-cobalt-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-cobalt-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">indigo</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-indigo-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-indigo-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PURPLES -->
+        <div id="purples" class="mb-12 scroll-mt-20">
+          <div class="apart-mid mb-4">
+            <h3 class="text-base font-semibold">Purples</h3>
+            <span class="text-[10px] font-mono text-graphite-400 dark:text-graphite-500">3 families · 33 colors</span>
+          </div>
+          <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-5">
+            Brand and creative accents.
+          </p>
+          <div class="stack-3">
+            <div class="grid grid-cols-[68px_1fr] gap-4">
+              <span></span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">50</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">100</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">200</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">300</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">400</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">500</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">600</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">700</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">800</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">900</span>
+                <span class="text-center text-[9px] font-mono text-graphite-400 dark:text-graphite-500">950</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">iris</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-iris-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-iris-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">violet</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-violet-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-violet-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[68px_1fr] gap-4 items-center">
+              <span class="text-[11px] font-mono text-graphite-500 dark:text-graphite-400">orchid</span>
+              <div class="grid grid-cols-11 gap-1.5">
+                <div class="h-10 rounded-md bg-orchid-50 ring-1 ring-black/5 dark:ring-white/[0.04] hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-100 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-200 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-300 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-400 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-500 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-600 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-700 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-800 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-900 hover:scale-110 transition-transform"></div>
+                <div class="h-10 rounded-md bg-orchid-950 hover:scale-110 transition-transform"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- SEMANTIC -->
+      <section id="semantic" class="mb-16 scroll-mt-20">
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Semantic colors</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Semantic colors map role names to colors. Instead of <code class="inline-code">bg-ruby-600</code>
+          you write <code class="inline-code">bg-danger</code>. The utility resolves at runtime through a
+          CSS variable, which means the same class changes appearance when you swap themes.
+        </p>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] flex gap-3 mb-8">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="text-sm">
+            <span class="font-medium text-graphite-950 dark:text-white">Opt-in.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Semantic colors are off by default. Enable them in <code class="inline-code">garur.config.js</code> with <code class="inline-code">semanticColors: true</code>.</span>
+          </div>
+        </div>
+
+        <h3 class="text-base font-semibold mb-4">The eight roles</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-iris-500"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">primary</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#8657f7</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Primary actions, links, brand accents.</div>
+            </div>
+          </div>
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-void-500"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">secondary</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#647490</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Secondary actions, neutral emphasis.</div>
+            </div>
+          </div>
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-forest-500"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">success</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#26944c</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Confirmations, positive states.</div>
+            </div>
+          </div>
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-ruby-600"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">danger</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#d12a3d</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Destructive actions, errors.</div>
+            </div>
+          </div>
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-honey-500"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">warning</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#f59e00</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Cautions, pending states.</div>
+            </div>
+          </div>
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-sky-500"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">info</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#1a8ade</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Informational callouts, tips.</div>
+            </div>
+          </div>
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-plum-500"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">accent</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#e54cb5</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Decorative highlights, featured badges.</div>
+            </div>
+          </div>
+          <div class="rounded-lg border border-graphite-200 dark:border-white/10 overflow-hidden">
+            <div class="h-14 bg-ash-500"></div>
+            <div class="p-4 stack-2">
+              <div class="apart-mid"><span class="text-sm font-semibold">muted</span><span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">#6f7780</span></div>
+              <div class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">De-emphasized text, disabled states.</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="semantic-utilities" class="text-base font-semibold mb-4 scroll-mt-20">Generated utilities</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-1/3">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Applies</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">bg-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">background-color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">bg-{role}-hover</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">darker variant for hover states</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">bg-{role}-subtle</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">15% opacity tint</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">text-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">text-{role}-fg</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">foreground that pairs with <code class="inline-code">bg-{role}</code></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">border-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">border-color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">ring-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">ring color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">outline-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">outline-color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">fill-{role}</code> / <code class="inline-code">stroke-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">SVG fill / stroke</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">decoration-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">text-decoration-color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">caret-{role}</code> / <code class="inline-code">accent-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">caret-color / accent-color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">from-{role}</code> · <code class="inline-code">via-{role}</code> · <code class="inline-code">to-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">gradient stops</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">divide-{role}</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">child border-color between siblings</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-base font-semibold mb-3 mt-8">Runtime override</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">theme.css</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-tag">:root</span> {
+  <span class="syn-attr">--garur-primary</span><span class="syn-punc">:</span> <span class="syn-str">#c2410c</span>;
+  <span class="syn-attr">--garur-primary-fg</span><span class="syn-punc">:</span> <span class="syn-str">#ffffff</span>;
+}</code></pre>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- COLOR UTILITIES -->
+      <section id="color-utilities" class="mb-16 scroll-mt-20">
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Color utilities</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Every palette color is available through 14 utility prefixes. Combined with the 11 shades and
+          21 opacity steps, the engine generates roughly <strong class="font-medium text-graphite-950 dark:text-white">100,000 class names</strong> —
+          only the ones you use land in the output CSS.
+        </p>
+
+        <h3 class="text-base font-semibold mb-4">The 14 color utility prefixes</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10 mb-8">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Prefix</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">CSS property</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Example</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">bg-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">background-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">bg-iris-500</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">text-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">text-plum-600</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">border-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">border-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">border-jade-300</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">fill-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">fill (SVG)</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">fill-honey-400</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">stroke-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">stroke (SVG)</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">stroke-sky-500</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">accent-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">accent-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">accent-azure-500</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">caret-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">caret-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">caret-ruby-500</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">decoration-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">text-decoration-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">decoration-coral-600</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">outline-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">outline-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">outline-iris-500</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">ring-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">--garur-ring-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">ring-jade-400</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">divide-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">child border-color</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">divide-ash-200</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">from-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">gradient start</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">from-iris-500</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">via-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">gradient middle</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">via-plum-500</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">to-</code></td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">gradient end</td><td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">to-aqua-500</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-base font-semibold mb-4">Live example</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+          <div class="p-4 rounded-lg bg-iris-500 text-white">
+            <div class="text-sm font-medium">.bg-iris-500</div>
+            <div class="text-xs opacity-80 mt-1 font-mono">background-color</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium text-iris-500">.text-iris-500</div>
+            <div class="text-xs text-graphite-500 dark:text-graphite-400 mt-1 font-mono">color</div>
+          </div>
+          <div class="p-4 rounded-lg border-2 border-iris-500 bg-white dark:bg-[#0a0a0a]">
+            <div class="text-sm font-medium">.border-iris-500</div>
+            <div class="text-xs text-graphite-500 dark:text-graphite-400 mt-1 font-mono">border-color</div>
+          </div>
+          <div class="p-4 rounded-lg bg-gradient-to-r from-iris-500 via-plum-500 to-aqua-500 text-white">
+            <div class="text-sm font-medium">.from / .via / .to</div>
+            <div class="text-xs opacity-80 mt-1 font-mono">gradient stops</div>
+          </div>
+        </div>
+
+        <h3 id="opacity" class="text-base font-semibold mb-4 scroll-mt-20">Opacity modifiers</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Every color utility accepts an opacity suffix. 21 pre-computed steps. Arbitrary values via
+          <code class="inline-code">bg-iris-500/[0.42]</code>.
+        </p>
+
+        <div class="grid grid-cols-6 md:grid-cols-11 gap-1.5 mb-6">
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/0 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">0</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/5 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">5</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/10 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">10</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/20 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">20</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/30 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">30</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/40 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">40</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/50 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">50</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/60 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">60</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/70 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">70</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/80 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">80</span></div>
+          <div class="stack-1"><div class="h-12 rounded-md bg-iris-500/100 ring-1 ring-black/5 dark:ring-white/[0.04]"></div><span class="text-[9px] font-mono text-center text-graphite-400 dark:text-graphite-500">100</span></div>
+        </div>
+
+        <h3 id="easy-mode" class="text-base font-semibold mb-4 mt-8 scroll-mt-20">Easy mode</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Three shorthand forms reduce typing on common cases. They resolve at build time to the same
+          CSS the explicit form would produce.
+        </p>
+        <div class="stack-3">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="apart-mid gap-4 mb-2">
+              <code class="inline-code">bg-iris</code>
+              <span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">→ bg-iris-500</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Omitting the shade resolves to <code class="inline-code">500</code>.</p>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="apart-mid gap-4 mb-2">
+              <code class="inline-code">bg-iris-6</code>
+              <span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">→ bg-iris-600</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Single digit expands to the hundreds.</p>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="apart-mid gap-4 mb-2">
+              <code class="inline-code">bg-iris-95</code>
+              <span class="text-[10px] font-mono text-graphite-500 dark:text-graphite-400">→ bg-iris-950</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Special case: <code class="inline-code">95</code> → <code class="inline-code">950</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      </div><!-- /chapter-reference -->
+
+      <!-- ═══════════════════════════════════════════════
+           CHAPTER 3 — GUIDES
+           ═══════════════════════════════════════════════ -->
+      <div id="chapter-guides" class="scroll-mt-20">
+
+      <hr class="divider" />
+
+      <header class="mb-12 mt-16">
+        <div class="mid gap-2 mb-4">
+          <span class="text-xs text-graphite-500 dark:text-graphite-400">Docs</span>
+          <span class="text-xs text-graphite-300 dark:text-graphite-600">/</span>
+          <span class="text-xs text-graphite-950 dark:text-white font-medium">Guides</span>
+        </div>
+        <h1 class="text-4xl font-bold tracking-tight leading-tight">Guides</h1>
+        <p class="text-lg text-graphite-600 dark:text-graphite-400 leading-relaxed mt-4">
+          Practical walkthroughs for integrating Garur with your framework, theming it to match your brand,
+          and migrating existing codebases. Each guide is self-contained.
+        </p>
+      </header>
+
+      <!-- NEXT.JS -->
+      <section id="nextjs" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 01</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~5 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">With Next.js</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur emits a plain CSS file, so integration is a build-time concern. You run Garur once before
+          <code class="inline-code">next build</code>, commit the output path to your root layout, and let
+          Next.js handle the rest.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Project layout</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">project tree</span>
+          </div>
+          <pre class="code-body text-sm"><code>my-app/
+├── app/
+│   ├── layout.tsx          <span class="syn-str">// imports garur.css</span>
+│   └── page.tsx
+├── build/
+│   └── garur.css           <span class="syn-str">// generated</span>
+├── garur.config.js
+└── package.json</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Wire it into the build</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">package.json</span>
+          </div>
+          <pre class="code-body text-sm"><code>{
+  <span class="syn-attr">"scripts"</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">"dev"</span><span class="syn-punc">:</span> <span class="syn-str">"next dev"</span>,
+    <span class="syn-attr">"prebuild"</span><span class="syn-punc">:</span> <span class="syn-str">"garur ssc ./app ./components --minify"</span>,
+    <span class="syn-attr">"build"</span><span class="syn-punc">:</span> <span class="syn-str">"next build"</span>,
+    <span class="syn-attr">"watch:css"</span><span class="syn-punc">:</span> <span class="syn-str">"garur watch"</span>
+  }
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Import in the root layout</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">app/layout.tsx</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">import</span> <span class="syn-str">'../build/garur.css'</span>;
+
+<span class="syn-punc">export default function</span> <span class="syn-tag">RootLayout</span>({ <span class="syn-attr">children</span> }) {
+  <span class="syn-punc">return</span> (
+    <span class="syn-punc">&lt;</span><span class="syn-tag">html</span> <span class="syn-attr">lang</span><span class="syn-punc">=</span><span class="syn-str">"en"</span><span class="syn-punc">&gt;</span>
+      <span class="syn-punc">&lt;</span><span class="syn-tag">body</span> <span class="syn-attr">className</span><span class="syn-punc">=</span><span class="syn-str">"bg-white dark:bg-[#0a0a0a]"</span><span class="syn-punc">&gt;</span>
+        {children}
+      <span class="syn-punc">&lt;/</span><span class="syn-tag">body</span><span class="syn-punc">&gt;</span>
+    <span class="syn-punc">&lt;/</span><span class="syn-tag">html</span><span class="syn-punc">&gt;</span>
+  );
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Common pitfalls</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-1/3">Symptom</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Fix</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Styles missing on first load</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Garur hasn't run yet. Add <code class="inline-code">prebuild</code> script.</td></tr>
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Stale CSS after class change</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Restart <code class="inline-code">garur watch</code>.</td></tr>
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Deployed build missing classes</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Check <code class="inline-code">build/</code> is not in <code class="inline-code">.gitignore</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- VITE -->
+      <section id="vite" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 02</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~4 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">With Vite</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Vite does not need a plugin to work with Garur. Import the generated CSS from your entry point
+          and let Vite handle bundling, HMR, and code-splitting.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Entry import</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">src/main.ts</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">import</span> <span class="syn-str">'../build/garur.css'</span>;
+<span class="syn-punc">import</span> { <span class="syn-attr">createApp</span> } <span class="syn-punc">from</span> <span class="syn-str">'vue'</span>;
+
+<span class="syn-attr">createApp</span>(<span class="syn-attr">App</span>).<span class="syn-attr">mount</span>(<span class="syn-str">'#app'</span>);</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Dev workflow</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">package.json</span>
+          </div>
+          <pre class="code-body text-sm"><code>{
+  <span class="syn-attr">"scripts"</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">"dev"</span><span class="syn-punc">:</span> <span class="syn-str">"concurrently \"garur watch\" \"vite\""</span>,
+    <span class="syn-attr">"prebuild"</span><span class="syn-punc">:</span> <span class="syn-str">"garur ssc ./src --minify"</span>,
+    <span class="syn-attr">"build"</span><span class="syn-punc">:</span> <span class="syn-str">"vite build"</span>
+  }
+}</code></pre>
+        </div>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="text-sm">
+            <span class="font-medium text-graphite-950 dark:text-white">Why no plugin?</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Garur already rebuilds in watch mode, faster than a plugin could. Two processes, one source of truth.</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- THEMES -->
+      <section id="themes" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 03</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~6 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Custom themes</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur exposes everything a primitive needs as a CSS variable. Theming does not require
+          a rebuild — swap a brand color, change the base radius, or add a new semantic palette
+          at runtime.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Runtime tokens</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">globals.css</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-tag">:root</span> {
+  <span class="syn-attr">--garur-primary</span><span class="syn-punc">:</span> <span class="syn-str">#c2410c</span>;
+  <span class="syn-attr">--garur-radius</span><span class="syn-punc">:</span> <span class="syn-str">0.25rem</span>;
+  <span class="syn-attr">--garur-surface</span><span class="syn-punc">:</span> <span class="syn-str">#fefefe</span>;
+}
+
+<span class="syn-tag">.dark</span> {
+  <span class="syn-attr">--garur-surface</span><span class="syn-punc">:</span> <span class="syn-str">#111111</span>;
+  <span class="syn-attr">--garur-primary</span><span class="syn-punc">:</span> <span class="syn-str">#fb923c</span>;
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Adding a brand palette</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">garur.config.js</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">palette</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">brand</span><span class="syn-punc">:</span> {
+      <span class="syn-attr">50</span><span class="syn-punc">:</span>  <span class="syn-str">'#fff7ed'</span>,
+      <span class="syn-attr">500</span><span class="syn-punc">:</span> <span class="syn-str">'#f97316'</span>,
+      <span class="syn-attr">900</span><span class="syn-punc">:</span> <span class="syn-str">'#7c2d12'</span>,
+    },
+  },
+};</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Semantic colors</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">garur.config.js</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">semanticColors</span><span class="syn-punc">:</span> <span class="syn-str">true</span>,
+  <span class="syn-attr">semanticOverrides</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">primary</span><span class="syn-punc">:</span> <span class="syn-str">'#c2410c'</span>,
+    <span class="syn-attr">success</span><span class="syn-punc">:</span> <span class="syn-str">'#16a34a'</span>,
+  },
+};</code></pre>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PATTERNS -->
+      <section id="patterns" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 04</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~5 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Component patterns</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          A long class string in JSX is fine once. Repeated twenty times, it becomes a maintenance
+          problem. Garur gives you three ways to solve this.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Pattern 1 — Constant strings</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">Button.tsx</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">const</span> <span class="syn-attr">BTN</span> <span class="syn-punc">=</span> <span class="syn-str">'inline-flex items-center gap-2 px-4 py-2 rounded-md'</span>;
+<span class="syn-punc">const</span> <span class="syn-attr">PRIMARY</span> <span class="syn-punc">=</span> <span class="syn-str">'bg-graphite-950 text-white'</span>;
+
+<span class="syn-punc">export function</span> <span class="syn-tag">Button</span>({ <span class="syn-attr">variant</span>, <span class="syn-attr">children</span> }) {
+  <span class="syn-punc">const</span> style <span class="syn-punc">=</span> variant <span class="syn-punc">===</span> <span class="syn-str">'primary'</span> ? <span class="syn-attr">PRIMARY</span> : <span class="syn-str">''</span>;
+  <span class="syn-punc">return</span> <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">className</span><span class="syn-punc">=</span>{<span class="syn-attr">`${BTN} ${style}`</span>}<span class="syn-punc">&gt;</span>{children}<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>;
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Pattern 2 — Garur primitives</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">Button.tsx</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export function</span> <span class="syn-tag">Button</span>({ <span class="syn-attr">variant</span> <span class="syn-punc">=</span> <span class="syn-str">'primary'</span>, <span class="syn-attr">children</span> }) {
+  <span class="syn-punc">const</span> cls <span class="syn-punc">=</span> {
+    <span class="syn-attr">primary</span><span class="syn-punc">:</span> <span class="syn-str">'btn btn-primary'</span>,
+    <span class="syn-attr">ghost</span><span class="syn-punc">:</span>   <span class="syn-str">'btn btn-ghost'</span>,
+    <span class="syn-attr">danger</span><span class="syn-punc">:</span>  <span class="syn-str">'btn btn-danger'</span>,
+  }[variant];
+
+  <span class="syn-punc">return</span> <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">className</span><span class="syn-punc">=</span>{cls}<span class="syn-punc">&gt;</span>{children}<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>;
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Pattern 3 — <code class="inline-code">@apply</code></h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">components.css</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-tag">.callout</span> {
+  <span class="syn-attr">@apply</span> p-4 rounded-lg border border-graphite-200 dark:border-white/10;
+}
+
+<span class="syn-tag">.callout-info</span> {
+  <span class="syn-attr">@apply</span> bg-sky-50 border-sky-200 text-sky-900;
+}</code></pre>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- MIGRATING -->
+      <section id="migrating" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 05</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~7 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Migrating from Tailwind</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur's utility layer is deliberately familiar to Tailwind users. Most atomic utilities carry
+          the same name, and the variant syntax is identical.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Class name mapping</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Tailwind</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Garur</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5 font-mono text-xs">slate-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">void-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">cool-tinted neutral</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">zinc-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">graphite-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">true neutral</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">stone-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">smoke-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">warm neutral</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">blue-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">azure-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">vivid blue</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">indigo-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">cobalt-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">deeper blue</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">violet-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">iris-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">blue-purple</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">fuchsia-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">orchid-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">pink-purple</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">pink-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">rose-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">classic rose</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">red-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">ruby-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">rich red</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">orange-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">ember-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">deep orange</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">amber-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">honey-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">amber gold</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">yellow-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">sunbeam-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">bright yellow</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">green-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">forest-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">deep green</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">emerald-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">jade-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">blue-green</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">cyan-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">aqua-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">cyan</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">gray-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">ash-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">cool neutral</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- PERFORMANCE -->
+      <section id="performance" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 06</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~6 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Performance tuning</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur's compile is fast by default. If your build is slower than expected, the cause is almost
+          always one of: overly broad content globs, a missing persistent cache in CI, or a large number
+          of uncached files.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Measure first</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="terminal-prompt">$</span> npx garur benchmark --runs 10
+
+  Files:        247
+  Classes:      1,842
+  Average:      <span class="terminal-ok">28ms</span>
+  Cache:        99.4%</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Persistent cache in CI</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">.github/workflows/build.yml</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">-</span> <span class="syn-attr">uses</span><span class="syn-punc">:</span> actions/cache@v4
+  <span class="syn-attr">with</span><span class="syn-punc">:</span>
+    <span class="syn-attr">path</span><span class="syn-punc">:</span> .garur-cache.bin
+    <span class="syn-attr">key</span><span class="syn-punc">:</span> <span class="syn-str">garur-${{ hashFiles('app/**') }}</span>
+
+<span class="syn-punc">-</span> <span class="syn-attr">run</span><span class="syn-punc">:</span> npx garur ssc ./app --minify</code></pre>
+        </div>
+      </section>
+
+      </div><!-- /chapter-guides -->
+
+      <!-- FEEDBACK -->
+      <div class="mt-12 pt-8 border-t border-graphite-200 dark:border-white/10">
+        <div class="apart-mid flex-wrap gap-4">
+          <span class="text-sm text-graphite-500 dark:text-graphite-400">Was this page helpful?</span>
+          <div class="mid gap-2">
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white transition-colors border border-graphite-200 dark:border-white/10" aria-label="Helpful">👍</button>
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white transition-colors border border-graphite-200 dark:border-white/10" aria-label="Not helpful">👎</button>
+          </div>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ═══ RIGHT SIDEBAR ═══ -->
+  <aside class="hidden lg:block lg:col-span-2 border-l border-graphite-200 dark:border-white/10">
+    <div class="sticky top-14 max-h-[calc(100vh_-_3.5rem)] overflow-y-auto p-6">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 mb-3">
+        On this page
+      </div>
+      <nav id="toc" class="stack-1 text-sm border-l border-graphite-200 dark:border-white/10">
+        <a href="#introduction" class="block pl-3 py-1 text-graphite-950 dark:text-white font-medium border-l-2 border-iris-500 -ml-px">What is Garur?</a>
+        <a href="#installation" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Installation</a>
+        <a href="#quickstart" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Quick start</a>
+        <a href="#layers" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Three layers</a>
+        <a href="#intent" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Intent layer</a>
+        <a href="#primitives" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Primitive layer</a>
+        <a href="#variants" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Variants</a>
+        <a href="#cli" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">CLI reference</a>
+        <a href="#config" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Configuration</a>
+        <a href="#tokens" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Design tokens</a>
+        <a href="#palette" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Color palette</a>
+        <a href="#semantic" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Semantic colors</a>
+        <a href="#color-utilities" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Color utilities</a>
+        <a href="#nextjs" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">With Next.js</a>
+        <a href="#vite" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">With Vite</a>
+        <a href="#themes" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Custom themes</a>
+        <a href="#patterns" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Component patterns</a>
+        <a href="#migrating" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Migrating</a>
+        <a href="#performance" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Performance</a>
+      </nav>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  // ── Theme toggle ──
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('garur-theme', isDark ? 'dark' : 'light'); } catch (_) {}
+  });
+
+  // ── Mobile drawer ──
+  const drawer = document.getElementById('drawer');
+  const menuBtn = document.getElementById('menu-btn');
+  const openDrawer = () => { drawer.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+  const closeDrawer = () => { drawer.classList.add('hidden'); document.body.style.overflow = ''; };
+  menuBtn?.addEventListener('click', openDrawer);
+  document.querySelectorAll('[data-drawer-close]').forEach(el => el.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  // ── Chapter navigation ──
+  const CHAPTERS = [
+    { id: 'chapter-introduction', label: 'Introduction', anchor: 'introduction' },
+    { id: 'chapter-reference',    label: 'Reference',    anchor: 'palette' },
+    { id: 'chapter-guides',       label: 'Guides',       anchor: 'nextjs' },
+  ];
+
+  let currentChapter = 0;
+
+  const prevBtn   = document.getElementById('prev-chapter');
+  const nextBtn   = document.getElementById('next-chapter');
+  const progressEl = document.getElementById('progress-rail');
+  const labelEl    = document.getElementById('chapter-label');
+  const labelText  = document.getElementById('chapter-label-text');
+  const dots       = document.querySelectorAll('.chapter-dot');
+
+  function setChapter(index, scroll = false) {
+    if (index < 0 || index >= CHAPTERS.length) return;
+    currentChapter = index;
+
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === CHAPTERS.length - 1;
+
+    const pct = ((index + 1) / CHAPTERS.length) * 100;
+    progressEl.style.height = pct + '%';
+
+    dots.forEach((dot, i) => {
+      const active = i === index;
+      dot.classList.toggle('bg-graphite-950', active);
+      dot.classList.toggle('dark:bg-white', active);
+      dot.classList.toggle('bg-graphite-300', !active);
+      dot.classList.toggle('dark:bg-white/20', !active);
+    });
+
+    labelText.textContent = CHAPTERS[index].label;
+
+    if (scroll) {
+      const el = document.getElementById(CHAPTERS[index].anchor);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  prevBtn.addEventListener('click', () => setChapter(currentChapter - 1, true));
+  nextBtn.addEventListener('click', () => setChapter(currentChapter + 1, true));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => setChapter(i, true)));
+
+  const railCenter = progressEl.parentElement.parentElement;
+  railCenter.addEventListener('mouseenter', () => labelEl.style.opacity = '1');
+  railCenter.addEventListener('mouseleave', () => labelEl.style.opacity = '0');
+
+  // ── Track chapter by scroll position ──
+  const chapterEls = CHAPTERS.map(c => document.getElementById(c.id)).filter(Boolean);
+  const chapterObserver = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top);
+    if (visible.length > 0) {
+      const id = visible[0].target.id;
+      const idx = CHAPTERS.findIndex(c => c.id === id);
+      if (idx !== -1 && idx !== currentChapter) setChapter(idx, false);
+    }
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  chapterEls.forEach(el => chapterObserver.observe(el));
+
+  // ── Sync TOC active state ──
+  const allSections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('#toc a');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => {
+          const active = link.getAttribute('href') === '#' + entry.target.id;
+          link.classList.toggle('text-graphite-950', active);
+          link.classList.toggle('dark:text-white', active);
+          link.classList.toggle('font-medium', active);
+          link.classList.toggle('border-iris-500', active);
+          link.classList.toggle('border-transparent', !active);
+          link.classList.toggle('text-graphite-500', !active);
+          link.classList.toggle('dark:text-graphite-400', !active);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -75% 0px' });
+  allSections.forEach(s => tocObserver.observe(s));
+
+  setChapter(0, false);
+
+  // ── Keyboard nav ──
+  document.addEventListener('keydown', e => {
+    const tag = (document.activeElement?.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+    if (e.key === '[' && !e.metaKey && !e.ctrlKey) { e.preventDefault(); setChapter(currentChapter - 1, true); }
+    else if (e.key === ']' && !e.metaKey && !e.ctrlKey) { e.preventDefault(); setChapter(currentChapter + 1, true); }
+  });
+</script>
+
+</body>
+</html>
