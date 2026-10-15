@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GarurSaili-CSS introduction — installation, core concepts, API reference, and guides." />
+  <title>Introduction — GarurSaili Documentation</title>
+  <link rel="stylesheet" href="../build/garur.css" />
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('garur-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
+</head>
+
+<body class="bg-bone-50 dark:bg-[#07070a] text-graphite-950 dark:text-graphite-50 font-sans antialiased m-0 min-h-screen">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TOP BAR
+     ═══════════════════════════════════════════════════════════════ -->
+<header class="pinned-blur h-14">
+  <div class="max-w-[1440px] mx-auto px-4 md:px-6 apart-mid h-full">
+
+    <div class="mid gap-4">
+      <a href="./index.html" class="mid gap-2 flex-shrink-0">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 via-plum-500 to-honey-500 mid text-white text-[13px] font-black">ग</span>
+        <span class="font-semibold small tracking-tight hidden sm:block">GarurSaili</span>
+      </a>
+
+      <span class="hidden md:block w-px h-5 bg-graphite-200 dark:bg-white/[0.08]"></span>
+
+      <nav class="hidden md:flex items-center gap-1.5 small">
+        <a href="./index.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <a href="./a.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Docs</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <span class="px-2 py-1 text-graphite-950 dark:text-white font-medium">Introduction</span>
+      </nav>
+
+      <span class="hidden md:inline-flex mid gap-1.5 px-2 py-0.5 rounded-full tiny font-mono font-medium bg-jade-500/10 text-jade-700 dark:text-jade-400 border border-jade-500/20">
+        <span class="w-1 h-1 rounded-full bg-jade-500 pulse-ring"></span>
+        v1.4.1
+      </span>
+    </div>
+
+    <div class="mid gap-2">
+      <button type="button" class="hidden md:flex mid gap-2 w-56 h-8 px-3 rounded-md small bg-bone-50 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.08] text-graphite-500 dark:text-graphite-400 hover:border-graphite-300 dark:hover:border-white/[0.15] smooth">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="flex-1 text-left">Search docs...</span>
+        <span class="kbd text-[9px] h-5 min-w-[1.25rem]">⌘K</span>
+      </button>
+
+      <button id="menu-btn" type="button" class="md:hidden w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth" aria-label="Open navigation">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <a href="https://github.com/barshansarkar/Garursaili-CSS" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-1.5 h-8 px-3 rounded-md small font-medium bg-graphite-950 dark:bg-white text-white dark:text-black hover:opacity-90 smooth">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        GitHub
+      </a>
+
+      <button id="theme-toggle" type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth" aria-label="Toggle theme">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOBILE DRAWER
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="drawer" class="hidden fixed inset-0 z-[60] md:hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-drawer-close></div>
+  <aside class="absolute top-0 left-0 bottom-0 w-72 bg-bone-50 dark:bg-[#0a0a0f] border-r border-graphite-200 dark:border-white/[0.08] overflow-y-auto p-5 stack-6">
+    <div class="apart-mid">
+      <div class="mid gap-2">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 to-plum-500 mid text-white text-sm font-black">ग</span>
+        <span class="font-semibold small">GarurSaili</span>
+      </div>
+      <button type="button" class="w-7 h-7 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06]" data-drawer-close>✕</button>
+    </div>
+
+    <nav class="stack-5 small">
+      <div class="stack-1">
+        <div class="menu-label">Getting started</div>
+        <a href="#introduction" class="menu-item" data-drawer-close>Introduction</a>
+        <a href="#installation" class="menu-item" data-drawer-close>Installation</a>
+        <a href="#quickstart" class="menu-item" data-drawer-close>Quick start</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Core concepts</div>
+        <a href="#layers" class="menu-item" data-drawer-close>Three layers</a>
+        <a href="#intent" class="menu-item" data-drawer-close>Intent layer</a>
+        <a href="#primitives" class="menu-item" data-drawer-close>Primitive layer</a>
+        <a href="#variants" class="menu-item" data-drawer-close>Variants</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Reference</div>
+        <a href="#tokens" class="menu-item" data-drawer-close>Design tokens</a>
+        <a href="#preflight" class="menu-item" data-drawer-close>Preflight</a>
+        <a href="#authoring" class="menu-item" data-drawer-close>@theme & @apply</a>
+        <a href="#cli" class="menu-item" data-drawer-close>CLI</a>
+        <a href="#config" class="menu-item" data-drawer-close>Configuration</a>
+      </div>
+    </nav>
+  </aside>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE SHELL — 3 columns
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="max-w-[1440px] mx-auto grid grid-cols-12 pt-14">
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="hidden md:block md:col-span-3 lg:col-span-2 border-r border-graphite-200 dark:border-white/[0.06]">
+    <nav class="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto p-6 stack-7 small">
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Getting started</div>
+        <a href="#introduction" class="menu-item menu-item-active">Introduction</a>
+        <a href="#installation" class="menu-item">Installation</a>
+        <a href="#quickstart" class="menu-item">Quick start</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Core concepts</div>
+        <a href="#layers" class="menu-item">Three layers</a>
+        <a href="#intent" class="menu-item">Intent layer</a>
+        <a href="#primitives" class="menu-item">Primitive layer</a>
+        <a href="#variants" class="menu-item">Variants</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Reference</div>
+        <a href="#tokens" class="menu-item">Design tokens</a>
+        <a href="#preflight" class="menu-item">Preflight</a>
+        <a href="#authoring" class="menu-item">@theme & @apply</a>
+        <a href="#plugins" class="menu-item">Plugins</a>
+        <a href="#cli" class="menu-item">CLI reference</a>
+        <a href="#config" class="menu-item">Configuration</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Next steps</div>
+        <a href="./colour.html" class="menu-item">Color palette →</a>
+        <a href="./garurintent.html" class="menu-item">Intent layer →</a>
+        <a href="./utility.html" class="menu-item">Utility layer →</a>
+        <a href="./getstarted.html" class="menu-item">Guides →</a>
+      </div>
+
+    </nav>
+  </aside>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="col-span-12 md:col-span-9 lg:col-span-8">
+    <article class="max-w-[720px] mx-auto px-6 py-12 md:py-16">
+
+      <!-- ═══════════════════════════════════════════════
+           HEADER
+           ═══════════════════════════════════════════════ -->
+      <header class="mb-14">
+        <div class="mid gap-2 mb-4">
+          <a href="./index.html" class="tiny text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+          <span class="tiny text-graphite-300 dark:text-graphite-600">/</span>
+          <a href="./a.html" class="tiny text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Docs</a>
+          <span class="tiny text-graphite-300 dark:text-graphite-600">/</span>
+          <span class="tiny text-graphite-950 dark:text-white font-medium">Introduction</span>
+        </div>
+
+        <h1 class="hero-vercel leading-[0.98]">
+          <span class="block text-4xl md:text-5xl">Introduction</span>
+          <span class="block gradient-text text-4xl md:text-5xl">to GarurSaili</span>
+        </h1>
+
+        <p class="lead text-graphite-600 dark:text-graphite-400 leading-relaxed mt-6">
+          GarurSaili-CSS is a semantic hybrid CSS engine. It fuses three layers —
+          <strong class="font-semibold text-graphite-950 dark:text-white">intent</strong>,
+          <strong class="font-semibold text-graphite-950 dark:text-white">primitive</strong>, and
+          <strong class="font-semibold text-graphite-950 dark:text-white">utility</strong> —
+          into a single native Rust binary that compiles at the speed of disk I/O.
+        </p>
+
+        <div class="mid gap-3 mt-6 tiny flex-wrap">
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-jade-500"></span>
+            <span>Stable · v1.4.1</span>
+          </div>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-iris-500"></span>
+            <span>MIT licensed</span>
+          </div>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-graphite-500 dark:text-graphite-400">Built in Malda, West Bengal</span>
+        </div>
+      </header>
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 01 — INTRODUCTION
+           ═══════════════════════════════════════════════ -->
+      <section id="introduction" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 01</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Introduction</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">What is GarurSaili?</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          GarurSaili is a compiler. You write class names in your markup, point it at your source
+          files, and it emits exactly the CSS you use — nothing more, nothing less. There is no
+          runtime, no plugin chain, and no JavaScript shipped to the browser.
+        </p>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          What makes it different is that its vocabulary spans three layers of abstraction. You can
+          write <code class="inline-code">mid</code> to mean <em>"center on both axes"</em> without
+          remembering whether that's <code class="inline-code">flex</code> or
+          <code class="inline-code">grid</code>. You can write <code class="inline-code">card-glass</code>
+          and get a complete translucent surface with border, radius, shadow, and backdrop blur in a
+          single class. You can also write raw utilities like <code class="inline-code">p-4</code> and
+          <code class="inline-code">bg-iris-500</code> when you need precise control.
+        </p>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed">
+          All three coexist. Compose them together. The engine handles the rest.
+        </p>
+
+        <!-- Meaning of the name -->
+        <div class="mt-8 p-6 rounded-xl bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+          <div class="mid gap-3 mb-3">
+            <span class="w-9 h-9 rounded-lg bg-gradient-to-br from-iris-500 to-plum-500 mid text-white font-black text-base">ग</span>
+            <div>
+              <div class="small font-semibold">गरुड़ · garuḍa</div>
+              <div class="tiny text-graphite-500 dark:text-graphite-400 font-mono">Sanskrit · "eagle"</div>
+            </div>
+          </div>
+          <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+            The <em>garuḍa</em> was the mount of Lord Vishnu — a divine eagle said to be the fastest
+            creature in the sky, faster than the wind itself. We named this framework after it because
+            speed should not be a compromise. <strong class="font-semibold text-graphite-950 dark:text-white">GarurSaili</strong>
+            compiles 10,000 classes in thirty milliseconds — not by trading precision for speed, but by
+            refusing to accept that they are opposites.
+          </p>
+        </div>
+
+        <!-- Note -->
+        <div class="mt-6 p-5 rounded-lg border border-graphite-200 dark:border-white/[0.06] bg-graphite-50 dark:bg-white/[0.02]">
+          <div class="mid gap-2 mb-2">
+            <svg class="w-4 h-4 text-iris-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span class="small font-medium">Build-time only.</span>
+          </div>
+          <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+            GarurSaili has zero effect on your application's runtime bundle. The output is a plain CSS
+            file — no CSS-in-JS, no injected style tags, no runtime style computation, no JavaScript
+            shipped to the browser.
+          </p>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 02 — INSTALLATION
+           ═══════════════════════════════════════════════ -->
+      <section id="installation" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 02</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Installation</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Installation</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          GarurSaili is distributed as a prebuilt native binary via N-API. Installation does not require
+          a Rust toolchain, a build step, or any native compilation on your machine.
+        </p>
+
+        <!-- Three install methods -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          <div class="p-5 rounded-xl bg-white dark:bg-white/[0.02] border border-iris-500/30 stack-3 relative overflow-hidden">
+            <div class="absolute top-3 right-3 tag-ok tiny">recommended</div>
+            <div class="mid gap-2">
+              <span class="w-8 h-8 rounded-lg bg-iris-500/10 mid text-iris-500 text-sm font-bold">npm</span>
+            </div>
+            <div class="small font-semibold">Cross-platform</div>
+            <p class="tiny text-graphite-500 dark:text-graphite-400 leading-relaxed">
+              Prebuilt binaries for Linux, macOS, and Windows.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="mid gap-2">
+              <span class="w-8 h-8 rounded-lg bg-jade-500/10 mid text-jade-500 text-sm font-bold">CDN</span>
+            </div>
+            <div class="small font-semibold">Zero-install</div>
+            <p class="tiny text-graphite-500 dark:text-graphite-400 leading-relaxed">
+              Prebuilt <code class="inline-code">garur.min.css</code> via jsDelivr.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="mid gap-2">
+              <span class="w-8 h-8 rounded-lg bg-plum-500/10 mid text-plum-500 text-sm font-bold">VS</span>
+            </div>
+            <div class="small font-semibold">Editor</div>
+            <p class="tiny text-graphite-500 dark:text-graphite-400 leading-relaxed">
+              IntelliSense for VS Code and Cursor.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Install via npm</h3>
+        <div class="code-window mb-4">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">terminal</span>
+          </div>
+          <pre class="code-body small"><code><span class="terminal-prompt">$</span> npm install garursaili-css</code></pre>
+        </div>
+
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Works with <strong class="font-semibold text-graphite-950 dark:text-white">npm</strong>,
+          <strong class="font-semibold text-graphite-950 dark:text-white">pnpm</strong>,
+          <strong class="font-semibold text-graphite-950 dark:text-white">Yarn</strong>, and
+          <strong class="font-semibold text-graphite-950 dark:text-white">Bun</strong> without
+          configuration. The package ships precompiled binaries for macOS (x64, arm64),
+          Linux (x64, arm64), and Windows (x64).
+        </p>
+
+        <h3 class="body font-semibold mb-3">Or use the CDN</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Drop one <code class="inline-code">&lt;link&gt;</code> into any HTML page. The whole
+          preflight, palette, primitives, and utilities are available immediately.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">index.html</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">&lt;</span><span class="syn-tag">link</span> <span class="syn-attr">rel</span>=<span class="syn-str">"stylesheet"</span>
+  <span class="syn-attr">href</span>=<span class="syn-str">"https://cdn.jsdelivr.net/npm/garursaili-css/dist-cdn/garur.min.css"</span> <span class="syn-punc">/&gt;</span></code></pre>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Verify installation</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">terminal</span>
+          </div>
+          <pre class="code-body small"><code><span class="terminal-prompt">$</span> npx garur --version
+<span class="terminal-ok">garursaili-css/1.4.1</span>
+<span class="terminal-ok">native/ferrous-engine</span>
+<span class="terminal-ok">platform/linux-x64-gnu</span></code></pre>
+        </div>
+
+        <div class="mt-5 p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="small">
+            <span class="font-medium">Editor extension.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Search "GarurSaili" in the VS Code marketplace for autocomplete, hover docs, class sorting, and diagnostics. Works in Cursor and Windsurf too.</span>
+          </div>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 03 — QUICK START
+           ═══════════════════════════════════════════════ -->
+      <section id="quickstart" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 03</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Quick start</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Quick start</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          The fastest way to see GarurSaili work is with the built-in <code class="inline-code">ssc</code>
+          command — <strong class="font-semibold text-graphite-950 dark:text-white">Super Sonic Cyclone</strong>.
+          It scans your source files, extracts every class, and emits a single stylesheet in one pass.
+        </p>
+
+        <!-- Step 1 -->
+        <h3 class="body font-semibold mb-3 mt-8">1. Scan and build</h3>
+        <div class="code-window mb-4">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">terminal</span>
+          </div>
+          <pre class="code-body small"><code><span class="terminal-prompt">$</span> npx garur ssc ./src
+<span class="terminal-ok">✓</span> Scanned <span class="syn-attr">124</span> files
+<span class="terminal-ok">✓</span> Extracted <span class="syn-attr">842</span> unique classes
+<span class="terminal-ok">✓</span> Built in <span class="terminal-ok">28ms</span>
+<span class="terminal-dim">→ ./build/garur.css · 14.2 KB</span></code></pre>
+        </div>
+
+        <!-- Step 2 -->
+        <h3 class="body font-semibold mb-3 mt-8">2. Link the stylesheet</h3>
+        <div class="code-window mb-4">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">index.html</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">&lt;</span><span class="syn-tag">link</span> <span class="syn-attr">rel</span>=<span class="syn-str">"stylesheet"</span> <span class="syn-attr">href</span>=<span class="syn-str">"./build/garur.css"</span> <span class="syn-punc">/&gt;</span></code></pre>
+        </div>
+
+        <!-- Step 3 -->
+        <h3 class="body font-semibold mb-3 mt-8">3. Write classes</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">page.html</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span>=<span class="syn-str">"mid stack-4 p-8"</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">h1</span> <span class="syn-attr">class</span>=<span class="syn-str">"text-3xl font-bold"</span><span class="syn-punc">&gt;</span>Hello<span class="syn-punc">&lt;/</span><span class="syn-tag">h1</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">class</span>=<span class="syn-str">"btn btn-primary"</span><span class="syn-punc">&gt;</span>Get started<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>
+<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span></code></pre>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 04 — THREE LAYERS
+           ═══════════════════════════════════════════════ -->
+      <section id="layers" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 04</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Core concept</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Three layers</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          GarurSaili's vocabulary is organized into three layers. Each has a distinct purpose.
+          Understanding them helps you decide <em>which</em> class to reach for when.
+        </p>
+
+        <div class="stack-3 mb-8">
+          <!-- Intent -->
+          <div class="p-5 rounded-xl border border-iris-500/30 bg-iris-500/[0.04] stack-3">
+            <div class="mid gap-3">
+              <span class="w-7 h-7 rounded-lg bg-iris-500/15 mid text-iris-600 dark:text-iris-400 text-sm font-bold">1</span>
+              <h3 class="body font-semibold">Intent layer</h3>
+              <span class="ml-auto tiny font-mono text-graphite-400 dark:text-graphite-500">signature.rs</span>
+            </div>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Describes <em>what you mean</em> using vocabulary that maps to your mental model.
+              <code class="inline-code">mid</code> means "centered both axes."
+              <code class="inline-code">apart-mid</code> means "space-between, aligned."
+              <code class="inline-code">rise</code> means "elevated with a shadow."
+            </p>
+            <div class="chips">
+              <span class="chip tiny">mid</span>
+              <span class="chip tiny">apart-mid</span>
+              <span class="chip tiny">rise</span>
+              <span class="chip tiny">clickable</span>
+              <span class="chip tiny">namaste</span>
+            </div>
+          </div>
+
+          <!-- Primitive -->
+          <div class="p-5 rounded-xl border border-plum-500/30 bg-plum-500/[0.04] stack-3">
+            <div class="mid gap-3">
+              <span class="w-7 h-7 rounded-lg bg-plum-500/15 mid text-plum-600 dark:text-plum-400 text-sm font-bold">2</span>
+              <h3 class="body font-semibold">Primitive layer</h3>
+              <span class="ml-auto tiny font-mono text-graphite-400 dark:text-graphite-500">primitives.rs</span>
+            </div>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Component-level shorthands powered by runtime tokens.
+              <code class="inline-code">card</code> gives you a complete surface with border, radius,
+              padding, and shadow. <code class="inline-code">btn</code> gives you a button skeleton.
+              Every token is a CSS variable, so theming works at runtime.
+            </p>
+            <div class="chips">
+              <span class="chip tiny">card</span>
+              <span class="chip tiny">btn-primary</span>
+              <span class="chip tiny">navbar</span>
+              <span class="chip tiny">modal</span>
+              <span class="chip tiny">alert</span>
+            </div>
+          </div>
+
+          <!-- Utility -->
+          <div class="p-5 rounded-xl border border-jade-500/30 bg-jade-500/[0.04] stack-3">
+            <div class="mid gap-3">
+              <span class="w-7 h-7 rounded-lg bg-jade-500/15 mid text-jade-600 dark:text-jade-400 text-sm font-bold">3</span>
+              <h3 class="body font-semibold">Utility layer</h3>
+              <span class="ml-auto tiny font-mono text-graphite-400 dark:text-graphite-500">utilities.rs</span>
+            </div>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Atomic utilities with a familiar syntax —
+              <code class="inline-code">p-4</code>, <code class="inline-code">bg-iris-500</code>,
+              <code class="inline-code">grid-cols-3</code>, <code class="inline-code">hover:rise</code>.
+              Full variant support, arbitrary values, and opacity modifiers.
+            </p>
+            <div class="chips">
+              <span class="chip tiny">p-4</span>
+              <span class="chip tiny">bg-iris-500/50</span>
+              <span class="chip tiny">grid-cols-3</span>
+              <span class="chip tiny">md:dark:hover:rise</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-lg bg-iris-50 dark:bg-iris-500/[0.06] border border-iris-100 dark:border-iris-500/20">
+          <div class="small">
+            <span class="font-medium text-iris-700 dark:text-iris-300">Layers compose freely.</span>
+            <span class="text-graphite-700 dark:text-graphite-300"> There is no rule preventing you from mixing a primitive with utilities, or using an intent alongside raw atomic classes. Utilities win the cascade where they overlap, so <code class="inline-code">card p-2</code> overrides the card's default padding without any <code class="inline-code">!important</code>.</span>
+          </div>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 05 — INTENT LAYER
+           ═══════════════════════════════════════════════ -->
+      <section id="intent" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 05</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Intent layer</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Intent layer</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Intents replace combinations of flex, gap, justify, and align declarations with a single
+          class. They read the way you would describe the layout to another engineer.
+        </p>
+
+        <h3 class="body font-semibold mb-3">Layout intents</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-8">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">mid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · centered both axes</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">apart-mid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · space-between, vertically centered</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">stack-4</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Column · gap: 1rem</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">row-3</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Row · gap: 0.75rem</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">cluster</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex-wrap · for chips and tags</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">auto-grid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Responsive grid with 16rem min column</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Visual intents</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-8">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">rise</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Elevated box-shadow (lg)</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">lift</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Hover: translateY(-2px) + shadow</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">faded</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">opacity: 0.5</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">smooth</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">300ms cubic-bezier transition</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">clickable</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Pointer cursor + hover background</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Indian-inspired intents</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Ten shorthands named after the things their visual patterns resemble. They're part of the
+          engine — not decoration.
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+          <div class="p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-1">
+            <code class="inline-code tiny">namaste</code>
+            <span class="tiny text-graphite-500 dark:text-graphite-400">Centered greeting stack</span>
+          </div>
+          <div class="p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-1">
+            <code class="inline-code tiny">lotus</code>
+            <span class="tiny text-graphite-500 dark:text-graphite-400">Symmetric grid</span>
+          </div>
+          <div class="p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-1">
+            <code class="inline-code tiny">banyan</code>
+            <span class="tiny text-graphite-500 dark:text-graphite-400">Sticky blur header</span>
+          </div>
+          <div class="p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-1">
+            <code class="inline-code tiny">rangoli</code>
+            <span class="tiny text-graphite-500 dark:text-graphite-400">4-column centered grid</span>
+          </div>
+          <div class="p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-1">
+            <code class="inline-code tiny">chakra</code>
+            <span class="tiny text-graphite-500 dark:text-graphite-400">Spinning loader</span>
+          </div>
+          <div class="p-3 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-1">
+            <code class="inline-code tiny">diya</code>
+            <span class="tiny text-graphite-500 dark:text-graphite-400">Warm radial glow</span>
+          </div>
+        </div>
+
+        <p class="small text-graphite-500 dark:text-graphite-400 mt-4">
+          See the <a href="./garurintent.html" class="link">full intent layer →</a>
+        </p>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 06 — PRIMITIVE LAYER
+           ═══════════════════════════════════════════════ -->
+      <section id="primitives" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 06</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Primitive layer</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Primitive layer</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Primitives are complete component shorthands. Every primitive reads its values from
+          <code class="inline-code">--garur-*</code> CSS variables, which means you can retheme the
+          entire system at runtime by overriding those variables on <code class="inline-code">:root</code>.
+        </p>
+
+        <h3 class="body font-semibold mb-3">Common primitives</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-48">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">card</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Surface with border, radius, padding, shadow</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">card-glass</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Translucent surface with backdrop blur</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">btn</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Button skeleton — pair with <code class="inline-code">btn-primary</code></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">badge</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Inline pill — variants for each semantic color</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">alert</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Notice block with border and background tint</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">input</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Form input with focus ring</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">navbar</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Top navigation bar layout</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Example — a complete card with header, body, and action buttons:
+        </p>
+
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">example.html</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span>=<span class="syn-str">"card"</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span>=<span class="syn-str">"card-header"</span><span class="syn-punc">&gt;</span>Title<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span>=<span class="syn-str">"card-body"</span><span class="syn-punc">&gt;</span>Content<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;</span><span class="syn-tag">div</span> <span class="syn-attr">class</span>=<span class="syn-str">"card-footer"</span><span class="syn-punc">&gt;</span>
+    <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">class</span>=<span class="syn-str">"btn btn-primary"</span><span class="syn-punc">&gt;</span>Save<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>
+  <span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span>
+<span class="syn-punc">&lt;/</span><span class="syn-tag">div</span><span class="syn-punc">&gt;</span></code></pre>
+        </div>
+
+        <p class="small text-graphite-500 dark:text-graphite-400 mt-4">
+          Primitives include forms, feedback, navigation, overlays, and content components. See the full list in the <a href="./utility.html" class="link">utility reference →</a>
+        </p>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 07 — VARIANTS
+           ═══════════════════════════════════════════════ -->
+      <section id="variants" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 07</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Variants</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Variants</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Any utility, primitive, or intent can be prefixed with a variant. Prefixes stack from left
+          to right — <code class="inline-code">md:dark:hover:bg-iris-500</code> applies on medium
+          screens, in dark mode, on hover.
+        </p>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-44">Variant</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Applies when</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">hover:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Pointer is over the element</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">focus-visible:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Element is keyboard-focused</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">active:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Element is being pressed</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">disabled:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Element has <code class="inline-code">[disabled]</code></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">dark:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Dark mode is active</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">md:</code> · <code class="inline-code">lg:</code> · <code class="inline-code">xl:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Viewport meets breakpoint</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">@sm:</code> · <code class="inline-code">@lg:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Container query — 24rem · 32rem min</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">group-hover:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Parent with <code class="inline-code">.group</code> is hovered</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">peer-checked:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Sibling with <code class="inline-code">.peer</code> is checked</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">has-[:checked]:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Element matches <code class="inline-code">:has()</code> selector</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">data-[state=open]:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Element has matching data attribute</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">aria-expanded-true:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">ARIA attribute is true</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">motion-safe:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Reduced-motion is not preferred</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">print:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Print media</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">rtl:</code> · <code class="inline-code">ltr:</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Text direction</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="small text-graphite-500 dark:text-graphite-400 mt-4">
+          GarurSaili ships 50+ variants across 12 families. See the <a href="./varients.html" class="link">complete variants reference →</a>
+        </p>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 08 — DESIGN TOKENS
+           ═══════════════════════════════════════════════ -->
+      <section id="tokens" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 08</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Design tokens</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Design tokens</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Every primitive reads from a CSS variable prefixed with <code class="inline-code">--garur-</code>.
+          You can retheme the whole system at runtime without a rebuild — just override the variables
+          on <code class="inline-code">:root</code>.
+        </p>
+
+        <h3 class="body font-semibold mb-3 mt-8">Semantic colors</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Token</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-32">Default</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-24">Foreground</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-primary</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#8657f7</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-secondary</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#647490</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-success</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#26944c</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-danger</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#d12a3d</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-warning</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#f59e00</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#1e1e1e</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-info</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#1a8ade</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-accent</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#e54cb5</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-muted</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#6f7780</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Surfaces & foreground</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Token</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Light / Dark</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-surface</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#ffffff / #1e1e1e</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-surface-muted</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#f5f5f5 / #2a2a2a</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-fg</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#1a1a1a / #f5f5f5</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-subtle</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#94a3b8 / #64748b</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-hint</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">#cbd5e1 / #475569</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-border-subtle</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">rgb(0 0 0 / 0.1) / rgb(255 255 255 / 0.1)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Radius, shadow, focus</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Token</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Default</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-radius</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">0.5rem</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-radius-lg</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">0.75rem</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-radius-xl</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">1rem</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-shadow-sm</code> → <code class="inline-code">2xl</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">five elevation levels</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-shadow-inner</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">inset shadow</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-focus-color</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">currentColor</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-focus-width</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">2px</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-focus-offset</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">2px</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">--garur-ring-color</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">--garur-primary</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Overriding tokens</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">theme.css</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-tag">:root</span> {
+  <span class="syn-attr">--garur-primary</span>: <span class="syn-str">#c2410c</span>;
+  <span class="syn-attr">--garur-radius</span>: <span class="syn-str">0.25rem</span>;
+  <span class="syn-attr">--garur-shadow-md</span>: <span class="syn-str">0 2px 4px rgba(0,0,0,0.06)</span>;
+}
+
+<span class="syn-comment">/* Every .btn, .card, .badge, .alert, .input, .modal,
+   .toast, and .navbar updates automatically. */</span></code></pre>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 09 — PREFLIGHT
+           ═══════════════════════════════════════════════ -->
+      <section id="preflight" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 09</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Preflight</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Preflight</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Preflight is GarurSaili's baseline stylesheet. It's emitted first, wrapped in cascade
+          layers, and includes everything you'd otherwise write by hand at the top of every
+          project: box-sizing, margin resets, focus rings, form normalization, print styles.
+        </p>
+
+        <div class="p-4 rounded-lg border border-iris-500/30 bg-iris-500/[0.05] flex gap-3 mb-6">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="small">
+            <span class="font-medium">Every section is optional.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Pass <code class="inline-code">getPreflightConfigured({ print: false, a11y: true })</code> to toggle individual blocks. Perfect for embedding GarurSaili into existing projects without fighting your own resets.</span>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">What's included</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-32">Section</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Includes</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-20">Default</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">reset</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">box-sizing, margin, border-zero, scrollbar-gutter</td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">typography</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">headings, paragraphs, lists, code, tables, media</td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">forms</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">input normalization, file button, select, placeholder</td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">a11y</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">focus-visible, reduced-motion, high-contrast, forced-colors</td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">modern</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">dialog, popover, details, selection, meter, fieldset</td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">runtime_theme</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">the <code class="inline-code">--garur-*</code> token variables on <code class="inline-code">:root</code></td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">perf_animation</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">GPU layer hints for elements with <code class="inline-code">animate-</code> or <code class="inline-code">transition-</code></td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">reduced_data</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">disables animation and background-image on <code class="inline-code">prefers-reduced-data</code></td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">reduced_transparency</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">solid fallbacks on <code class="inline-code">prefers-reduced-transparency</code></td><td class="px-4 py-2.5"><span class="tag-ok tiny">on</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">print</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">page margins, link href expansion, page-break rules</td><td class="px-4 py-2.5"><span class="tag-warn tiny">off</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">dark_auto</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">sets <code class="inline-code">color-scheme: light dark</code> globally</td><td class="px-4 py-2.5"><span class="tag-warn tiny">off</span></td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">auto_dark_controls</code></td><td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">native form controls follow OS dark mode</td><td class="px-4 py-2.5"><span class="tag-warn tiny">off</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Cascade layers</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Everything GarurSaili emits lives inside declared layers. This means your own CSS — outside
+          any layer — always wins, without needing <code class="inline-code">!important</code>.
+        </p>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">layer order</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-tag">@layer</span> garur-tokens, garur-reset, garur-elements,
+       garur-forms, garur-motion, garur-utils;
+
+<span class="syn-comment">/* Later layers win over earlier ones. */</span>
+<span class="syn-comment">/* Your own unlayered CSS wins over all of them. */</span></code></pre>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Configuring preflight</h3>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">enable print + dark_auto</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">import</span> { <span class="syn-attr">getPreflightConfigured</span> } <span class="syn-punc">from</span> <span class="syn-str">'garursaili-css'</span>;
+
+<span class="syn-punc">const</span> preflight = <span class="syn-attr">getPreflightConfigured</span>({
+  <span class="syn-attr">print</span>: <span class="syn-str">true</span>,
+  <span class="syn-attr">dark_auto</span>: <span class="syn-str">true</span>,
+  <span class="syn-attr">auto_dark_controls</span>: <span class="syn-str">true</span>,
+  <span class="syn-attr">reduced_data</span>: <span class="syn-str">false</span>, <span class="syn-comment">// skip data-saver</span>
+});</code></pre>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 10 — AUTHORING
+           ═══════════════════════════════════════════════ -->
+      <section id="authoring" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 10</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Authoring</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">@theme & @apply</h2>
+
+        <h3 class="body font-semibold mb-3">@theme</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Declare design tokens directly in CSS. GarurSaili extracts them, feeds them into the engine
+          as if they were in <code class="inline-code">garur.config.js</code>, and emits them as CSS
+          custom properties on <code class="inline-code">:root</code>. This lets you keep colors and
+          spacing near the components that use them.
+        </p>
+
+        <div class="code-window mb-5">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">theme.css</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-tag">@theme</span> {
+  <span class="syn-attr">--color-brand-50</span>:  <span class="syn-str">#fff7ed</span>;
+  <span class="syn-attr">--color-brand-500</span>: <span class="syn-str">#f97316</span>;
+  <span class="syn-attr">--color-brand-900</span>: <span class="syn-str">#7c2d12</span>;
+
+  <span class="syn-attr">--spacing-xs</span>: <span class="syn-str">0.125rem</span>;
+  <span class="syn-attr">--spacing-xl</span>: <span class="syn-str">2rem</span>;
+
+  <span class="syn-attr">--radius-card</span>: <span class="syn-str">1.25rem</span>;
+  <span class="syn-attr">--font-brand</span>: <span class="syn-str">"Inter Variable"</span>;
+}
+
+<span class="syn-comment">/* After extraction, these are also available as utilities: */</span>
+<span class="syn-comment">/* bg-brand-500, text-brand-900, p-xs, p-xl, rounded-card, font-brand */</span></code></pre>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">@apply</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-3">
+          Extract utility strings into named classes. The engine expands
+          <code class="inline-code">@apply</code> at build time — the emitted CSS contains the
+          resolved declarations, not a reference.
+        </p>
+
+        <div class="code-window mb-5">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">components.css</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-tag">.callout</span> {
+  <span class="syn-attr">@apply</span> p-4 rounded-lg border border-graphite-200 dark:border-white/10;
+}
+
+<span class="syn-tag">.callout-info</span> {
+  <span class="syn-attr">@apply</span> bg-sky-50 border-sky-200 text-sky-900;
+}
+
+<span class="syn-comment">/* @apply accepts variants too */</span>
+<span class="syn-tag">.btn-hover-lift</span> {
+  <span class="syn-attr">@apply</span> hover:rise focus-visible:ring-2 focus-visible:ring-iris-500;
+}</code></pre>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">When to use @apply</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-4 rounded-lg border border-jade-500/30 bg-jade-500/[0.04] stack-2">
+            <div class="tiny uppercase tracking-wider font-semibold text-jade-600 dark:text-jade-400">Good use</div>
+            <ul class="small text-graphite-700 dark:text-graphite-300 stack-1 list-disc pl-4">
+              <li>Markdown-rendered content you don't control</li>
+              <li>CMS blocks and rich-text output</li>
+              <li>Third-party widgets that need one class</li>
+            </ul>
+          </div>
+          <div class="p-4 rounded-lg border border-ruby-500/30 bg-ruby-500/[0.04] stack-2">
+            <div class="tiny uppercase tracking-wider font-semibold text-ruby-600 dark:text-ruby-400">Bad use</div>
+            <ul class="small text-graphite-700 dark:text-graphite-300 stack-1 list-disc pl-4">
+              <li>Component class strings in JSX</li>
+              <li>Anything used once</li>
+              <li>Replacing a primitive that already exists</li>
+            </ul>
+          </div>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 11 — PLUGINS
+           ═══════════════════════════════════════════════ -->
+      <section id="plugins" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 11</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Plugins</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Plugins</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          GarurSaili's plugin API is minimal by design. Register custom utilities and custom
+          variants from JavaScript — they merge into the engine's namespace and are available to
+          every scan, build, and SSC pass.
+        </p>
+
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">plugin.js</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">import</span> {
+  <span class="syn-attr">registerPluginUtility</span>,
+  <span class="syn-attr">registerPluginVariant</span>
+} <span class="syn-punc">from</span> <span class="syn-str">'garursaili-css'</span>;
+
+<span class="syn-comment">// Custom utility — name → declarations</span>
+<span class="syn-attr">registerPluginUtility</span>(
+  <span class="syn-str">'glass'</span>,
+  <span class="syn-str">'backdrop-filter:blur(16px);background:rgba(255,255,255,0.6)'</span>
+);
+
+<span class="syn-comment">// Custom variant — hocus = hover OR focus</span>
+<span class="syn-attr">registerPluginVariant</span>(
+  <span class="syn-str">'hocus'</span>,
+  <span class="syn-str">'&:hover, &:focus-visible'</span>
+);
+
+<span class="syn-comment">// Now `glass` and `hocus:bg-iris-500` work everywhere</span></code></pre>
+        </div>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] bg-graphite-50 dark:bg-white/[0.02] flex gap-3 mt-5">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="small">
+            <span class="font-medium">Plugin utilities never override built-ins.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Registration uses <code class="inline-code">or_insert_with</code>. If a utility with the same name already exists, yours is silently ignored — meaning adding plugins is always safe.</span>
+          </div>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 12 — CLI
+           ═══════════════════════════════════════════════ -->
+      <section id="cli" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 12</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">CLI reference</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">CLI reference</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          GarurSaili ships a single CLI binary. Every command accepts a positional path or uses the
+          current directory by default.
+        </p>
+
+        <div class="stack-4">
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur build</code>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">— compile stylesheet from config</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur build [--watch] [--minify] [--out ./build/garur.css]</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur ssc</code>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">— Super Sonic Cyclone · scan, extract, build</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur ssc ./src [--preflight] [--minify]</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur init</code>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">— scaffold a config file</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur init [--force]</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur benchmark</code>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">— measure compile performance</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur benchmark --runs 10</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <div class="mid gap-2 mb-2">
+              <code class="inline-code">garur doctor</code>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">— diagnose environment</span>
+            </div>
+            <div class="code-window">
+              <pre class="code-body text-xs"><code><span class="terminal-prompt">$</span> garur doctor</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 13 — CONFIGURATION
+           ═══════════════════════════════════════════════ -->
+      <section id="config" class="mb-16 scroll-mt-20">
+
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 13</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Configuration</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Configuration</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          GarurSaili works with zero configuration. When you need to customize, create
+          <code class="inline-code">garur.config.js</code> at the project root. Only the keys you
+          provide are overridden — the rest inherit sensible defaults.
+        </p>
+
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">garur.config.js</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">content</span>: [<span class="syn-str">'./src/**/*.{html,tsx,jsx,vue}'</span>],
+  <span class="syn-attr">output</span>: <span class="syn-str">'./build/garur.css'</span>,
+
+  <span class="syn-attr">darkMode</span>: <span class="syn-str">'class'</span>,       <span class="syn-comment">// or 'media'</span>
+  <span class="syn-attr">important</span>: <span class="syn-str">false</span>,
+  <span class="syn-attr">targets</span>: [<span class="syn-str">'> 0.5%'</span>, <span class="syn-str">'last 2 versions'</span>, <span class="syn-str">'not dead'</span>],
+
+  <span class="syn-attr">breakpoints</span>: {
+    <span class="syn-attr">sm</span>:  <span class="syn-str">'640px'</span>,
+    <span class="syn-attr">md</span>:  <span class="syn-str">'768px'</span>,
+    <span class="syn-attr">lg</span>:  <span class="syn-str">'1024px'</span>,
+    <span class="syn-attr">xl</span>:  <span class="syn-str">'1280px'</span>,
+    <span class="syn-str">'2xl'</span>: <span class="syn-str">'1536px'</span>,
+  },
+
+  <span class="syn-attr">palette</span>: {
+    <span class="syn-attr">brand</span>: {
+      <span class="syn-attr">50</span>:  <span class="syn-str">'#fff7ed'</span>,
+      <span class="syn-attr">500</span>: <span class="syn-str">'#f97316'</span>,
+      <span class="syn-attr">900</span>: <span class="syn-str">'#7c2d12'</span>,
+    },
+  },
+
+  <span class="syn-attr">semanticColors</span>: <span class="syn-str">false</span>,     <span class="syn-comment">// opt-in layer</span>
+  <span class="syn-attr">semanticOverrides</span>: {
+    <span class="syn-attr">primary</span>: <span class="syn-str">'#c2410c'</span>,
+  },
+};</code></pre>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Options</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Key</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-24">Type</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Default</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">content</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">string[]</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">['./src/**/*']</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">output</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">string</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">'./build/garur.css'</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">darkMode</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">'class' | 'media'</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">'class'</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">important</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">boolean</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">false</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">breakpoints</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">object</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">{ sm, md, lg, xl, 2xl }</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">palette</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">object</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">31 built-in families</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">semanticColors</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">boolean</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">false</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">semanticOverrides</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">object</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">{}</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">targets</code></td><td class="px-4 py-2.5 tiny text-graphite-500 dark:text-graphite-400">string[]</td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">browserslist queries</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           PREV / NEXT
+           ═══════════════════════════════════════════════ -->
+      <nav class="grid grid-cols-2 gap-3 pt-8 border-t border-graphite-200 dark:border-white/[0.06]">
+        <a href="./index.html" class="block p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] hover:border-graphite-300 dark:hover:border-white/[0.15] smooth stack-1">
+          <div class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-medium">← Home</div>
+          <div class="small font-medium">Landing page</div>
+        </a>
+        <a href="./colour.html" class="block p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] hover:border-graphite-300 dark:hover:border-white/[0.15] smooth stack-1 text-right">
+          <div class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-medium">Next →</div>
+          <div class="small font-medium">Color palette</div>
+        </a>
+      </nav>
+
+      <!-- ═══════════════════════════════════════════════
+           FEEDBACK
+           ═══════════════════════════════════════════════ -->
+      <div class="mt-12 pt-8 border-t border-graphite-200 dark:border-white/[0.06]">
+        <div class="apart-mid flex-wrap gap-4">
+          <span class="small text-graphite-500 dark:text-graphite-400">Was this page helpful?</span>
+          <div class="mid gap-2">
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white smooth border border-graphite-200 dark:border-white/[0.06]" aria-label="Helpful">👍</button>
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white smooth border border-graphite-200 dark:border-white/[0.06]" aria-label="Not helpful">👎</button>
+          </div>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ═══ RIGHT SIDEBAR — ON THIS PAGE ═══ -->
+  <aside class="hidden lg:block lg:col-span-2 border-l border-graphite-200 dark:border-white/[0.06]">
+    <div class="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto p-6">
+      <div class="menu-label mb-3">On this page</div>
+      <nav id="toc" class="stack-1 small border-l border-graphite-200 dark:border-white/[0.06]">
+        <a href="#introduction" class="block pl-3 py-1 font-medium border-l-2 border-iris-500 -ml-px">What is GarurSaili?</a>
+        <a href="#installation" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Installation</a>
+        <a href="#quickstart" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Quick start</a>
+        <a href="#layers" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Three layers</a>
+        <a href="#intent" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Intent layer</a>
+        <a href="#primitives" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Primitive layer</a>
+        <a href="#variants" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Variants</a>
+        <a href="#tokens" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Design tokens</a>
+        <a href="#preflight" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Preflight</a>
+        <a href="#authoring" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">@theme & @apply</a>
+        <a href="#plugins" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Plugins</a>
+        <a href="#cli" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">CLI reference</a>
+        <a href="#config" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Configuration</a>
+      </nav>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  // Theme toggle
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('garur-theme', isDark ? 'dark' : 'light'); } catch (_) {}
+  });
+
+  // Mobile drawer
+  const drawer = document.getElementById('drawer');
+  const menuBtn = document.getElementById('menu-btn');
+  const openDrawer = () => { drawer.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+  const closeDrawer = () => { drawer.classList.add('hidden'); document.body.style.overflow = ''; };
+  menuBtn?.addEventListener('click', openDrawer);
+  document.querySelectorAll('[data-drawer-close]').forEach(el => el.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  // TOC active tracking
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('#toc a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => {
+          const active = link.getAttribute('href') === '#' + entry.target.id;
+          link.classList.toggle('text-graphite-950', active);
+          link.classList.toggle('dark:text-white', active);
+          link.classList.toggle('font-medium', active);
+          link.classList.toggle('border-iris-500', active);
+          link.classList.toggle('border-transparent', !active);
+          link.classList.toggle('text-graphite-500', !active);
+          link.classList.toggle('dark:text-graphite-400', !active);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Left sidebar active tracking (same sections)
+  const sideLinks = document.querySelectorAll('aside nav a.menu-item');
+  const sideObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        sideLinks.forEach(link => {
+          const active = link.getAttribute('href') === '#' + entry.target.id;
+          link.classList.toggle('menu-item-active', active);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  sections.forEach(s => sideObserver.observe(s));
+
+  // Smooth scroll for hash links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GarurSaili component showcase — beautiful, production-ready components with live previews and copy-ready code." />
+  <meta name="theme-color" content="#8657f7" />
+  <title>Showcase — GarurSaili Components</title>
+  <link rel="stylesheet" href="../build/garur.css" />
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('garur-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
+
+  <style>
+    /* ─── Showcase-specific polish ─── */
+
+    /* Tab buttons */
+    .stab {
+      padding: 5px 11px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border-radius: 7px;
+      color: #6f7780;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .stab:hover { color: #1a1a1a; }
+    .dark .stab:hover { color: #fff; }
+    .stab.is-active {
+      background: #fff;
+      color: #1a1a1a;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.03);
+    }
+    .dark .stab.is-active {
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06);
+    }
+
+    /* Device toggle */
+    .dev-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 8px;
+      color: #6f7780;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+    .dev-btn:hover { color: #1a1a1a; }
+    .dark .dev-btn:hover { color: #fff; }
+    .dev-btn.is-active {
+      background: #fff;
+      color: #8657f7;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 0 0 1px rgba(134,87,247,.15);
+    }
+    .dark .dev-btn.is-active {
+      background: rgba(134,87,247,.12);
+      color: #a78bfa;
+      box-shadow: 0 0 0 1px rgba(134,87,247,.25);
+    }
+
+    /* Preview stage — resizes with device toggle */
+    .preview-stage {
+      width: 100%;
+      margin-inline: auto;
+      transition: max-width 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    body[data-device="mobile"] .preview-stage { max-width: 375px; }
+    body[data-device="tablet"] .preview-stage { max-width: 700px; }
+    body[data-device="laptop"] .preview-stage { max-width: 100%; }
+
+    /* Device chrome — appears when simulating a device */
+    .device-frame {
+      position: relative;
+      padding: 0;
+      border-radius: 0;
+      transition: all .4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    body[data-device="mobile"] .device-frame,
+    body[data-device="tablet"] .device-frame {
+      padding: 10px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.02));
+      box-shadow: 0 20px 60px -20px rgba(0,0,0,.25), inset 0 0 0 1px rgba(0,0,0,.06);
+    }
+    .dark body[data-device="mobile"] .device-frame,
+    .dark body[data-device="tablet"] .device-frame {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      box-shadow: 0 20px 60px -20px rgba(0,0,0,.8), inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    body[data-device="mobile"] .device-frame::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 5px;
+      border-radius: 3px;
+      background: rgba(0,0,0,.12);
+    }
+    .dark body[data-device="mobile"] .device-frame::before {
+      background: rgba(255,255,255,.15);
+    }
+
+    /* Preview surface — subtle dot grid so components pop */
+    .preview-surface {
+      background-color: #fafafa;
+      background-image: radial-gradient(circle, rgba(0,0,0,.045) 1px, transparent 1px);
+      background-size: 14px 14px;
+      border-radius: 12px;
+      transition: background-color .3s, border-radius .3s;
+    }
+    .dark .preview-surface {
+      background-color: rgba(255,255,255,.012);
+      background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+    }
+
+    /* Filter chips */
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 999px;
+      color: #4b5563;
+      background: transparent;
+      border: 1px solid rgba(0,0,0,.08);
+      cursor: pointer;
+      transition: all .2s ease;
+      white-space: nowrap;
+    }
+    .dark .filter-chip {
+      color: #9ca3af;
+      border-color: rgba(255,255,255,.08);
+    }
+    .filter-chip:hover {
+      color: #1a1a1a;
+      border-color: rgba(134,87,247,.4);
+    }
+    .dark .filter-chip:hover {
+      color: #fff;
+      border-color: rgba(134,87,247,.5);
+    }
+    .filter-chip.is-active {
+      background: #8657f7;
+      color: #fff;
+      border-color: #8657f7;
+      box-shadow: 0 4px 12px -4px rgba(134,87,247,.5);
+    }
+    .dark .filter-chip.is-active {
+      background: #8657f7;
+      color: #fff;
+      border-color: #8657f7;
+    }
+
+    /* Code panel */
+    .code-panel {
+      background: #0f0f14;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .dark .code-panel {
+      background: #08080c;
+    }
+    .code-panel pre {
+      margin: 0;
+      padding: 16px 18px;
+      overflow-x: auto;
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: #e5e7eb;
+      tab-size: 2;
+    }
+    .code-panel .tk-tag { color: #f0abfc; }
+    .code-panel .tk-attr { color: #a5b4fc; }
+    .code-panel .tk-str { color: #86efac; }
+    .code-panel .tk-punc { color: #6b7280; }
+    .code-panel .tk-comment { color: #6b7280; font-style: italic; }
+    .code-panel .tk-kw { color: #c4b5fd; }
+
+    /* Scrollbar */
+    .code-panel pre::-webkit-scrollbar { height: 8px; }
+    .code-panel pre::-webkit-scrollbar-track { background: transparent; }
+    .code-panel pre::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.1);
+      border-radius: 4px;
+    }
+
+    /* Hide panels */
+    [data-panel][hidden] { display: none; }
+
+    /* Sticky filter bar blur */
+    .filter-bar {
+      background: rgba(250,250,245,.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .dark .filter-bar {
+      background: rgba(7,7,10,.75);
+    }
+
+    /* Smooth card entrance */
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .showcase {
+      animation: cardIn .5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+  </style>
+</head>
+
+<body class="bg-bone-50 dark:bg-[#07070a] text-graphite-950 dark:text-graphite-50 font-sans antialiased m-0 min-h-screen overflow-x-hidden">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TOP BAR
+     ═══════════════════════════════════════════════════════════════ -->
+<header class="pinned-blur h-14 z-50">
+  <div class="max-w-[1440px] mx-auto px-4 md:px-6 apart-mid h-full">
+
+    <div class="mid gap-4">
+      <a href="./index.html" class="mid gap-2 flex-shrink-0">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 via-plum-500 to-honey-500 mid text-white text-[13px] font-black shadow-sm shadow-iris-500/30">ग</span>
+        <span class="font-semibold small tracking-tight hidden sm:block">GarurSaili</span>
+      </a>
+      <span class="hidden md:block w-px h-5 bg-graphite-200 dark:bg-white/[0.08]"></span>
+      <nav class="hidden md:flex items-center gap-1.5 small">
+        <a href="./index.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <a href="./a.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Docs</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <span class="px-2 py-1 text-graphite-950 dark:text-white font-medium">Showcase</span>
+      </nav>
+    </div>
+
+    <div class="mid gap-2">
+      <span class="hidden md:inline-flex mid gap-1.5 px-2 py-0.5 rounded-full tiny font-mono font-medium bg-jade-500/10 text-jade-700 dark:text-jade-400 border border-jade-500/20">
+        <span class="w-1 h-1 rounded-full bg-jade-500 pulse-ring"></span>
+        v1.4.1
+      </span>
+
+      <a href="https://github.com/barshansarkar/Garursaili-CSS" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-1.5 h-8 px-3 rounded-md small font-medium bg-graphite-950 dark:bg-white text-white dark:text-black hover:opacity-90 smooth">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        GitHub
+      </a>
+
+      <button id="theme-toggle" type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth" aria-label="Toggle theme">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="relative overflow-hidden">
+  <div class="absolute inset-0 mesh-bg opacity-60 dark:opacity-90 pointer-events-none"></div>
+  <div class="absolute inset-0 dot-grid opacity-30 dark:opacity-20 pointer-events-none"></div>
+  <div class="absolute orb-iris w-[520px] h-[520px] -top-40 -left-40 float-slow opacity-25 dark:opacity-50 pointer-events-none"></div>
+  <div class="absolute orb-pink w-[420px] h-[420px] top-20 -right-32 float-slower opacity-25 dark:opacity-50 pointer-events-none"></div>
+
+  <div class="relative max-w-6xl mx-auto px-6 pt-20 md:pt-28 pb-16 text-center">
+    <div class="stack-6 items-center">
+
+      <a href="#showcase" class="mid gap-2 px-3 py-1.5 rounded-full text-xs bg-graphite-100/80 dark:bg-white/[0.05] border border-graphite-200 dark:border-white/[0.08] text-graphite-600 dark:text-graphite-400 backdrop-blur-sm hover:border-iris-500/40 smooth">
+        <span class="w-1.5 h-1.5 rounded-full bg-iris-500 pulse-ring"></span>
+        <span class="font-medium">24 components · 7 categories · live previews</span>
+      </a>
+
+      <h1 class="hero-vercel max-w-3xl">
+        <span class="block">Beautiful by</span>
+        <span class="block gradient-text">default.</span>
+      </h1>
+
+      <p class="lead-vercel mx-auto text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Every component below is built with the same three-layer vocabulary —
+        <em>intent</em>, <em>primitive</em>, and <em>utility</em>. Click
+        <span class="font-medium text-graphite-950 dark:text-white">Preview</span> to see it live,
+        <span class="font-medium text-graphite-950 dark:text-white">Code</span> to grab the markup.
+      </p>
+
+      <!-- Device simulator -->
+      <div class="mid gap-2 flex-wrap justify-center mt-2">
+        <div class="mid gap-1 p-1 rounded-xl bg-white dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.08] shadow-sm">
+          <button type="button" class="dev-btn is-active" data-device="laptop">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>
+            <span class="hidden sm:inline">Laptop</span>
+          </button>
+          <button type="button" class="dev-btn" data-device="tablet">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M12 17h.01"/></svg>
+            <span class="hidden sm:inline">Tablet</span>
+          </button>
+          <button type="button" class="dev-btn" data-device="mobile">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            <span class="hidden sm:inline">Mobile</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-3 md:gap-6 max-w-lg mx-auto mt-6 pt-8 border-t border-graphite-200 dark:border-white/[0.06]">
+        <div class="stack-1">
+          <div class="stat-num gradient-text">24</div>
+          <div class="stat-label">Components</div>
+        </div>
+        <div class="stack-1">
+          <div class="stat-num">5k+</div>
+          <div class="stat-label">Utilities</div>
+        </div>
+        <div class="stack-1">
+          <div class="stat-num">0 KB</div>
+          <div class="stat-label">Runtime JS</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FILTER BAR — sticky
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="sticky top-14 z-40 filter-bar border-y border-graphite-200 dark:border-white/[0.06]">
+  <div class="max-w-6xl mx-auto px-6 py-3 apart-mid gap-4">
+    <div class="flex gap-2 overflow-x-auto scrollbar-none" style="scrollbar-width: none;">
+      <button type="button" class="filter-chip is-active" data-filter="all">All <span class="opacity-60">24</span></button>
+      <button type="button" class="filter-chip" data-filter="actions">Actions</button>
+      <button type="button" class="filter-chip" data-filter="forms">Forms</button>
+      <button type="button" class="filter-chip" data-filter="surfaces">Surfaces</button>
+      <button type="button" class="filter-chip" data-filter="feedback">Feedback</button>
+      <button type="button" class="filter-chip" data-filter="data">Data</button>
+      <button type="button" class="filter-chip" data-filter="nav">Navigation</button>
+      <button type="button" class="filter-chip" data-filter="overlays">Overlays</button>
+    </div>
+    <span id="device-label" class="hidden md:inline-flex tiny font-mono text-graphite-500 dark:text-graphite-400 whitespace-nowrap">
+      viewport · <span id="device-dim">100%</span>
+    </span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SHOWCASE
+     ═══════════════════════════════════════════════════════════════ -->
+<main id="showcase" class="max-w-6xl mx-auto px-6 py-12 md:py-16 stack-10">
+
+  <!-- ═══════════ ACTIONS ═══════════ -->
+  <section id="cat-actions" data-section="actions" class="stack-6 scroll-mt-32">
+    <header class="stack-2">
+      <div class="mid gap-2 tiny uppercase tracking-wider font-bold text-iris-600 dark:text-iris-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-iris-500"></span>
+        Actions
+      </div>
+      <h2 class="display-section">Buttons, badges & chips</h2>
+      <p class="lead text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Every action in your app. Primary for the thing you want people to do, ghost for the
+        thing you don't, danger for the thing you hope they don't.
+      </p>
+    </header>
+
+    <!-- Buttons -->
+    <article class="showcase" data-cat="actions">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Button variants</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Primary, secondary, ghost, danger</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame">
+              <div class="mid gap-3 flex-wrap justify-center">
+                <button class="btn btn-primary">Primary</button>
+                <button class="btn btn-secondary">Secondary</button>
+                <button class="btn btn-ghost">Ghost</button>
+                <button class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-primary"</span><span class="tk-punc">&gt;</span>Primary<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-secondary"</span><span class="tk-punc">&gt;</span>Secondary<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-ghost"</span><span class="tk-punc">&gt;</span>Ghost<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-danger"</span><span class="tk-punc">&gt;</span>Delete<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Buttons + sizes + icons -->
+    <article class="showcase" data-cat="actions">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Sizes, icons & states</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Composable building blocks</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame stack-5">
+              <div class="mid gap-3 flex-wrap">
+                <button class="btn btn-primary tiny">Small</button>
+                <button class="btn btn-primary">Default</button>
+                <button class="btn btn-primary lead">Large</button>
+              </div>
+              <div class="mid gap-3 flex-wrap">
+                <button class="btn btn-primary mid gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                  New project
+                </button>
+                <button class="btn btn-secondary mid gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                  Download
+                </button>
+                <button class="btn btn-ghost locked" disabled>Disabled</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Sizes --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-primary tiny"</span><span class="tk-punc">&gt;</span>Small<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-primary"</span><span class="tk-punc">&gt;</span>Default<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- With icon --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-primary mid gap-2"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">svg</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"w-4 h-4"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">svg</span><span class="tk-punc">&gt;</span>
+  New project
+<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Disabled --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-ghost locked"</span> <span class="tk-attr">disabled</span><span class="tk-punc">&gt;</span>Disabled<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Badges & Chips -->
+    <article class="showcase" data-cat="actions">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Badges, tags & chips</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Status at a glance</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame stack-5">
+              <div class="chips gap-2">
+                <span class="badge">Default</span>
+                <span class="badge badge-primary">Primary</span>
+                <span class="badge badge-success">Success</span>
+                <span class="badge badge-warning">Warning</span>
+                <span class="badge badge-danger">Danger</span>
+                <span class="badge badge-info">Info</span>
+              </div>
+              <div class="chips gap-2">
+                <span class="tag-ok">Deployed</span>
+                <span class="tag-warn">Pending</span>
+                <span class="tag-err">Failed</span>
+                <span class="tag-note">Draft</span>
+                <span class="tag-hint">Beta</span>
+              </div>
+              <div class="chips gap-2">
+                <span class="chip">React</span>
+                <span class="chip">Vue</span>
+                <span class="chip">Svelte</span>
+                <span class="chip">Solid</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Badges --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"badge badge-primary"</span><span class="tk-punc">&gt;</span>Primary<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"badge badge-success"</span><span class="tk-punc">&gt;</span>Success<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Semantic tags --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"tag-ok"</span><span class="tk-punc">&gt;</span>Deployed<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"tag-warn"</span><span class="tk-punc">&gt;</span>Pending<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"tag-err"</span><span class="tk-punc">&gt;</span>Failed<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Chips --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"chips gap-2"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"chip"</span><span class="tk-punc">&gt;</span>React<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════ FORMS ═══════════ -->
+  <section id="cat-forms" data-section="forms" class="stack-6 scroll-mt-32">
+    <header class="stack-2">
+      <div class="mid gap-2 tiny uppercase tracking-wider font-bold text-plum-600 dark:text-plum-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-plum-500"></span>
+        Forms
+      </div>
+      <h2 class="display-section">Inputs & controls</h2>
+      <p class="lead text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Every field, every state. Focus rings, validation colors, and accessibility defaults
+        handled by preflight.
+      </p>
+    </header>
+
+    <!-- Inputs -->
+    <article class="showcase" data-cat="forms">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Text inputs</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With labels, hints, and states</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame stack-4 max-w-md mx-auto">
+              <div class="stack-2">
+                <label class="small font-medium">Email address</label>
+                <input class="input" type="email" placeholder="you@example.com" />
+                <span class="tiny text-graphite-500 dark:text-graphite-400">We'll never share your email.</span>
+              </div>
+              <div class="stack-2">
+                <label class="small font-medium">Password</label>
+                <input class="input" type="password" value="••••••••" />
+              </div>
+              <div class="stack-2">
+                <label class="small font-medium">Invalid field</label>
+                <input class="input invalid" value="not-an-email" />
+                <span class="tiny text-ruby-600 dark:text-ruby-400">Please enter a valid email.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"stack-2"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">label</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"small font-medium"</span><span class="tk-punc">&gt;</span>Email address<span class="tk-punc">&lt;/</span><span class="tk-tag">label</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">input</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"input"</span> <span class="tk-attr">type</span><span class="tk-punc">=</span><span class="tk-str">"email"</span> <span class="tk-attr">placeholder</span><span class="tk-punc">=</span><span class="tk-str">"you@example.com"</span> <span class="tk-punc">/&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"tiny text-graphite-500"</span><span class="tk-punc">&gt;</span>We'll never share your email.<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Invalid state --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">input</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"input invalid"</span> <span class="tk-attr">value</span><span class="tk-punc">=</span><span class="tk-str">"not-an-email"</span> <span class="tk-punc">/&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Toggles -->
+    <article class="showcase" data-cat="forms">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Checkboxes, radios & switches</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Native controls, elegant styling</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              <div class="stack-3">
+                <div class="tiny uppercase tracking-wider font-semibold text-graphite-500 dark:text-graphite-400">Checkboxes</div>
+                <label class="mid gap-3 small"><input type="checkbox" class="checkbox" checked /> Email notifications</label>
+                <label class="mid gap-3 small"><input type="checkbox" class="checkbox" checked /> Push notifications</label>
+                <label class="mid gap-3 small"><input type="checkbox" class="checkbox" /> SMS notifications</label>
+              </div>
+              <div class="stack-3">
+                <div class="tiny uppercase tracking-wider font-semibold text-graphite-500 dark:text-graphite-400">Radio group</div>
+                <label class="mid gap-3 small"><input type="radio" name="plan" class="radio" checked /> Starter</label>
+                <label class="mid gap-3 small"><input type="radio" name="plan" class="radio" /> Pro</label>
+                <label class="mid gap-3 small"><input type="radio" name="plan" class="radio" /> Enterprise</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Checkbox --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">label</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"mid gap-3 small"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">input</span> <span class="tk-attr">type</span><span class="tk-punc">=</span><span class="tk-str">"checkbox"</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"checkbox"</span> <span class="tk-attr">checked</span> <span class="tk-punc">/&gt;</span>
+  Email notifications
+<span class="tk-punc">&lt;/</span><span class="tk-tag">label</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Radio --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">label</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"mid gap-3 small"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">input</span> <span class="tk-attr">type</span><span class="tk-punc">=</span><span class="tk-str">"radio"</span> <span class="tk-attr">name</span><span class="tk-punc">=</span><span class="tk-str">"plan"</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"radio"</span> <span class="tk-attr">checked</span> <span class="tk-punc">/&gt;</span>
+  Starter
+<span class="tk-punc">&lt;/</span><span class="tk-tag">label</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Search -->
+    <article class="showcase" data-cat="forms">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Search bar</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With icon and keyboard hint</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame max-w-md mx-auto">
+              <div class="search w-full">
+                <svg class="w-4 h-4 search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input class="search-input" placeholder="Search documentation..." />
+                <span class="kbd tiny">⌘K</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"search w-full"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">svg</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"w-4 h-4 search-icon"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">svg</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">input</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"search-input"</span> <span class="tk-attr">placeholder</span><span class="tk-punc">=</span><span class="tk-str">"Search documentation..."</span> <span class="tk-punc">/&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"kbd tiny"</span><span class="tk-punc">&gt;</span>⌘K<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════ SURFACES ═══════════ -->
+  <section id="cat-surfaces" data-section="surfaces" class="stack-6 scroll-mt-32">
+    <header class="stack-2">
+      <div class="mid gap-2 tiny uppercase tracking-wider font-bold text-jade-600 dark:text-jade-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-jade-500"></span>
+        Surfaces
+      </div>
+      <h2 class="display-section">Cards & containers</h2>
+      <p class="lead text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Surfaces that hold your content. Glass, gradient, elevated, and everything in between.
+      </p>
+    </header>
+
+    <!-- Basic cards -->
+    <article class="showcase" data-cat="surfaces">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Card variants</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Basic, glass, and gradient</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="card stack-3">
+                <div class="title">Basic card</div>
+                <p class="small text-graphite-600 dark:text-graphite-400">A clean surface with border and shadow. Great for content blocks and list items.</p>
+              </div>
+              <div class="card-glass stack-3">
+                <div class="title">Glass card</div>
+                <p class="small text-graphite-600 dark:text-graphite-400">Translucent surface with backdrop blur. Perfect for overlays and hero panels.</p>
+              </div>
+              <div class="card stack-3 border-gradient-iris">
+                <div class="title gradient-text">Gradient card</div>
+                <p class="small text-graphite-600 dark:text-graphite-400">Iris-tinted gradient frame for featured content and calls to action.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Basic --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Glass --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card-glass"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Gradient border --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card border-gradient-iris"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Feature card -->
+    <article class="showcase" data-cat="surfaces">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Feature card</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With icon, heading, and CTA</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame max-w-md mx-auto">
+              <div class="card stack-5 hover:lift smooth">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-iris-500 to-plum-500 mid text-white shadow-lg shadow-iris-500/30">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <div class="stack-2">
+                  <h3 class="headline">Blazing fast</h3>
+                  <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+                    Compiled at the speed of disk I/O. Native Rust engine, zero runtime overhead,
+                    and a persistent cache that makes warm builds nearly instant.
+                  </p>
+                </div>
+                <div class="mid gap-2 pt-2">
+                  <a href="#" class="link mid gap-1.5 small font-medium">
+                    Learn more
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card stack-5 hover:lift smooth"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"w-12 h-12 rounded-xl bg-gradient-to-br from-iris-500 to-plum-500 mid text-white"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">svg</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">svg</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">h3</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"headline"</span><span class="tk-punc">&gt;</span>Blazing fast<span class="tk-punc">&lt;/</span><span class="tk-tag">h3</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">p</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"small text-graphite-600"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">p</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">a</span> <span class="tk-attr">href</span><span class="tk-punc">=</span><span class="tk-str">"#"</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"link"</span><span class="tk-punc">&gt;</span>Learn more →<span class="tk-punc">&lt;/</span><span class="tk-tag">a</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Pricing -->
+    <article class="showcase" data-cat="surfaces">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Pricing card</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With feature list and CTA</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame max-w-sm mx-auto">
+              <div class="card stack-5 border-gradient-iris">
+                <div class="apart-mid">
+                  <div class="badge badge-primary">Most popular</div>
+                  <span class="chip tiny">Save 20%</span>
+                </div>
+                <div class="stack-1">
+                  <div class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400">Pro plan</div>
+                  <div class="mid gap-2 items-baseline">
+                    <span class="text-4xl font-black tracking-tight">$29</span>
+                    <span class="small text-graphite-500 dark:text-graphite-400">/ month</span>
+                  </div>
+                </div>
+                <hr class="divider" />
+                <ul class="stack-3 small">
+                  <li class="mid gap-3">
+                    <span class="w-4 h-4 rounded-full bg-jade-500/15 mid text-jade-500 text-[10px] font-bold">✓</span>
+                    Unlimited projects
+                  </li>
+                  <li class="mid gap-3">
+                    <span class="w-4 h-4 rounded-full bg-jade-500/15 mid text-jade-500 text-[10px] font-bold">✓</span>
+                    Priority support
+                  </li>
+                  <li class="mid gap-3">
+                    <span class="w-4 h-4 rounded-full bg-jade-500/15 mid text-jade-500 text-[10px] font-bold">✓</span>
+                    Advanced analytics
+                  </li>
+                </ul>
+                <button class="btn btn-primary w-full shine">Get started</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card stack-5 border-gradient-iris"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"apart-mid"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"badge badge-primary"</span><span class="tk-punc">&gt;</span>Most popular<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"chip tiny"</span><span class="tk-punc">&gt;</span>Save 20%<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"mid gap-2 items-baseline"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"text-4xl font-black"</span><span class="tk-punc">&gt;</span>$29<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"small text-graphite-500"</span><span class="tk-punc">&gt;</span>/ month<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+  <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-primary w-full shine"</span><span class="tk-punc">&gt;</span>Get started<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Stats -->
+    <article class="showcase" data-cat="surfaces">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Stat cards</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With trends and icons</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="card stack-3">
+                <div class="apart-mid">
+                  <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">Revenue</span>
+                  <span class="trend-up">↑ 12.5%</span>
+                </div>
+                <div class="text-3xl font-black tracking-tight">$48,209</div>
+                <div class="tiny text-graphite-500 dark:text-graphite-400">vs $42,847 last month</div>
+              </div>
+              <div class="card stack-3">
+                <div class="apart-mid">
+                  <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">Active users</span>
+                  <span class="trend-up">↑ 8.2%</span>
+                </div>
+                <div class="text-3xl font-black tracking-tight">12,847</div>
+                <div class="tiny text-graphite-500 dark:text-graphite-400">+984 this week</div>
+              </div>
+              <div class="card stack-3">
+                <div class="apart-mid">
+                  <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">Churn</span>
+                  <span class="trend-down">↓ 0.4%</span>
+                </div>
+                <div class="text-3xl font-black tracking-tight">2.1%</div>
+                <div class="tiny text-graphite-500 dark:text-graphite-400">Lowest in 6 months</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card stack-3"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"apart-mid"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"tiny uppercase tracking-wider text-graphite-500 font-semibold"</span><span class="tk-punc">&gt;</span>Revenue<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"trend-up"</span><span class="tk-punc">&gt;</span>↑ 12.5%<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"text-3xl font-black tracking-tight"</span><span class="tk-punc">&gt;</span>$48,209<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"tiny text-graphite-500"</span><span class="tk-punc">&gt;</span>vs $42,847 last month<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════ FEEDBACK ═══════════ -->
+  <section id="cat-feedback" data-section="feedback" class="stack-6 scroll-mt-32">
+    <header class="stack-2">
+      <div class="mid gap-2 tiny uppercase tracking-wider font-bold text-honey-600 dark:text-honey-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-honey-500"></span>
+        Feedback
+      </div>
+      <h2 class="display-section">Alerts, loaders & states</h2>
+      <p class="lead text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Tell people what's happening. Success, warning, error, and everything in between.
+      </p>
+    </header>
+
+    <!-- Alerts -->
+    <article class="showcase" data-cat="feedback">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Alert variants</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Semantic colors with icons</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame stack-3 max-w-lg mx-auto">
+              <div class="alert alert-success mid gap-3">
+                <span class="w-5 h-5 rounded-full bg-jade-500 mid text-white text-xs font-bold flex-shrink-0">✓</span>
+                <div class="stack-1">
+                  <div class="small font-medium">Payment successful</div>
+                  <div class="tiny text-graphite-600 dark:text-graphite-400">Your receipt has been emailed.</div>
+                </div>
+              </div>
+              <div class="alert alert-warning mid gap-3">
+                <span class="w-5 h-5 rounded-full bg-honey-500 mid text-white text-xs font-bold flex-shrink-0">!</span>
+                <div class="stack-1">
+                  <div class="small font-medium">Storage almost full</div>
+                  <div class="tiny text-graphite-600 dark:text-graphite-400">You're using 92% of your quota.</div>
+                </div>
+              </div>
+              <div class="alert alert-danger mid gap-3">
+                <span class="w-5 h-5 rounded-full bg-ruby-500 mid text-white text-xs font-bold flex-shrink-0">×</span>
+                <div class="stack-1">
+                  <div class="small font-medium">Something went wrong</div>
+                  <div class="tiny text-graphite-600 dark:text-graphite-400">Please try again in a moment.</div>
+                </div>
+              </div>
+              <div class="alert alert-info mid gap-3">
+                <span class="w-5 h-5 rounded-full bg-sky-500 mid text-white text-xs font-bold flex-shrink-0">i</span>
+                <div class="stack-1">
+                  <div class="small font-medium">New feature available</div>
+                  <div class="tiny text-graphite-600 dark:text-graphite-400">Check out container queries.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"alert alert-success mid gap-3"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"w-5 h-5 rounded-full bg-jade-500 mid text-white"</span><span class="tk-punc">&gt;</span>✓<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"small font-medium"</span><span class="tk-punc">&gt;</span>Payment successful<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"tiny text-graphite-600"</span><span class="tk-punc">&gt;</span>Your receipt has been emailed.<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Progress & loaders -->
+    <article class="showcase" data-cat="feedback">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Progress & loaders</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Bars, spinners, and skeleton states</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame stack-6 max-w-md mx-auto">
+              <div class="stack-2">
+                <div class="apart-mid">
+                  <span class="small font-medium">Uploading files</span>
+                  <span class="tiny font-mono text-graphite-500 dark:text-graphite-400">68%</span>
+                </div>
+                <div class="h-2 rounded-full bg-graphite-200 dark:bg-white/[0.06] overflow-hidden">
+                  <div class="h-full w-[68%] rounded-full bg-gradient-to-r from-iris-500 to-plum-500"></div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <div class="stack-2 mid">
+                  <span class="chakra w-6 h-6 text-iris-500"></span>
+                  <span class="tiny text-graphite-500 dark:text-graphite-400">chakra</span>
+                </div>
+                <div class="stack-2 mid">
+                  <span class="loader text-plum-500"></span>
+                  <span class="tiny text-graphite-500 dark:text-graphite-400">loader</span>
+                </div>
+                <div class="stack-2 mid">
+                  <span class="loading-dots text-jade-500"><span></span><span></span><span></span></span>
+                  <span class="tiny text-graphite-500 dark:text-graphite-400">dots</span>
+                </div>
+              </div>
+
+              <div class="stack-2">
+                <div class="skeleton h-3 rounded w-3/4"></div>
+                <div class="skeleton h-3 rounded w-1/2"></div>
+                <div class="skeleton h-3 rounded w-5/6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Progress bar --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"h-2 rounded-full bg-graphite-200 overflow-hidden"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"h-full w-[68%] bg-gradient-to-r from-iris-500 to-plum-500"</span><span class="tk-punc">&gt;&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Spinners --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"chakra w-6 h-6 text-iris-500"</span><span class="tk-punc">&gt;&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"loader text-plum-500"</span><span class="tk-punc">&gt;&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Skeleton --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"skeleton h-3 rounded w-3/4"</span><span class="tk-punc">&gt;&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Empty state -->
+    <article class="showcase" data-cat="feedback">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Empty & error states</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">For when there's nothing to show</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="card empty-state-icon">
+                <svg class="icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 13V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7m16 0v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-5m16 0h-2.586a1 1 0 0 0-.707.293l-2.414 2.414a1 1 0 0 1-.707.293h-3.172a1 1 0 0 1-.707-.293l-2.414-2.414A1 1 0 0 0 6.586 13H4"/></svg>
+                <span class="title">No projects yet</span>
+                <span class="small text-graphite-500 dark:text-graphite-400">Get started by creating your first project.</span>
+                <button class="btn btn-primary mt-3">Create project</button>
+              </div>
+              <div class="card error-state">
+                <span class="w-12 h-12 rounded-full bg-ruby-500/15 mid text-ruby-500 text-2xl font-bold">!</span>
+                <span class="title">Failed to load</span>
+                <span class="small text-graphite-500 dark:text-graphite-400">We couldn't reach the server. Please try again.</span>
+                <button class="btn btn-secondary mt-3">Retry</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Empty state --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card empty-state-icon"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">svg</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"icon"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">svg</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"title"</span><span class="tk-punc">&gt;</span>No projects yet<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"small text-graphite-500"</span><span class="tk-punc">&gt;</span>Get started...<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-primary mt-3"</span><span class="tk-punc">&gt;</span>Create project<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════ DATA ═══════════ -->
+  <section id="cat-data" data-section="data" class="stack-6 scroll-mt-32">
+    <header class="stack-2">
+      <div class="mid gap-2 tiny uppercase tracking-wider font-bold text-sky-600 dark:text-sky-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+        Data
+      </div>
+      <h2 class="display-section">Avatars, tables & comments</h2>
+      <p class="lead text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Displaying people, data, and conversations. Clean typography and generous spacing.
+      </p>
+    </header>
+
+    <!-- Avatars -->
+    <article class="showcase" data-cat="data">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Avatars & status</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With online indicators and stacks</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame stack-6 max-w-md mx-auto">
+              <div class="mid gap-4 flex-wrap justify-center">
+                <div class="avatar avatar-sm bg-iris-500 text-white mid font-bold">AK</div>
+                <div class="avatar bg-plum-500 text-white mid font-bold">PS</div>
+                <div class="avatar avatar-lg bg-jade-500 text-white mid font-bold">RV</div>
+                <div class="avatar avatar-xl bg-honey-500 text-white mid font-bold">SD</div>
+              </div>
+
+              <div class="mid gap-6 flex-wrap justify-center">
+                <div class="relative">
+                  <div class="avatar bg-iris-500 text-white mid font-bold">AK</div>
+                  <span class="status-online absolute -bottom-0.5 -right-0.5"></span>
+                </div>
+                <div class="relative">
+                  <div class="avatar bg-plum-500 text-white mid font-bold">PS</div>
+                  <span class="status-away absolute -bottom-0.5 -right-0.5"></span>
+                </div>
+                <div class="relative">
+                  <div class="avatar bg-jade-500 text-white mid font-bold">RV</div>
+                  <span class="status-busy absolute -bottom-0.5 -right-0.5"></span>
+                </div>
+                <div class="relative">
+                  <div class="avatar bg-ash-500 text-white mid font-bold">SD</div>
+                  <span class="status-offline absolute -bottom-0.5 -right-0.5"></span>
+                </div>
+              </div>
+
+              <div class="mid justify-center -space-x-3">
+                <div class="avatar avatar-sm bg-iris-500 text-white mid font-bold ring-2 ring-white dark:ring-[#07070a]">A</div>
+                <div class="avatar avatar-sm bg-plum-500 text-white mid font-bold ring-2 ring-white dark:ring-[#07070a]">B</div>
+                <div class="avatar avatar-sm bg-jade-500 text-white mid font-bold ring-2 ring-white dark:ring-[#07070a]">C</div>
+                <div class="avatar avatar-sm bg-honey-500 text-white mid font-bold ring-2 ring-white dark:ring-[#07070a]">D</div>
+                <div class="avatar avatar-sm bg-graphite-200 dark:bg-white/[0.08] mid text-graphite-600 dark:text-graphite-400 font-bold ring-2 ring-white dark:ring-[#07070a] tiny">+9</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Sizes --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"avatar avatar-sm bg-iris-500 text-white"</span><span class="tk-punc">&gt;</span>AK<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"avatar avatar-lg bg-plum-500 text-white"</span><span class="tk-punc">&gt;</span>PS<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- With status --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"relative"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"avatar bg-iris-500 text-white"</span><span class="tk-punc">&gt;</span>AK<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"status-online absolute -bottom-0.5 -right-0.5"</span><span class="tk-punc">&gt;&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Stacked group --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"mid -space-x-3"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"avatar avatar-sm bg-iris-500 text-white ring-2 ring-white"</span><span class="tk-punc">&gt;</span>A<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"avatar avatar-sm bg-plum-500 text-white ring-2 ring-white"</span><span class="tk-punc">&gt;</span>B<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Table -->
+    <article class="showcase" data-cat="data">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Data table</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Sortable, scannable, responsive</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame card p-0 overflow-hidden">
+              <div class="p-5 apart-mid border-b border-graphite-200 dark:border-white/[0.06]">
+                <div class="stack-1">
+                  <div class="title">Team members</div>
+                  <div class="tiny text-graphite-500 dark:text-graphite-400">4 people · 2 admins</div>
+                </div>
+                <button class="btn btn-primary tiny">Invite</button>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full small">
+                  <thead class="bg-graphite-50 dark:bg-white/[0.02] border-b border-graphite-200 dark:border-white/[0.06]">
+                    <tr>
+                      <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-5 py-3">Name</th>
+                      <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-5 py-3">Role</th>
+                      <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-5 py-3">Status</th>
+                      <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-5 py-3"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+                    <tr>
+                      <td class="px-5 py-3">
+                        <div class="mid gap-3">
+                          <div class="avatar avatar-sm bg-iris-500 text-white mid font-bold">AK</div>
+                          <div class="stack-0.5">
+                            <span class="font-medium">Arjun Kapoor</span>
+                            <span class="tiny text-graphite-500 dark:text-graphite-400">arjun@example.com</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-5 py-3 text-graphite-600 dark:text-graphite-400">Owner</td>
+                      <td class="px-5 py-3"><span class="tag-ok">Active</span></td>
+                      <td class="px-5 py-3"><button class="chip tiny">···</button></td>
+                    </tr>
+                    <tr>
+                      <td class="px-5 py-3">
+                        <div class="mid gap-3">
+                          <div class="avatar avatar-sm bg-plum-500 text-white mid font-bold">PS</div>
+                          <div class="stack-0.5">
+                            <span class="font-medium">Priya Sharma</span>
+                            <span class="tiny text-graphite-500 dark:text-graphite-400">priya@example.com</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-5 py-3 text-graphite-600 dark:text-graphite-400">Admin</td>
+                      <td class="px-5 py-3"><span class="tag-ok">Active</span></td>
+                      <td class="px-5 py-3"><button class="chip tiny">···</button></td>
+                    </tr>
+                    <tr>
+                      <td class="px-5 py-3">
+                        <div class="mid gap-3">
+                          <div class="avatar avatar-sm bg-jade-500 text-white mid font-bold">RV</div>
+                          <div class="stack-0.5">
+                            <span class="font-medium">Rohan Verma</span>
+                            <span class="tiny text-graphite-500 dark:text-graphite-400">rohan@example.com</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-5 py-3 text-graphite-600 dark:text-graphite-400">Member</td>
+                      <td class="px-5 py-3"><span class="tag-warn">Pending</span></td>
+                      <td class="px-5 py-3"><button class="chip tiny">···</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"card p-0 overflow-hidden"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"p-5 apart-mid border-b border-graphite-200"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"title"</span><span class="tk-punc">&gt;</span>Team members<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-primary tiny"</span><span class="tk-punc">&gt;</span>Invite<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">table</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"w-full small"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">thead</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"bg-graphite-50 border-b border-graphite-200"</span><span class="tk-punc">&gt;</span>
+      <span class="tk-punc">&lt;</span><span class="tk-tag">tr</span><span class="tk-punc">&gt;</span>
+        <span class="tk-punc">&lt;</span><span class="tk-tag">th</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"text-left px-5 py-3"</span><span class="tk-punc">&gt;</span>Name<span class="tk-punc">&lt;/</span><span class="tk-tag">th</span><span class="tk-punc">&gt;</span>
+        <span class="tk-punc">&lt;</span><span class="tk-tag">th</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"text-left px-5 py-3"</span><span class="tk-punc">&gt;</span>Role<span class="tk-punc">&lt;/</span><span class="tk-tag">th</span><span class="tk-punc">&gt;</span>
+      <span class="tk-punc">&lt;/</span><span class="tk-tag">tr</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;/</span><span class="tk-tag">thead</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">tbody</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"divide-y divide-graphite-100"</span><span class="tk-punc">&gt;</span>
+      <span class="tk-punc">&lt;</span><span class="tk-tag">tr</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">tr</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;/</span><span class="tk-tag">tbody</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">table</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Comments -->
+    <article class="showcase" data-cat="data">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Comment thread</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With avatars, timestamps, and replies</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame card max-w-lg mx-auto stack-5">
+              <article class="comment">
+                <div class="comment-avatar mid bg-iris-500 text-white tiny font-bold">AK</div>
+                <div class="comment-body">
+                  <div class="mid gap-2">
+                    <span class="comment-author">Arjun Kapoor</span>
+                    <span class="comment-time">2h ago</span>
+                  </div>
+                  <p class="comment-text">
+                    The new intent layer is a game changer. <code class="inline-code">apart-mid</code> alone saved me hours.
+                  </p>
+                </div>
+              </article>
+
+              <div class="pl-12">
+                <article class="comment">
+                  <div class="comment-avatar mid bg-plum-500 text-white tiny font-bold">PS</div>
+                  <div class="comment-body">
+                    <div class="mid gap-2">
+                      <span class="comment-author">Priya Sharma</span>
+                      <span class="comment-time">1h ago</span>
+                    </div>
+                    <p class="comment-text">Totally agree. The naming is so intuitive.</p>
+                  </div>
+                </article>
+              </div>
+
+              <article class="comment">
+                <div class="comment-avatar mid bg-jade-500 text-white tiny font-bold">RV</div>
+                <div class="comment-body">
+                  <div class="mid gap-2">
+                    <span class="comment-author">Rohan Verma</span>
+                    <span class="comment-time">12m ago</span>
+                  </div>
+                  <p class="comment-text">Wait until you try the container queries.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">article</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"comment"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"comment-avatar mid bg-iris-500 text-white tiny font-bold"</span><span class="tk-punc">&gt;</span>AK<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"comment-body"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"mid gap-2"</span><span class="tk-punc">&gt;</span>
+      <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"comment-author"</span><span class="tk-punc">&gt;</span>Arjun Kapoor<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+      <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"comment-time"</span><span class="tk-punc">&gt;</span>2h ago<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">p</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"comment-text"</span><span class="tk-punc">&gt;</span>...<span class="tk-punc">&lt;/</span><span class="tk-tag">p</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">article</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════ NAVIGATION ═══════════ -->
+  <section id="cat-nav" data-section="nav" class="stack-6 scroll-mt-32">
+    <header class="stack-2">
+      <div class="mid gap-2 tiny uppercase tracking-wider font-bold text-iris-600 dark:text-iris-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-iris-500"></span>
+        Navigation
+      </div>
+      <h2 class="display-section">Tabs, breadcrumbs & pagination</h2>
+      <p class="lead text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Helping people move through your product without thinking about it.
+      </p>
+    </header>
+
+    <!-- Tabs -->
+    <article class="showcase" data-cat="nav">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Tabs</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">With underline indicator</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame max-w-lg mx-auto">
+              <div class="border-b border-graphite-200 dark:border-white/[0.06]">
+                <div class="row-6 small">
+                  <button class="pb-3 -mb-px border-b-2 border-iris-500 text-graphite-950 dark:text-white font-medium">Overview</button>
+                  <button class="pb-3 -mb-px border-b-2 border-transparent text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Activity</button>
+                  <button class="pb-3 -mb-px border-b-2 border-transparent text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Settings</button>
+                </div>
+              </div>
+              <div class="pt-5 small text-graphite-600 dark:text-graphite-400">
+                Content for the selected tab lives here. Tabs are just buttons with the right borders.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"border-b border-graphite-200"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"row-6 small"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"pb-3 -mb-px border-b-2 border-iris-500 font-medium"</span><span class="tk-punc">&gt;</span>
+      Overview
+    <span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"pb-3 -mb-px border-b-2 border-transparent text-graphite-500"</span><span class="tk-punc">&gt;</span>
+      Activity
+    <span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Breadcrumbs + pagination -->
+    <article class="showcase" data-cat="nav">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Breadcrumbs & pagination</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Orientation and progress</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame stack-6 max-w-xl mx-auto">
+              <!-- Breadcrumbs -->
+              <nav class="mid gap-2 small flex-wrap">
+                <a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+                <span class="text-graphite-300 dark:text-graphite-600">/</span>
+                <a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Components</a>
+                <span class="text-graphite-300 dark:text-graphite-600">/</span>
+                <a href="#" class="text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Navigation</a>
+                <span class="text-graphite-300 dark:text-graphite-600">/</span>
+                <span class="text-graphite-950 dark:text-white font-medium">Breadcrumbs</span>
+              </nav>
+
+              <!-- Pagination -->
+              <div class="mid gap-1.5 flex-wrap">
+                <button class="w-9 h-9 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth border border-graphite-200 dark:border-white/[0.06]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="w-9 h-9 rounded-md mid small bg-iris-500 text-white font-medium">1</button>
+                <button class="w-9 h-9 rounded-md mid small text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth">2</button>
+                <button class="w-9 h-9 rounded-md mid small text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth">3</button>
+                <span class="w-9 h-9 mid text-graphite-400 dark:text-graphite-600 small">···</span>
+                <button class="w-9 h-9 rounded-md mid small text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth">12</button>
+                <button class="w-9 h-9 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth border border-graphite-200 dark:border-white/[0.06]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Breadcrumbs --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">nav</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"mid gap-2 small"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">a</span> <span class="tk-attr">href</span><span class="tk-punc">=</span><span class="tk-str">"#"</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"text-graphite-500 hover:text-graphite-950"</span><span class="tk-punc">&gt;</span>Home<span class="tk-punc">&lt;/</span><span class="tk-tag">a</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"text-graphite-300"</span><span class="tk-punc">&gt;</span>/<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">span</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"font-medium"</span><span class="tk-punc">&gt;</span>Breadcrumbs<span class="tk-punc">&lt;/</span><span class="tk-tag">span</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">nav</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Pagination --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"mid gap-1.5"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"w-9 h-9 rounded-md mid"</span><span class="tk-punc">&gt;</span>←<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"w-9 h-9 rounded-md mid bg-iris-500 text-white"</span><span class="tk-punc">&gt;</span>1<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- FAQ -->
+    <article class="showcase" data-cat="nav">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Accordion / FAQ</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Native &lt;details&gt; with elegant styling</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame max-w-lg mx-auto stack-2">
+              <details class="faq-item" open>
+                <summary class="faq-q">What makes GarurSaili different?</summary>
+                <p class="faq-a">The engine is native Rust, the vocabulary is hybrid (intent + primitive + utility), and the palette is poetic and original.</p>
+              </details>
+              <details class="faq-item">
+                <summary class="faq-q">Does it work with my framework?</summary>
+                <p class="faq-a">Yes — Garur emits plain CSS. Any framework that consumes a stylesheet works. There are guides for Next.js, Vite, and plain HTML.</p>
+              </details>
+              <details class="faq-item">
+                <summary class="faq-q">Do I need a Rust toolchain?</summary>
+                <p class="faq-a">No. Prebuilt binaries ship via npm for Linux, macOS, and Windows. Installation is a normal npm command.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">details</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"faq-item"</span> <span class="tk-attr">open</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">summary</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"faq-q"</span><span class="tk-punc">&gt;</span>What makes GarurSaili different?<span class="tk-punc">&lt;/</span><span class="tk-tag">summary</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">p</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"faq-a"</span><span class="tk-punc">&gt;</span>The engine is native Rust...<span class="tk-punc">&lt;/</span><span class="tk-tag">p</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">details</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════ OVERLAYS ═══════════ -->
+  <section id="cat-overlays" data-section="overlays" class="stack-6 scroll-mt-32">
+    <header class="stack-2">
+      <div class="mid gap-2 tiny uppercase tracking-wider font-bold text-plum-600 dark:text-plum-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-plum-500"></span>
+        Overlays
+      </div>
+      <h2 class="display-section">Modals, tooltips & popovers</h2>
+      <p class="lead text-graphite-600 dark:text-graphite-400 max-w-2xl">
+        Layers that sit above the page. Native where possible, styled to match everything else.
+      </p>
+    </header>
+
+    <!-- Modal -->
+    <article class="showcase" data-cat="overlays">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Modal dialog</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Native &lt;dialog&gt; with backdrop blur</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame max-w-md mx-auto card stack-5 relative">
+              <div class="mid gap-4">
+                <span class="w-12 h-12 rounded-xl bg-gradient-to-br from-iris-500 to-plum-500 mid text-white">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                </span>
+                <div class="stack-1">
+                  <div class="title">Delete this project?</div>
+                  <div class="small text-graphite-500 dark:text-graphite-400">This action cannot be undone.</div>
+                </div>
+              </div>
+              <div class="mid gap-2 justify-end">
+                <button class="btn btn-ghost">Cancel</button>
+                <button class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-punc">&lt;</span><span class="tk-tag">dialog</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"modal"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"modal-header"</span><span class="tk-punc">&gt;</span>Delete this project?<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"modal-body"</span><span class="tk-punc">&gt;</span>
+    This action cannot be undone.
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"modal-footer"</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-ghost"</span><span class="tk-punc">&gt;</span>Cancel<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+    <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-danger"</span><span class="tk-punc">&gt;</span>Delete<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">dialog</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- Tooltip -->
+    <article class="showcase" data-cat="overlays">
+      <header class="apart-mid gap-4 mb-4 flex-wrap">
+        <div class="stack-1">
+          <h3 class="title">Tooltip & popover</h3>
+          <p class="tiny text-graphite-500 dark:text-graphite-400">Hover hints and native popovers</p>
+        </div>
+        <div class="mid gap-1 p-1 rounded-lg bg-graphite-100 dark:bg-white/[0.04]">
+          <button type="button" class="stab is-active" data-tab="preview">Preview</button>
+          <button type="button" class="stab" data-tab="code">Code</button>
+        </div>
+      </header>
+
+      <div data-panel="preview">
+        <div class="preview-surface p-6 md:p-8 border border-graphite-200 dark:border-white/[0.06]">
+          <div class="preview-stage">
+            <div class="device-frame max-w-md mx-auto stack-6">
+              <div class="mid justify-center gap-4 flex-wrap">
+                <div class="relative group">
+                  <button class="btn btn-secondary">Hover me</button>
+                  <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-md bg-graphite-950 dark:bg-white text-white dark:text-black tiny font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 smooth pointer-events-none">
+                    This is a tooltip
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-graphite-950 dark:border-t-white"></div>
+                  </div>
+                </div>
+
+                <button type="button" popovertarget="demo-popover" class="btn btn-primary">Open popover</button>
+                <!-- <div id="demo-popover" popover class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.08] bg-bone-50 dark:bg-[#0f0f0f] shadow-2xl stack-3 max-w-xs">
+                  <div class="title">Native popover</div>
+                  <p class="tiny text-graphite-500 dark:text-graphite-400">Zero JavaScript. Styled with Garur. Click outside to dismiss.</p>
+                  <button class="btn btn-primary tiny" popovertarget="demo-popover" popovertargetaction="hide">Got it</button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-panel="code" hidden>
+        <div class="code-panel">
+          <pre><code><span class="tk-comment">&lt;!-- Tooltip --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"relative group"</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"btn btn-secondary"</span><span class="tk-punc">&gt;</span>Hover me<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+  <span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-md bg-graphite-950 text-white tiny opacity-0 group-hover:opacity-100 smooth"</span><span class="tk-punc">&gt;</span>
+    This is a tooltip
+  <span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span>
+
+<span class="tk-comment">&lt;!-- Native popover --&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">button</span> <span class="tk-attr">popovertarget</span><span class="tk-punc">=</span><span class="tk-str">"my-popover"</span><span class="tk-punc">&gt;</span>Open<span class="tk-punc">&lt;/</span><span class="tk-tag">button</span><span class="tk-punc">&gt;</span>
+<span class="tk-punc">&lt;</span><span class="tk-tag">div</span> <span class="tk-attr">id</span><span class="tk-punc">=</span><span class="tk-str">"my-popover"</span> <span class="tk-attr">popover</span> <span class="tk-attr">class</span><span class="tk-punc">=</span><span class="tk-str">"p-5 rounded-xl border shadow-2xl"</span><span class="tk-punc">&gt;</span>
+  Popover content
+<span class="tk-punc">&lt;/</span><span class="tk-tag">div</span><span class="tk-punc">&gt;</span></code></pre>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ═══════════ CLOSING CTA ═══════════ -->
+  <section class="mt-16">
+    <div class="jumbo bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/20 rounded-3xl relative overflow-hidden">
+      <div class="absolute inset-0 aurora-bg opacity-60 dark:opacity-90 pointer-events-none"></div>
+      <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-iris-500/25 dark:bg-iris-500/35 blur-3xl pointer-events-none"></div>
+      <div class="relative">
+        <h2 class="hero-vercel max-w-2xl mx-auto">
+          <span class="block">Build something</span>
+          <span class="block gradient-text">beautiful.</span>
+        </h2>
+        <p class="lead-vercel mx-auto mt-5 text-graphite-600 dark:text-graphite-400 max-w-xl">
+          24 components shown, thousands more available. Every class on this page composes with
+          every variant, every intent, and every primitive.
+        </p>
+        <div class="mid gap-2.5 mt-8 flex-wrap justify-center">
+          <a href="./a.html" class="btn-hero btn-hero-primary shine">
+            <span>Read the docs</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="https://github.com/barshansarkar/Garursaili-CSS" target="_blank" rel="noopener" class="btn-hero btn-hero-secondary">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            <span>Star on GitHub</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════════ -->
+<footer class="border-t border-graphite-200 dark:border-white/[0.06] py-12">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="apart-mid flex-wrap gap-4">
+      <div class="mid gap-2.5">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 via-plum-500 to-honey-500 mid text-white text-sm font-black">ग</span>
+        <span class="font-semibold small">GarurSaili-CSS</span>
+        <span class="chip tiny">v1.4.1</span>
+      </div>
+      <p class="tiny text-graphite-500 dark:text-graphite-400">
+        © 2026 · Barshan Sarkar · Malda, West Bengal, India
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+  // ── Theme toggle ──
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('garur-theme', isDark ? 'dark' : 'light'); } catch (_) {}
+  });
+
+  // ── Device simulator ──
+  const DEVICE_LABELS = {
+    mobile: '375px',
+    tablet: '700px',
+    laptop: '100%'
+  };
+  const deviceButtons = document.querySelectorAll('[data-device]');
+  const deviceDim = document.getElementById('device-dim');
+
+  function setDevice(device) {
+    document.body.dataset.device = device;
+    deviceButtons.forEach(b => b.classList.toggle('is-active', b.dataset.device === device));
+    if (deviceDim) deviceDim.textContent = DEVICE_LABELS[device] || '100%';
+    try { localStorage.setItem('garur-device', device); } catch (_) {}
+  }
+
+  deviceButtons.forEach(btn => {
+    btn.addEventListener('click', () => setDevice(btn.dataset.device));
+  });
+
+  // Restore saved device preference
+  try {
+    const savedDevice = localStorage.getItem('garur-device');
+    if (savedDevice && DEVICE_LABELS[savedDevice]) setDevice(savedDevice);
+    else setDevice('laptop');
+  } catch (_) { setDevice('laptop'); }
+
+  // ── Preview / Code tabs ──
+  document.querySelectorAll('.showcase').forEach(card => {
+    const tabs = card.querySelectorAll('.stab');
+    const panels = card.querySelectorAll('[data-panel]');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        tabs.forEach(t => t.classList.toggle('is-active', t === tab));
+        panels.forEach(p => { p.hidden = p.dataset.panel !== target; });
+      });
+    });
+  });
+
+  // ── Category filter ──
+  const filterChips = document.querySelectorAll('.filter-chip');
+  const sections = document.querySelectorAll('[data-section]');
+
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      filterChips.forEach(c => c.classList.toggle('is-active', c === chip));
+
+      sections.forEach(section => {
+        const match = filter === 'all' || section.dataset.section === filter;
+        section.style.display = match ? '' : 'none';
+      });
+    });
+  });
+
+  // ── Smooth scroll for in-page links ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ── Copy code on click of the code panel ──
+  document.querySelectorAll('.code-panel').forEach(panel => {
+    panel.style.cursor = 'pointer';
+    panel.title = 'Click to copy';
+    panel.addEventListener('click', () => {
+      const code = panel.querySelector('code');
+      if (!code) return;
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        const original = panel.style.boxShadow;
+        panel.style.boxShadow = '0 0 0 2px #8657f7';
+        setTimeout(() => { panel.style.boxShadow = original; }, 500);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

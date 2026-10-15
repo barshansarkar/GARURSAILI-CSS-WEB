@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Garur guides — framework integration, theming, migration, and performance." />
+  <title>Guides — Garur Documentation</title>
+  <link rel="stylesheet" href="../build/garur.css" />
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('garur-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
+</head>
+
+<body class="bg-white dark:bg-[#0a0a0a] text-graphite-950 dark:text-graphite-50 font-sans antialiased m-0 min-h-screen">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TOP BAR
+     ═══════════════════════════════════════════════════════════════ -->
+<header class="fixed top-0 left-0 right-0 z-40 h-14 bg-white/80 dark:bg-graphite-950/80 backdrop-blur-md border-b border-graphite-200 dark:border-white/10">
+  <div class="h-full max-w-[1440px] mx-auto px-4 md:px-6 apart-mid">
+
+    <div class="mid gap-4">
+      <a href="#" class="mid gap-2 flex-shrink-0">
+        <div class="w-6 h-6 rounded-md bg-graphite-950 dark:bg-white mid">
+          <span class="text-white dark:text-black text-[11px] font-bold">G</span>
+        </div>
+        <span class="font-semibold text-sm tracking-tight hidden sm:block">Garur</span>
+      </a>
+      <span class="hidden md:block w-px h-5 bg-graphite-200 dark:bg-white/10"></span>
+      <nav class="hidden md:flex items-center gap-1.5 text-sm">
+        <a href="#" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Docs</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <span class="px-2 py-1 text-graphite-950 dark:text-white font-medium">Guides</span>
+      </nav>
+      <span class="hidden md:inline-flex mid gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-graphite-100 dark:bg-white/[0.06] text-graphite-600 dark:text-graphite-400 border border-graphite-200 dark:border-white/10">
+        v0.2.0
+      </span>
+    </div>
+
+    <div class="mid gap-2">
+      <button type="button" class="hidden md:flex mid gap-2 w-56 h-8 px-3 rounded-md text-sm bg-graphite-50 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/10 text-graphite-500 dark:text-graphite-400 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="flex-1 text-left">Search guides...</span>
+        <span class="kbd text-[9px] h-5 min-w-[1.25rem]">⌘K</span>
+      </button>
+      <button id="menu-btn" type="button" class="md:hidden w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] transition-colors" aria-label="Open navigation">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="#" class="hidden md:inline-flex items-center gap-1.5 h-8 px-3 rounded-md text-sm font-medium bg-graphite-950 dark:bg-white text-white dark:text-black hover:opacity-90 transition-opacity">GitHub</a>
+      <button id="theme-toggle" type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] transition-colors" aria-label="Toggle theme">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOBILE DRAWER
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="drawer" class="hidden fixed inset-0 z-[60] md:hidden">
+  <div class="absolute inset-0 bg-black/50" data-drawer-close></div>
+  <aside class="absolute top-0 left-0 bottom-0 w-72 bg-white dark:bg-[#0f0f0f] border-r border-graphite-200 dark:border-white/10 overflow-y-auto p-5 stack-6">
+    <div class="apart-mid">
+      <div class="mid gap-2">
+        <div class="w-6 h-6 rounded-md bg-graphite-950 dark:bg-white mid"><span class="text-white dark:text-black text-[11px] font-bold">G</span></div>
+        <span class="font-semibold text-sm">Garur</span>
+      </div>
+      <button type="button" class="w-7 h-7 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06]" data-drawer-close>✕</button>
+    </div>
+    <nav class="stack-5 text-sm">
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2 mb-1">Guides</div>
+        <a href="#nextjs" class="px-2 py-1.5 rounded text-graphite-950 dark:text-white bg-graphite-100 dark:bg-white/[0.06] font-medium" data-drawer-close>With Next.js</a>
+        <a href="#vite" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>With Vite</a>
+        <a href="#themes" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Custom themes</a>
+        <a href="#patterns" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Component patterns</a>
+        <a href="#migrating" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Migrating</a>
+        <a href="#performance" class="px-2 py-1.5 rounded text-graphite-700 dark:text-graphite-300" data-drawer-close>Performance</a>
+      </div>
+    </nav>
+  </aside>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FLOATING PREV / NEXT CONTROL — right edge, vertical, tracks scroll
+     ═══════════════════════════════════════════════════════════════ -->
+<nav id="guide-nav" class="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-30 flex-col items-end gap-2 select-none">
+
+  <!-- Prev button -->
+  <button id="prev-guide" type="button"
+    class="group mid gap-2 h-9 pl-3 pr-2.5 rounded-full bg-white/90 dark:bg-graphite-950/90 backdrop-blur-md border border-graphite-200 dark:border-white/10 text-graphite-600 dark:text-graphite-400 shadow-sm hover:border-graphite-300 dark:hover:border-white/[0.18] hover:text-graphite-950 dark:hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
+    aria-label="Previous guide">
+    <span class="text-[10px] uppercase tracking-wider font-semibold whitespace-nowrap">Prev</span>
+    <span class="w-5 h-5 rounded-full bg-graphite-100 dark:bg-white/[0.06] mid group-hover:bg-graphite-200 dark:group-hover:bg-white/[0.10] transition-colors">
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
+    </span>
+  </button>
+
+  <!-- Center: current guide indicator + progress rail -->
+  <div class="mid flex-col gap-2 py-2">
+    <div class="w-px h-12 bg-graphite-200 dark:bg-white/10 relative overflow-hidden rounded-full">
+      <div id="progress-rail" class="absolute inset-x-0 top-0 bg-graphite-950 dark:bg-white rounded-full transition-all duration-500" style="height: 16.6%"></div>
+    </div>
+
+    <div class="mid flex-col gap-1.5">
+      <button data-guide-target="nextjs"      class="guide-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="With Next.js"></button>
+      <button data-guide-target="vite"        class="guide-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="With Vite"></button>
+      <button data-guide-target="themes"      class="guide-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="Custom themes"></button>
+      <button data-guide-target="patterns"    class="guide-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="Component patterns"></button>
+      <button data-guide-target="migrating"   class="guide-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="Migrating"></button>
+      <button data-guide-target="performance" class="guide-dot w-1.5 h-1.5 rounded-full bg-graphite-300 dark:bg-white/20 hover:bg-graphite-950 dark:hover:bg-white transition-colors" aria-label="Performance"></button>
+    </div>
+
+    <div class="w-px h-12 bg-graphite-200 dark:bg-white/10"></div>
+  </div>
+
+  <!-- Next button -->
+  <button id="next-guide" type="button"
+    class="group mid gap-2 h-9 pl-3 pr-2.5 rounded-full bg-white/90 dark:bg-graphite-950/90 backdrop-blur-md border border-graphite-200 dark:border-white/10 text-graphite-600 dark:text-graphite-400 shadow-sm hover:border-graphite-300 dark:hover:border-white/[0.18] hover:text-graphite-950 dark:hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
+    aria-label="Next guide">
+    <span class="text-[10px] uppercase tracking-wider font-semibold whitespace-nowrap">Next</span>
+    <span class="w-5 h-5 rounded-full bg-graphite-100 dark:bg-white/[0.06] mid group-hover:bg-graphite-200 dark:group-hover:bg-white/[0.10] transition-colors">
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+    </span>
+  </button>
+
+  <!-- Floating current-guide label — appears on hover of the rail -->
+  <div id="guide-label" class="absolute right-14 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 transition-opacity duration-200">
+    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-mono font-medium bg-graphite-950 dark:bg-white text-white dark:text-black shadow-md whitespace-nowrap">
+      <span id="guide-label-text">With Next.js</span>
+    </span>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE SHELL
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="max-w-[1440px] mx-auto grid grid-cols-12 pt-14">
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="hidden md:block md:col-span-3 lg:col-span-2 border-r border-graphite-200 dark:border-white/10">
+    <nav class="sticky top-14 max-h-[calc(100vh_-_3.5rem)] overflow-y-auto p-6 stack-6 text-sm">
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2">Getting Started</div>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Introduction</a>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Installation</a>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Quick start</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2">Core Concepts</div>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Three layers</a>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Intent layer</a>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Primitive layer</a>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Variants</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2">API Reference</div>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">CLI</a>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Configuration</a>
+        <a href="#" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Design tokens</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 px-2">Guides</div>
+        <a href="#nextjs" class="block px-2 py-1.5 rounded-md text-graphite-950 dark:text-white bg-graphite-100 dark:bg-white/[0.06] font-medium">With Next.js</a>
+        <a href="#vite" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">With Vite</a>
+        <a href="#themes" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Custom themes</a>
+        <a href="#patterns" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Component patterns</a>
+        <a href="#migrating" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Migrating</a>
+        <a href="#performance" class="block px-2 py-1.5 rounded-md text-graphite-600 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white hover:bg-graphite-50 dark:hover:bg-white/[0.03] transition-colors">Performance</a>
+      </div>
+
+    </nav>
+  </aside>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="col-span-12 md:col-span-9 lg:col-span-8">
+    <article class="max-w-[720px] mx-auto px-6 py-12 md:py-16">
+
+      <!-- HEADER -->
+      <header class="mb-12">
+        <div class="mid gap-2 mb-4">
+          <a href="#" class="text-xs text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Docs</a>
+          <span class="text-xs text-graphite-300 dark:text-graphite-600">/</span>
+                              <a href="./a.html" class="text-xs text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white transition-colors">Introduction</a>
+
+                              <span class="text-xs text-graphite-950 dark:text-white font-medium">/</span>
+          <span class="text-xs text-graphite-950 dark:text-white font-medium">Guides</span>
+        </div>
+        <h1 class="text-4xl font-bold tracking-tight leading-tight">Guides</h1>
+        <p class="text-lg text-graphite-600 dark:text-graphite-400 leading-relaxed mt-4">
+          Practical walkthroughs for integrating Garur with your framework, theming it to match your brand,
+          and migrating existing codebases. Each guide is self-contained — pick the one you need.
+        </p>
+      </header>
+
+      <!-- GUIDE INDEX -->
+      <section class="mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <a href="#nextjs" class="group p-4 rounded-lg border border-graphite-200 dark:border-white/10 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors stack-1.5">
+            <div class="mid gap-2">
+              <span class="w-6 h-6 rounded-md bg-graphite-100 dark:bg-white/[0.06] mid text-xs font-bold">1</span>
+              <span class="text-sm font-medium">With Next.js</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">App Router and Pages Router integration, dev workflow, and CI.</p>
+          </a>
+          <a href="#vite" class="group p-4 rounded-lg border border-graphite-200 dark:border-white/10 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors stack-1.5">
+            <div class="mid gap-2">
+              <span class="w-6 h-6 rounded-md bg-graphite-100 dark:bg-white/[0.06] mid text-xs font-bold">2</span>
+              <span class="text-sm font-medium">With Vite</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Dev server, HMR, and production builds.</p>
+          </a>
+          <a href="#themes" class="group p-4 rounded-lg border border-graphite-200 dark:border-white/10 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors stack-1.5">
+            <div class="mid gap-2">
+              <span class="w-6 h-6 rounded-md bg-graphite-100 dark:bg-white/[0.06] mid text-xs font-bold">3</span>
+              <span class="text-sm font-medium">Custom themes</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Runtime tokens, brand palettes, and semantic colors.</p>
+          </a>
+          <a href="#patterns" class="group p-4 rounded-lg border border-graphite-200 dark:border-white/10 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors stack-1.5">
+            <div class="mid gap-2">
+              <span class="w-6 h-6 rounded-md bg-graphite-100 dark:bg-white/[0.06] mid text-xs font-bold">4</span>
+              <span class="text-sm font-medium">Component patterns</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Reusable class strings, <code class="inline-code">@apply</code>, and React/Vue idioms.</p>
+          </a>
+          <a href="#migrating" class="group p-4 rounded-lg border border-graphite-200 dark:border-white/10 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors stack-1.5">
+            <div class="mid gap-2">
+              <span class="w-6 h-6 rounded-md bg-graphite-100 dark:bg-white/[0.06] mid text-xs font-bold">5</span>
+              <span class="text-sm font-medium">Migrating from Tailwind</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">Class name mapping, automated find/replace, and behavioral differences.</p>
+          </a>
+          <a href="#performance" class="group p-4 rounded-lg border border-graphite-200 dark:border-white/10 hover:border-graphite-300 dark:hover:border-white/[0.15] transition-colors stack-1.5">
+            <div class="mid gap-2">
+              <span class="w-6 h-6 rounded-md bg-graphite-100 dark:bg-white/[0.06] mid text-xs font-bold">6</span>
+              <span class="text-sm font-medium">Performance tuning</span>
+            </div>
+            <p class="text-xs text-graphite-500 dark:text-graphite-400 leading-relaxed">SSC mode, persistent cache, content globs, and CI strategy.</p>
+          </a>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- GUIDE 1 -->
+      <section id="nextjs" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 01</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~5 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">With Next.js</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur emits a plain CSS file, so integration is a build-time concern. You run Garur once before
+          <code class="inline-code">next build</code>, commit the output path to your root layout, and let
+          Next.js handle the rest. There is no webpack loader, no PostCSS plugin, and no runtime in the browser.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Project layout</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          A typical Next.js project using Garur has three additional files at the root: a config, a build output
+          folder, and one import statement in the layout. Everything else stays as-is.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">project tree</span>
+          </div>
+          <pre class="code-body text-sm"><code>my-app/
+├── app/
+│   ├── layout.tsx          <span class="syn-str">// imports garur.css</span>
+│   └── page.tsx
+├── build/
+│   └── garur.css           <span class="syn-str">// generated — do not edit</span>
+├── garur.config.js         <span class="syn-str">// optional</span>
+├── next.config.mjs
+└── package.json</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Wire it into the build</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          The cleanest approach is a <strong class="font-medium text-graphite-950 dark:text-white">prebuild script</strong> in
+          <code class="inline-code">package.json</code>. NPM runs <code class="inline-code">prebuild</code> automatically before
+          <code class="inline-code">build</code>, so Garur always sees the latest source.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">package.json</span>
+          </div>
+          <pre class="code-body text-sm"><code>{
+  <span class="syn-attr">"scripts"</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">"dev"</span><span class="syn-punc">:</span> <span class="syn-str">"next dev"</span>,
+    <span class="syn-attr">"prebuild"</span><span class="syn-punc">:</span> <span class="syn-str">"garur ssc ./app ./components --minify"</span>,
+    <span class="syn-attr">"build"</span><span class="syn-punc">:</span> <span class="syn-str">"next build"</span>,
+    <span class="syn-attr">"watch:css"</span><span class="syn-punc">:</span> <span class="syn-str">"garur watch"</span>
+  }
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Import in the root layout</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          In the App Router, import the generated stylesheet in <code class="inline-code">app/layout.tsx</code>.
+          Next.js will inline it into the build automatically.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">app/layout.tsx</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">import</span> <span class="syn-str">'../build/garur.css'</span>;
+<span class="syn-punc">import type</span> { <span class="syn-attr">Metadata</span> } <span class="syn-punc">from</span> <span class="syn-str">'next'</span>;
+
+<span class="syn-punc">export const</span> <span class="syn-attr">metadata</span><span class="syn-punc">:</span> <span class="syn-attr">Metadata</span> <span class="syn-punc">=</span> {
+  <span class="syn-attr">title</span><span class="syn-punc">:</span> <span class="syn-str">'My App'</span>,
+};
+
+<span class="syn-punc">export default function</span> <span class="syn-tag">RootLayout</span>({ <span class="syn-attr">children</span> }: { <span class="syn-attr">children</span>: <span class="syn-attr">React.ReactNode</span> }) {
+  <span class="syn-punc">return</span> (
+    <span class="syn-punc">&lt;</span><span class="syn-tag">html</span> <span class="syn-attr">lang</span><span class="syn-punc">=</span><span class="syn-str">"en"</span><span class="syn-punc">&gt;</span>
+      <span class="syn-punc">&lt;</span><span class="syn-tag">body</span> <span class="syn-attr">className</span><span class="syn-punc">=</span><span class="syn-str">"bg-white dark:bg-[#0a0a0a]"</span><span class="syn-punc">&gt;</span>
+        {children}
+      <span class="syn-punc">&lt;/</span><span class="syn-tag">body</span><span class="syn-punc">&gt;</span>
+    <span class="syn-punc">&lt;/</span><span class="syn-tag">html</span><span class="syn-punc">&gt;</span>
+  );
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Dev workflow</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          During development, run Garur in watch mode alongside <code class="inline-code">next dev</code>. Garur
+          watches your source files and rebuilds in ~3 ms on each save, so the CSS is always current by
+          the time Next's HMR runs.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal · two panes</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-comment"># pane 1</span>
+<span class="terminal-prompt">$</span> npm run watch:css
+
+<span class="syn-comment"># pane 2</span>
+<span class="terminal-prompt">$</span> npm run dev</code></pre>
+        </div>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="text-sm">
+            <span class="font-medium text-graphite-950 dark:text-white">Tip — run both in one command.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Use <code class="inline-code">npm-run-all</code> or <code class="inline-code">concurrently</code>:
+            <code class="inline-code">concurrently "garur watch" "next dev"</code>.</span>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Pages Router</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          If you're on the Pages Router, import the stylesheet in <code class="inline-code">pages/_app.tsx</code> instead.
+          Everything else stays the same.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">pages/_app.tsx</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">import</span> <span class="syn-str">'../build/garur.css'</span>;
+<span class="syn-punc">import type</span> { <span class="syn-attr">AppProps</span> } <span class="syn-punc">from</span> <span class="syn-str">'next/app'</span>;
+
+<span class="syn-punc">export default function</span> <span class="syn-tag">App</span>({ <span class="syn-attr">Component</span>, <span class="syn-attr">pageProps</span> }: <span class="syn-attr">AppProps</span>) {
+  <span class="syn-punc">return</span> <span class="syn-punc">&lt;</span><span class="syn-tag">Component</span> {...<span class="syn-attr">pageProps</span>} <span class="syn-punc">/&gt;</span>;
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Common pitfalls</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-1/3">Symptom</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Fix</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Styles missing on first load</td>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Garur hasn't run yet. Add <code class="inline-code">prebuild</code> script.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Stale CSS after class change</td>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Restart <code class="inline-code">garur watch</code> — it caches by file hash.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Turbopack complaining about imports</td>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Point the import at <code class="inline-code">build/garur.css</code>, not a folder.</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Deployed build missing classes</td>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Check that <code class="inline-code">build/</code> is not in <code class="inline-code">.gitignore</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- GUIDE 2 -->
+      <section id="vite" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 02</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~4 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">With Vite</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Vite does not need a plugin to work with Garur. Because Garur produces a plain CSS file, you can
+          import it directly in your entry point and let Vite handle bundling, HMR, and code-splitting.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Entry import</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Import the generated CSS from <code class="inline-code">src/main.ts</code>. Vite treats it as a
+          first-class module — no <code class="inline-code">link</code> tag needed.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">src/main.ts</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">import</span> <span class="syn-str">'../build/garur.css'</span>;
+<span class="syn-punc">import</span> { <span class="syn-attr">createApp</span> } <span class="syn-punc">from</span> <span class="syn-str">'vue'</span>;
+<span class="syn-punc">import</span> <span class="syn-attr">App</span> <span class="syn-punc">from</span> <span class="syn-str">'./App.vue'</span>;
+
+<span class="syn-attr">createApp</span>(<span class="syn-attr">App</span>).<span class="syn-attr">mount</span>(<span class="syn-str">'#app'</span>);</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Dev workflow</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Run Garur and Vite as parallel processes. Vite's HMR is CSS-agnostic — when Garur rewrites
+          <code class="inline-code">build/garur.css</code>, Vite picks up the change within a frame.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">package.json</span>
+          </div>
+          <pre class="code-body text-sm"><code>{
+  <span class="syn-attr">"scripts"</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">"dev"</span><span class="syn-punc">:</span> <span class="syn-str">"concurrently \"garur watch\" \"vite\""</span>,
+    <span class="syn-attr">"prebuild"</span><span class="syn-punc">:</span> <span class="syn-str">"garur ssc ./src --minify"</span>,
+    <span class="syn-attr">"build"</span><span class="syn-punc">:</span> <span class="syn-str">"vite build"</span>
+  }
+}</code></pre>
+        </div>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="text-sm">
+            <span class="font-medium text-graphite-950 dark:text-white">Why no plugin?</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> A Vite plugin would need to rebuild the CSS on every file change — but Garur already does that in watch mode, faster than a plugin could. Two processes, one source of truth.</span>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Production build</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          The <code class="inline-code">prebuild</code> script runs before <code class="inline-code">vite build</code>.
+          Garur emits both the unminified and minified files; Vite imports the unminified one and minifies it
+          again as part of its pipeline. To avoid double-minification, point the import at
+          <code class="inline-code">build/garur.css</code> and let Vite do the final pass.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">vite.config.ts</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">import</span> { <span class="syn-attr">defineConfig</span> } <span class="syn-punc">from</span> <span class="syn-str">'vite'</span>;
+
+<span class="syn-punc">export default</span> <span class="syn-attr">defineConfig</span>({
+  <span class="syn-attr">css</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">devSourcemap</span><span class="syn-punc">:</span> <span class="syn-str">true</span>,
+  },
+  <span class="syn-attr">build</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">cssMinify</span><span class="syn-punc">:</span> <span class="syn-str">'lightningcss'</span>,
+  },
+});</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Turbopack and Rolldown</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          If you're on Vite's <strong class="font-medium text-graphite-950 dark:text-white">Rolldown</strong> beta or
+          using <code class="inline-code">vite-plugin-wasm</code>, everything still works — Garur's output is
+          plain CSS and does not require any bundler-specific integration.
+        </p>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- GUIDE 3 -->
+      <section id="themes" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 03</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~6 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Custom themes</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur exposes everything a primitive needs as a CSS variable. That means theming does not require
+          a rebuild — you can swap a brand color, change the base radius, or add a new semantic palette
+          entirely at runtime by overriding variables on <code class="inline-code">:root</code>.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Three layers of theming</h3>
+        <div class="stack-3 mb-6">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-1">1 · Runtime tokens</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">Override <code class="inline-code">--garur-*</code> variables on <code class="inline-code">:root</code>. Affects every primitive instantly — no rebuild.</p>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-1">2 · Config palette</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">Add brand families to <code class="inline-code">garur.config.js</code>. Generates new utility classes like <code class="inline-code">bg-brand-500</code> — requires a rebuild.</p>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-1">3 · Semantic colors</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">Opt-in layer for <code class="inline-code">bg-primary</code>, <code class="inline-code">text-success</code>, and other role-based utilities. Rebuild required.</p>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Runtime tokens</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Every primitive in Garur reads from a design token. To retheme, override the token — no rebuild,
+          no class changes. This works because primitives never hardcode colors, radii, or shadows.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">globals.css</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-tag">:root</span> {
+  <span class="syn-attr">--garur-primary</span><span class="syn-punc">:</span> <span class="syn-str">#c2410c</span>;
+  <span class="syn-attr">--garur-radius</span><span class="syn-punc">:</span> <span class="syn-str">0.25rem</span>;
+  <span class="syn-attr">--garur-surface</span><span class="syn-punc">:</span> <span class="syn-str">#fefefe</span>;
+  <span class="syn-attr">--garur-shadow-md</span><span class="syn-punc">:</span> <span class="syn-str">0 2px 4px rgba(0,0,0,0.06)</span>;
+}
+
+<span class="syn-tag">.dark</span> {
+  <span class="syn-attr">--garur-surface</span><span class="syn-punc">:</span> <span class="syn-str">#111111</span>;
+  <span class="syn-attr">--garur-primary</span><span class="syn-punc">:</span> <span class="syn-str">#fb923c</span>;
+}</code></pre>
+        </div>
+
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          The primitives that read these tokens include <code class="inline-code">card</code>,
+          <code class="inline-code">btn</code>, <code class="inline-code">input</code>,
+          <code class="inline-code">badge</code>, <code class="inline-code">alert</code>,
+          <code class="inline-code">toast</code>, <code class="inline-code">modal</code>, and every
+          <code class="inline-code">avatar</code> / <code class="inline-code">divider</code> variant.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Adding a brand palette</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          For brand colors you want to use as utility classes (<code class="inline-code">bg-brand-500</code>,
+          <code class="inline-code">text-brand-600</code>), define them in the config. Garur generates the full
+          shade ramp and every variant automatically.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">garur.config.js</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">palette</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">brand</span><span class="syn-punc">:</span> {
+      <span class="syn-attr">50</span><span class="syn-punc">:</span>  <span class="syn-str">'#fff7ed'</span>,
+      <span class="syn-attr">100</span><span class="syn-punc">:</span> <span class="syn-str">'#ffedd5'</span>,
+      <span class="syn-attr">200</span><span class="syn-punc">:</span> <span class="syn-str">'#fed7aa'</span>,
+      <span class="syn-attr">300</span><span class="syn-punc">:</span> <span class="syn-str">'#fdba74'</span>,
+      <span class="syn-attr">400</span><span class="syn-punc">:</span> <span class="syn-str">'#fb923c'</span>,
+      <span class="syn-attr">500</span><span class="syn-punc">:</span> <span class="syn-str">'#f97316'</span>,
+      <span class="syn-attr">600</span><span class="syn-punc">:</span> <span class="syn-str">'#ea580c'</span>,
+      <span class="syn-attr">700</span><span class="syn-punc">:</span> <span class="syn-str">'#c2410c'</span>,
+      <span class="syn-attr">800</span><span class="syn-punc">:</span> <span class="syn-str">'#9a3412'</span>,
+      <span class="syn-attr">900</span><span class="syn-punc">:</span> <span class="syn-str">'#7c2d12'</span>,
+      <span class="syn-attr">950</span><span class="syn-punc">:</span> <span class="syn-str">'#431407'</span>,
+    },
+  },
+};</code></pre>
+        </div>
+
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          After a rebuild, every color utility has a new variant:
+          <code class="inline-code">bg-brand-500</code>, <code class="inline-code">text-brand-600</code>,
+          <code class="inline-code">border-brand-300</code>, <code class="inline-code">ring-brand-400</code>,
+          <code class="inline-code">fill-brand-500</code>, <code class="inline-code">from-brand-400</code>,
+          and the full opacity ramp (<code class="inline-code">bg-brand-500/50</code>, etc.).
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Semantic colors</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Semantic colors are an opt-in layer that maps role names —
+          <code class="inline-code">primary</code>, <code class="inline-code">success</code>,
+          <code class="inline-code">danger</code>, and so on — to a color. They are <strong class="font-medium text-graphite-950 dark:text-white">off by default</strong>
+          because most projects prefer literal color names. Enable them when your design system uses role-based tokens.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">garur.config.js</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">semanticColors</span><span class="syn-punc">:</span> <span class="syn-str">true</span>,
+  <span class="syn-attr">semanticOverrides</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">primary</span><span class="syn-punc">:</span>   <span class="syn-str">'#c2410c'</span>,
+    <span class="syn-attr">success</span><span class="syn-punc">:</span>   <span class="syn-str">'#16a34a'</span>,
+    <span class="syn-attr">danger</span><span class="syn-punc">:</span>    <span class="syn-str">'#dc2626'</span>,
+    <span class="syn-attr">'warning-fg'</span><span class="syn-punc">:</span> <span class="syn-str">'#422006'</span>,
+  },
+};</code></pre>
+        </div>
+
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Enabling this generates <code class="inline-code">bg-primary</code>,
+          <code class="inline-code">bg-primary-hover</code>, <code class="inline-code">bg-primary-subtle</code>,
+          <code class="inline-code">text-primary</code>, <code class="inline-code">border-primary</code>,
+          <code class="inline-code">ring-primary</code>, and equivalents for each of the eight roles. The
+          generated utilities reference CSS variables, so you can still override them at runtime —
+          <code class="inline-code">--garur-primary</code> wins over the config value.
+        </p>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="text-sm">
+            <span class="font-medium text-graphite-950 dark:text-white">Which should I pick?</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> Use <strong>literal</strong> colors (<code class="inline-code">bg-iris-500</code>) when your design language has a fixed palette. Use <strong>semantic</strong> colors when the same UI element needs to change color across themes without a class change.</span>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Dark mode</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Dark mode is configured with the <code class="inline-code">darkMode</code> key. The default is
+          <code class="inline-code">'class'</code> — the <code class="inline-code">dark:</code> variant fires
+          when an ancestor has class <code class="inline-code">dark</code>. Set it to
+          <code class="inline-code">'media'</code> to follow the OS preference instead.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">garur.config.js</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">darkMode</span><span class="syn-punc">:</span> <span class="syn-str">'class'</span>, <span class="syn-comment">// or 'media'</span>
+};</code></pre>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- GUIDE 4 -->
+      <section id="patterns" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 04</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~5 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Component patterns</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          A long class string in JSX is fine once. Repeated twenty times across a codebase, it becomes a
+          maintenance problem. Garur gives you three ways to solve this, in increasing order of structure.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Pattern 1 — Constant strings</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          The simplest pattern: extract the class string into a constant. No new syntax, no build step,
+          works in every framework. If the string never changes based on props, this is enough.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">Button.tsx</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">const</span> <span class="syn-attr">BTN</span> <span class="syn-punc">=</span> <span class="syn-str">'inline-flex items-center gap-2 px-4 py-2 rounded-md font-medium text-sm transition-colors'</span>;
+<span class="syn-punc">const</span> <span class="syn-attr">PRIMARY</span> <span class="syn-punc">=</span> <span class="syn-str">'bg-graphite-950 text-white hover:bg-graphite-800 dark:bg-white dark:text-black'</span>;
+<span class="syn-punc">const</span> <span class="syn-attr">GHOST</span> <span class="syn-punc">=</span> <span class="syn-str">'text-graphite-700 hover:bg-graphite-100 dark:text-graphite-300'</span>;
+
+<span class="syn-punc">export function</span> <span class="syn-tag">Button</span>({ <span class="syn-attr">variant</span> <span class="syn-punc">=</span> <span class="syn-str">'primary'</span>, <span class="syn-attr">children</span> }) {
+  <span class="syn-punc">const</span> style <span class="syn-punc">=</span> variant <span class="syn-punc">===</span> <span class="syn-str">'primary'</span> ? <span class="syn-attr">PRIMARY</span> : <span class="syn-attr">GHOST</span>;
+  <span class="syn-punc">return</span> <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">className</span><span class="syn-punc">=</span>{<span class="syn-attr">`${BTN} ${style}`</span>}<span class="syn-punc">&gt;</span>{children}<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>;
+}</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Pattern 2 — Garur primitives</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          For UI that maps to an existing primitive, prefer the primitive over a raw utility string. The
+          primitive reads from <code class="inline-code">--garur-*</code> tokens, which means theming works
+          automatically — no need to touch the component when the theme changes.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">Button.tsx</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export function</span> <span class="syn-tag">Button</span>({ <span class="syn-attr">variant</span> <span class="syn-punc">=</span> <span class="syn-str">'primary'</span>, <span class="syn-attr">children</span> }) {
+  <span class="syn-punc">const</span> cls <span class="syn-punc">=</span> {
+    <span class="syn-attr">primary</span><span class="syn-punc">:</span> <span class="syn-str">'btn btn-primary'</span>,
+    <span class="syn-attr">ghost</span><span class="syn-punc">:</span>   <span class="syn-str">'btn btn-ghost'</span>,
+    <span class="syn-attr">danger</span><span class="syn-punc">:</span>  <span class="syn-str">'btn btn-danger'</span>,
+  }[variant];
+
+  <span class="syn-punc">return</span> <span class="syn-punc">&lt;</span><span class="syn-tag">button</span> <span class="syn-attr">className</span><span class="syn-punc">=</span>{cls}<span class="syn-punc">&gt;</span>{children}<span class="syn-punc">&lt;/</span><span class="syn-tag">button</span><span class="syn-punc">&gt;</span>;
+}</code></pre>
+        </div>
+
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          The advantage over Pattern 1: when you retheme — say you change
+          <code class="inline-code">--garur-primary</code> to orange — every button updates without a
+          rebuild or a source change. The class string never references a literal color.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Pattern 3 — <code class="inline-code">@apply</code> in CSS</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          When a class string would be reused in HTML you don't control — markdown, CMS content, third-party
+          embeds — extract it into a named class in your stylesheet. Garur expands
+          <code class="inline-code">@apply</code> at build time and folds it into the output.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">components.css</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-tag">.callout</span> {
+  <span class="syn-attr">@apply</span> p-4 rounded-lg border border-graphite-200 dark:border-white/10;
+}
+
+<span class="syn-tag">.callout-info</span> {
+  <span class="syn-attr">@apply</span> bg-sky-50 border-sky-200 text-sky-900;
+}
+
+<span class="syn-tag">.callout-info</span> <span class="syn-tag">.callout-title</span> {
+  <span class="syn-attr">@apply</span> font-medium mb-1;
+}</code></pre>
+        </div>
+
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          <code class="inline-code">@apply</code> also accepts variants:
+          <code class="inline-code">@apply hover:rise focus-visible:ring-2 md:grid-3</code>. Variants compile
+          into the nested selector form, so the resulting CSS matches what you'd write by hand.
+        </p>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="text-sm">
+            <span class="font-medium text-graphite-950 dark:text-white">Don't over-abstract.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> If a string is used once, keep it inline. Extracting it into a named class adds indirection with no payoff. The three patterns above are ordered by when they start paying off — use each only when the case warrants.</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- GUIDE 5 -->
+      <section id="migrating" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 05</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~7 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Migrating from Tailwind</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur's utility layer is deliberately familiar to Tailwind users. Most atomic utilities carry
+          the same name, and the variant syntax is identical. The differences are in the palette, the
+          primitive layer, and how the build is wired.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">What stays the same</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10 mb-6">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Category</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Compatible</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Spacing scale</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300"><code class="inline-code">p-4</code> · <code class="inline-code">m-2</code> · <code class="inline-code">gap-3</code> — identical values</td></tr>
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Layout utilities</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300"><code class="inline-code">flex</code> · <code class="inline-code">grid-cols-3</code> · <code class="inline-code">justify-between</code></td></tr>
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Sizing</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300"><code class="inline-code">w-full</code> · <code class="inline-code">max-w-2xl</code> · <code class="inline-code">min-h-screen</code></td></tr>
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Typography</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300"><code class="inline-code">text-lg</code> · <code class="inline-code">font-bold</code> · <code class="inline-code">leading-relaxed</code></td></tr>
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Variants</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300"><code class="inline-code">hover:</code> · <code class="inline-code">md:</code> · <code class="inline-code">dark:</code> · <code class="inline-code">group-hover:</code></td></tr>
+              <tr><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Arbitrary values</td><td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300"><code class="inline-code">w-[42rem]</code> · <code class="inline-code">bg-[#0a0a0a]</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">What changes</h3>
+
+        <div class="stack-3 mb-6">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-2">Color palette</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed mb-2">
+              Garur ships its own 31-family palette. Slate, zinc, and neutral are replaced by
+              <code class="inline-code">void</code>, <code class="inline-code">graphite</code>, and
+              <code class="inline-code">ash</code>. Brand colors are named after materials —
+              <code class="inline-code">iris</code>, <code class="inline-code">plum</code>, <code class="inline-code">jade</code> —
+              rather than abstract labels.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-2">Default breakpoints</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              The <code class="inline-code">sm</code> · <code class="inline-code">md</code> ·
+              <code class="inline-code">lg</code> · <code class="inline-code">xl</code> ·
+              <code class="inline-code">2xl</code> breakpoints carry the same widths as Tailwind, so
+              no source changes are needed.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-2">Primitive layer</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Tailwind has no primitive layer. Garur adds classes like <code class="inline-code">card</code>,
+              <code class="inline-code">btn</code>, <code class="inline-code">navbar</code>,
+              <code class="inline-code">modal</code>, and <code class="inline-code">alert</code> that
+              replace common utility strings. Use them or ignore them — both work.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-2">Build tool</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              No PostCSS plugin. No <code class="inline-code">tailwind.config.js</code>. Replace the
+              Tailwind CLI with <code class="inline-code">garur ssc ./src</code> and remove the PostCSS
+              entry from your bundler config.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Class name mapping</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Most class names carry over unchanged. Only the palette names differ. The table below maps the
+          most common Tailwind palette classes to their Garur equivalent.
+        </p>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10 mb-6">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Tailwind</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Garur</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr><td class="px-4 py-2.5 font-mono text-xs">slate-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">void-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">cool-tinted neutral</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">zinc-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">graphite-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">true neutral</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">neutral-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">graphite-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">true neutral</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">stone-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">smoke-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">warm neutral</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">blue-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">azure-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">vivid blue</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">sky-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">sky-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">unchanged</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">indigo-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">cobalt-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">deeper blue</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">violet-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">iris-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">blue-purple</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">purple-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">violet-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">classic violet</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">fuchsia-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">orchid-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">pink-purple</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">pink-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">rose-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">classic rose</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">red-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">ruby-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">rich red</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">orange-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">ember-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">deep orange</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">amber-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">honey-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">amber gold</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">yellow-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">sunbeam-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">bright yellow</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">green-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">forest-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">deep green</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">emerald-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">jade-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">blue-green</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">teal-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">teal-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">unchanged</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">cyan-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">aqua-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">cyan</td></tr>
+              <tr><td class="px-4 py-2.5 font-mono text-xs">gray-*</td><td class="px-4 py-2.5 font-mono text-xs text-iris-600 dark:text-iris-400">ash-*</td><td class="px-4 py-2.5 text-xs text-graphite-500 dark:text-graphite-400">cool neutral</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Automated find and replace</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          For projects using a small palette of Tailwind colors, a targeted <code class="inline-code">sed</code>
+          pass migrates most of the source. The regex below matches class attributes and replaces the
+          Tailwind family prefix with the Garur equivalent.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-comment"># macOS + GNU sed</span>
+<span class="terminal-prompt">$</span> find ./src -type f \( -name <span class="syn-str">"*.tsx"</span> -o -name <span class="syn-str">"*.jsx"</span> \) -print0 \
+  | xargs -0 sed -i <span class="syn-str">''</span> \
+    -e <span class="syn-str">'s/\\bslate-/void-/g'</span> \
+    -e <span class="syn-str">'s/\\bzinc-/graphite-/g'</span> \
+    -e <span class="syn-str">'s/\\bneutral-/graphite-/g'</span> \
+    -e <span class="syn-str">'s/\\bstone-/smoke-/g'</span> \
+    -e <span class="syn-str">'s/\\bgray-/ash-/g'</span> \
+    -e <span class="syn-str">'s/\\bblue-/azure-/g'</span> \
+    -e <span class="syn-str">'s/\\bindigo-/cobalt-/g'</span> \
+    -e <span class="syn-str">'s/\\bviolet-/iris-/g'</span> \
+    -e <span class="syn-str">'s/\\bpurple-/violet-/g'</span> \
+    -e <span class="syn-str">'s/\\bfuchsia-/orchid-/g'</span> \
+    -e <span class="syn-str">'s/\\bred-/ruby-/g'</span> \
+    -e <span class="syn-str">'s/\\borange-/ember-/g'</span> \
+    -e <span class="syn-str">'s/\\bamber-/honey-/g'</span> \
+    -e <span class="syn-str">'s/\\byellow-/sunbeam-/g'</span> \
+    -e <span class="syn-str">'s/\\bgreen-/forest-/g'</span> \
+    -e <span class="syn-str">'s/\\bemerald-/jade-/g'</span> \
+    -e <span class="syn-str">'s/\\bcyan-/aqua-/g'</span></code></pre>
+        </div>
+
+        <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10 bg-graphite-50 dark:bg-white/[0.02] flex gap-3">
+          <svg class="w-4 h-4 text-iris-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <div class="text-sm">
+            <span class="font-medium text-graphite-950 dark:text-white">Review every change.</span>
+            <span class="text-graphite-600 dark:text-graphite-400"> A blind find/replace will also hit strings, comments, and API responses. Always diff the result and run the site locally before committing.</span>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Keep Tailwind alongside</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          For large codebases, migrating incrementally is faster than a big-bang rewrite. Run both engines
+          side by side: Tailwind for existing components, Garur for new ones. Both emit plain CSS, so
+          they can coexist in the same project.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">package.json</span>
+          </div>
+          <pre class="code-body text-sm"><code>{
+  <span class="syn-attr">"scripts"</span><span class="syn-punc">:</span> {
+    <span class="syn-attr">"prebuild"</span><span class="syn-punc">:</span> <span class="syn-str">"garur ssc ./app/new --minify"</span>,
+    <span class="syn-attr">"build"</span><span class="syn-punc">:</span> <span class="syn-str">"next build"</span>
+  }
+}</code></pre>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- GUIDE 6 -->
+      <section id="performance" class="mb-20 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="text-[10px] uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Guide 06</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-[10px] text-graphite-500 dark:text-graphite-400">~6 min read</span>
+        </div>
+        <h2 class="text-3xl font-semibold tracking-tight mb-4">Performance tuning</h2>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Garur's compile is fast by default. If your build is slower than expected, the cause is almost
+          always one of: overly broad content globs, a missing persistent cache in CI, or a large number
+          of uncached files. This guide walks through each in turn.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Measure first</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Before tuning, take a baseline. The <code class="inline-code">garur benchmark</code> command runs
+          the compiler N times against your project and prints average, min, and max latency alongside
+          cache hit rate.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="terminal-prompt">$</span> npx garur benchmark --runs 10
+
+  Files:        247
+  Classes:      1,842
+  Average:      <span class="terminal-ok">28ms</span>
+  Min:          24ms
+  Max:          41ms
+
+  Cache performance:
+    build  ████████████████████ 99.4%  1,832h / 10m</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Content globs</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Garur walks the file tree looking for class names. By default it scans the entire project
+          (except common ignore folders). Narrowing the content globs to only the directories that
+          actually contain UI code cuts scan time substantially on monorepos.
+        </p>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">garur.config.js</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">export default</span> {
+  <span class="syn-attr">content</span><span class="syn-punc">:</span> [
+    <span class="syn-str">'./app/**/*.{tsx,jsx}'</span>,
+    <span class="syn-str">'./components/**/*.{tsx,jsx}'</span>,
+    <span class="syn-str">'./content/**/*.mdx'</span>,
+  ],
+  <span class="syn-attr">ignore</span><span class="syn-punc">:</span> [
+    <span class="syn-str">'**/*.test.*'</span>,
+    <span class="syn-str">'**/*.stories.*'</span>,
+    <span class="syn-str">'./app/api/**'</span>,
+  ],
+};</code></pre>
+        </div>
+
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          The most common cause of slow scans is a glob that accidentally matches
+          <code class="inline-code">node_modules</code>, <code class="inline-code">dist</code>, or
+          <code class="inline-code">.next</code>. These directories are excluded by the default ignore
+          list, but if you override <code class="inline-code">content</code> without preserving the ignore
+          list, they may be included.
+        </p>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Persistent cache</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Garur keeps two caches: an in-process <strong class="font-medium text-graphite-950 dark:text-white">build cache</strong>
+          (keyed by class name) and a cross-process <strong class="font-medium text-graphite-950 dark:text-white">file cache</strong>
+          (keyed by content hash). The first is discarded when the process exits; the second is written to
+          <code class="inline-code">.garur-cache.bin</code> and read on the next run.
+        </p>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          In CI, cache <code class="inline-code">.garur-cache.bin</code> between runs. A warm cache cuts
+          cold-start compile time in half.
+        </p>
+
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">.github/workflows/build.yml</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="syn-punc">-</span> <span class="syn-attr">uses</span><span class="syn-punc">:</span> actions/cache@v4
+  <span class="syn-attr">with</span><span class="syn-punc">:</span>
+    <span class="syn-attr">path</span><span class="syn-punc">:</span> .garur-cache.bin
+    <span class="syn-attr">key</span><span class="syn-punc">:</span> <span class="syn-str">garur-${{ hashFiles('app/**', 'components/**') }}</span>
+    <span class="syn-attr">restore-keys</span><span class="syn-punc">:</span> <span class="syn-str">garur-</span>
+
+<span class="syn-punc">-</span> <span class="syn-attr">run</span><span class="syn-punc">:</span> npx garur ssc ./app ./components --minify</code></pre>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Watch vs one-shot</h3>
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/10 mb-6">
+          <table class="w-full text-sm">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/10">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Command</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Best for</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Latency</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/10">
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">garur ssc</code></td>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">CI, one-off builds</td>
+                <td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">~30ms cold · ~5ms warm</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">garur watch</code></td>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Local development</td>
+                <td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">~3ms per rebuild</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">garur build</code></td>
+                <td class="px-4 py-2.5 text-graphite-700 dark:text-graphite-300">Pre-commit hooks, scripts</td>
+                <td class="px-4 py-2.5 font-mono text-xs text-graphite-500 dark:text-graphite-400">~30ms cold</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Large class counts</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Above roughly 20,000 unique classes, build time is bounded by the size of the generated
+          stylesheet, not by the compiler. At this scale the CSS file itself becomes the bottleneck.
+          Two strategies help:
+        </p>
+        <div class="stack-3 mb-6">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-1">Split per route</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">Run Garur once per top-level route with its own content globs. Each route ships only the classes it needs.</p>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/10">
+            <div class="text-sm font-medium mb-1">Prune aggressively</div>
+            <p class="text-sm text-graphite-600 dark:text-graphite-400 leading-relaxed">Add test files, stories, and generated code to <code class="inline-code">ignore</code>. Garur compiles them the same as production files.</p>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-graphite-500 dark:text-graphite-400 mb-3 mt-8">Diagnostics</h3>
+        <p class="text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Set <code class="inline-code">GARUR_DEBUG=1</code> to see the exact file list, platform key, and
+          native binary path. This is the fastest way to diagnose "why is my build slow" — the output
+          tells you whether Garur is scanning more files than expected.
+        </p>
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 text-xs text-graphite-500 dark:text-graphite-400 font-mono">terminal</span>
+          </div>
+          <pre class="code-body text-sm"><code><span class="terminal-prompt">$</span> GARUR_DEBUG=1 npx garur ssc ./src
+
+[garur] Platform: darwin-arm64
+[garur] Binary names: garur_core.darwin-arm64.node, index.cjs
+[garur] Native candidates (12):
+   /Users/me/project/garur_core.darwin-arm64.node
+   /Users/me/project/node_modules/garursaili-css/...
+[garur] Found 247 files
+[garur] Found 1,842 unique classes</code></pre>
+        </div>
+      </section>
+
+      <!-- FEEDBACK -->
+      <div class="mt-12 pt-8 border-t border-graphite-200 dark:border-white/10">
+        <div class="apart-mid flex-wrap gap-4">
+          <span class="text-sm text-graphite-500 dark:text-graphite-400">Was this page helpful?</span>
+          <div class="mid gap-2">
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white transition-colors border border-graphite-200 dark:border-white/10" aria-label="Helpful">👍</button>
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white transition-colors border border-graphite-200 dark:border-white/10" aria-label="Not helpful">👎</button>
+          </div>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ═══ RIGHT SIDEBAR ═══ -->
+  <aside class="hidden lg:block lg:col-span-2 border-l border-graphite-200 dark:border-white/10">
+    <div class="sticky top-14 max-h-[calc(100vh_-_3.5rem)] overflow-y-auto p-6">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-graphite-400 dark:text-graphite-500 mb-3">
+        On this page
+      </div>
+      <nav id="toc" class="stack-1 text-sm border-l border-graphite-200 dark:border-white/10">
+        <a href="#nextjs" class="block pl-3 py-1 text-graphite-950 dark:text-white font-medium border-l-2 border-iris-500 -ml-px">With Next.js</a>
+        <a href="#vite" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">With Vite</a>
+        <a href="#themes" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Custom themes</a>
+        <a href="#patterns" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Component patterns</a>
+        <a href="#migrating" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Migrating</a>
+        <a href="#performance" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white border-l-2 border-transparent -ml-px transition-colors">Performance</a>
+      </nav>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  // ── Theme toggle ──
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('garur-theme', isDark ? 'dark' : 'light'); } catch (_) {}
+  });
+
+  // ── Mobile drawer ──
+  const drawer = document.getElementById('drawer');
+  const menuBtn = document.getElementById('menu-btn');
+  const openDrawer = () => { drawer.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+  const closeDrawer = () => { drawer.classList.add('hidden'); document.body.style.overflow = ''; };
+  menuBtn?.addEventListener('click', openDrawer);
+  document.querySelectorAll('[data-drawer-close]').forEach(el => el.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  // ── Guide navigation ──
+  const GUIDES = [
+    { id: 'nextjs',      label: 'With Next.js' },
+    { id: 'vite',        label: 'With Vite' },
+    { id: 'themes',      label: 'Custom themes' },
+    { id: 'patterns',    label: 'Component patterns' },
+    { id: 'migrating',   label: 'Migrating from Tailwind' },
+    { id: 'performance', label: 'Performance tuning' },
+  ];
+
+  let currentIndex = 0;
+
+  const prevBtn    = document.getElementById('prev-guide');
+  const nextBtn    = document.getElementById('next-guide');
+  const progressEl = document.getElementById('progress-rail');
+  const labelEl    = document.getElementById('guide-label');
+  const labelText  = document.getElementById('guide-label-text');
+  const dots       = document.querySelectorAll('.guide-dot');
+  const navRail    = document.getElementById('guide-nav');
+
+  function setActive(index, scroll = false) {
+    if (index < 0 || index >= GUIDES.length) return;
+    currentIndex = index;
+
+    // Update prev/next button disabled state
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === GUIDES.length - 1;
+
+    // Update progress rail height (1/6 of the rail per guide, anchored at top)
+    const pct = ((index + 1) / GUIDES.length) * 100;
+    progressEl.style.height = pct + '%';
+
+    // Update dots
+    dots.forEach((dot, i) => {
+      const active = i === index;
+      dot.classList.toggle('bg-graphite-950', active);
+      dot.classList.toggle('dark:bg-white', active);
+      dot.classList.toggle('bg-graphite-300', !active);
+      dot.classList.toggle('dark:bg-white/20', !active);
+    });
+
+    // Update floating label
+    labelText.textContent = GUIDES[index].label;
+
+    // Sync the on-page TOC (right sidebar)
+    document.querySelectorAll('#toc a').forEach((link, i) => {
+      const active = i === index;
+      link.classList.toggle('text-graphite-950', active);
+      link.classList.toggle('dark:text-white', active);
+      link.classList.toggle('font-medium', active);
+      link.classList.toggle('border-iris-500', active);
+      link.classList.toggle('border-transparent', !active);
+      link.classList.toggle('text-graphite-500', !active);
+      link.classList.toggle('dark:text-graphite-400', !active);
+    });
+
+    if (scroll) {
+      const el = document.getElementById(GUIDES[index].id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  prevBtn.addEventListener('click', () => setActive(currentIndex - 1, true));
+  nextBtn.addEventListener('click', () => setActive(currentIndex + 1, true));
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => setActive(i, true));
+  });
+
+  // Show label on hover of the rail area
+  const railCenter = progressEl.parentElement.parentElement;
+  railCenter.addEventListener('mouseenter', () => labelEl.style.opacity = '1');
+  railCenter.addEventListener('mouseleave', () => labelEl.style.opacity = '0');
+
+  // ── IntersectionObserver to track active guide as user scrolls ──
+  const sections = GUIDES.map(g => document.getElementById(g.id)).filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    // Find the topmost visible section
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top);
+
+    if (visible.length > 0) {
+      const id = visible[0].target.id;
+      const idx = GUIDES.findIndex(g => g.id === id);
+      if (idx !== -1 && idx !== currentIndex) {
+        setActive(idx, false); // no scroll — just sync state
+      }
+    }
+  }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Initial state
+  setActive(0, false);
+
+  // ── Keyboard shortcuts ──
+  document.addEventListener('keydown', e => {
+    // Ignore if user is typing in an input
+    const tag = (document.activeElement?.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+
+    if (e.key === '[' && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      setActive(currentIndex - 1, true);
+    } else if (e.key === ']' && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      setActive(currentIndex + 1, true);
+    }
+  });
+</script>
+
+</body>
+</html>

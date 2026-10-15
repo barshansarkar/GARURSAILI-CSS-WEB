@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GarurSaili intent layer — 340+ semantic classes that read like intent, not CSS. Layout, visual, feedback, Indian-inspired, and premium kit." />
+  <title>Intent layer — GarurSaili Documentation</title>
+  <link rel="stylesheet" href="../build/garur.css" />
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('garur-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
+</head>
+
+<body class="bg-bone-50 dark:bg-[#07070a] text-graphite-950 dark:text-graphite-50 font-sans antialiased m-0 min-h-screen">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TOP BAR
+     ═══════════════════════════════════════════════════════════════ -->
+<header class="pinned-blur h-14">
+  <div class="max-w-[1440px] mx-auto px-4 md:px-6 apart-mid h-full">
+    <div class="mid gap-4">
+      <a href="./index.html" class="mid gap-2 flex-shrink-0">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 via-plum-500 to-honey-500 mid text-white text-[13px] font-black">ग</span>
+        <span class="font-semibold small tracking-tight hidden sm:block">GarurSaili</span>
+      </a>
+      <span class="hidden md:block w-px h-5 bg-graphite-200 dark:bg-white/[0.08]"></span>
+      <nav class="hidden md:flex items-center gap-1.5 small">
+        <a href="./index.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <a href="./a.html" class="px-2 py-1 rounded text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Docs</a>
+        <span class="text-graphite-300 dark:text-graphite-600">/</span>
+        <span class="px-2 py-1 text-graphite-950 dark:text-white font-medium">Intent layer</span>
+      </nav>
+      <span class="hidden md:inline-flex mid gap-1.5 px-2 py-0.5 rounded-full tiny font-mono font-medium bg-jade-500/10 text-jade-700 dark:text-jade-400 border border-jade-500/20">
+        <span class="w-1 h-1 rounded-full bg-jade-500 pulse-ring"></span>
+        v1.4.1
+      </span>
+    </div>
+    <div class="mid gap-2">
+      <button type="button" class="hidden md:flex mid gap-2 w-56 h-8 px-3 rounded-md small bg-bone-50 dark:bg-white/[0.04] border border-graphite-200 dark:border-white/[0.08] text-graphite-500 dark:text-graphite-400 hover:border-graphite-300 dark:hover:border-white/[0.15] smooth">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span class="flex-1 text-left">Search intents...</span>
+        <span class="kbd text-[9px] h-5 min-w-[1.25rem]">⌘K</span>
+      </button>
+      <button id="menu-btn" type="button" class="md:hidden w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth" aria-label="Open navigation">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="https://github.com/barshansarkar/Garursaili-CSS" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-1.5 h-8 px-3 rounded-md small font-medium bg-graphite-950 dark:bg-white text-white dark:text-black hover:opacity-90 smooth">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        GitHub
+      </a>
+      <button id="theme-toggle" type="button" class="w-8 h-8 rounded-md mid text-graphite-600 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] smooth" aria-label="Toggle theme">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOBILE DRAWER
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="drawer" class="hidden fixed inset-0 z-[60] md:hidden">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" data-drawer-close></div>
+  <aside class="absolute top-0 left-0 bottom-0 w-72 bg-bone-50 dark:bg-[#0a0a0f] border-r border-graphite-200 dark:border-white/[0.08] overflow-y-auto p-5 stack-6">
+    <div class="apart-mid">
+      <div class="mid gap-2">
+        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-iris-500 to-plum-500 mid text-white text-sm font-black">ग</span>
+        <span class="font-semibold small">GarurSaili</span>
+      </div>
+      <button type="button" class="w-7 h-7 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06]" data-drawer-close>✕</button>
+    </div>
+    <nav class="stack-5 small">
+      <div class="stack-1">
+        <div class="menu-label">Overview</div>
+        <a href="#overview" class="menu-item" data-drawer-close>What is intent?</a>
+        <a href="#philosophy" class="menu-item" data-drawer-close>Philosophy</a>
+        <a href="#families" class="menu-item" data-drawer-close>Families</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Layout</div>
+        <a href="#flex" class="menu-item" data-drawer-close>Flex containers</a>
+        <a href="#gapped" class="menu-item" data-drawer-close>Gapped flex</a>
+        <a href="#grid" class="menu-item" data-drawer-close>Grid</a>
+        <a href="#rhythm" class="menu-item" data-drawer-close>Section rhythm</a>
+        <a href="#position" class="menu-item" data-drawer-close>Position</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Visual</div>
+        <a href="#elevation" class="menu-item" data-drawer-close>Elevation</a>
+        <a href="#opacity" class="menu-item" data-drawer-close>Opacity</a>
+        <a href="#motion" class="menu-item" data-drawer-close>Motion</a>
+        <a href="#hover" class="menu-item" data-drawer-close>Hover</a>
+        <a href="#borders" class="menu-item" data-drawer-close>Borders</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Content & feedback</div>
+        <a href="#type" class="menu-item" data-drawer-close>Type scale</a>
+        <a href="#overflow" class="menu-item" data-drawer-close>Overflow</a>
+        <a href="#emphasis" class="menu-item" data-drawer-close>Emphasis</a>
+        <a href="#states" class="menu-item" data-drawer-close>Interaction</a>
+        <a href="#indicators" class="menu-item" data-drawer-close>Indicators</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Forms</div>
+        <a href="#form" class="menu-item" data-drawer-close>Validation</a>
+        <a href="#cta" class="menu-item" data-drawer-close>Call to action</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Indian-inspired</div>
+        <a href="#indian" class="menu-item" data-drawer-close>All 13 intents</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Tier B</div>
+        <a href="#tier-b" class="menu-item" data-drawer-close>Production components</a>
+      </div>
+      <div class="stack-1">
+        <div class="menu-label">Signature kit</div>
+        <a href="#web-kit" class="menu-item" data-drawer-close>Web kit</a>
+        <a href="#premium" class="menu-item" data-drawer-close>Premium kit</a>
+        <a href="#compat" class="menu-item" data-drawer-close>Compat shorthands</a>
+      </div>
+    </nav>
+  </aside>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE SHELL
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="max-w-[1440px] mx-auto grid grid-cols-12 pt-14">
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="hidden md:block md:col-span-3 lg:col-span-2 border-r border-graphite-200 dark:border-white/[0.06]">
+    <nav class="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto p-6 stack-7 small">
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Overview</div>
+        <a href="#overview" class="menu-item menu-item-active">What is intent?</a>
+        <a href="#philosophy" class="menu-item">Philosophy</a>
+        <a href="#families" class="menu-item">Families</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Layout & position</div>
+        <a href="#flex" class="menu-item">Flex containers</a>
+        <a href="#gapped" class="menu-item">Gapped flex</a>
+        <a href="#grid" class="menu-item">Grid</a>
+        <a href="#rhythm" class="menu-item">Section rhythm</a>
+        <a href="#position" class="menu-item">Position</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Visual</div>
+        <a href="#elevation" class="menu-item">Elevation</a>
+        <a href="#opacity" class="menu-item">Opacity</a>
+        <a href="#motion" class="menu-item">Motion</a>
+        <a href="#hover" class="menu-item">Hover</a>
+        <a href="#borders" class="menu-item">Borders</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Content & feedback</div>
+        <a href="#type" class="menu-item">Type scale</a>
+        <a href="#overflow" class="menu-item">Overflow</a>
+        <a href="#emphasis" class="menu-item">Emphasis</a>
+        <a href="#states" class="menu-item">Interaction</a>
+        <a href="#indicators" class="menu-item">Indicators</a>
+        <a href="#tags" class="menu-item">Tags & trends</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Forms</div>
+        <a href="#form" class="menu-item">Validation</a>
+        <a href="#cta" class="menu-item">Call to action</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Indian-inspired</div>
+        <a href="#indian" class="menu-item">All 13 intents</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Tier B</div>
+        <a href="#tier-b" class="menu-item">Production components</a>
+        <a href="#tier-b-nav" class="menu-item">Navigation</a>
+        <a href="#tier-b-data" class="menu-item">Data & content</a>
+        <a href="#tier-b-media" class="menu-item">Media & loaders</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Signature kit</div>
+        <a href="#web-kit" class="menu-item">Web kit</a>
+        <a href="#premium" class="menu-item">Premium kit</a>
+        <a href="#compat" class="menu-item">Compat shorthands</a>
+      </div>
+
+      <div class="stack-1">
+        <div class="menu-label mb-2">Next</div>
+        <a href="./utility.html" class="menu-item">Utility layer →</a>
+        <a href="./shorthand.html" class="menu-item">Shorthands →</a>
+      </div>
+
+    </nav>
+  </aside>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="col-span-12 md:col-span-9 lg:col-span-8">
+    <article class="max-w-[720px] mx-auto px-6 py-12 md:py-16">
+
+      <!-- ═══════════════════════════════════════════════
+           HEADER
+           ═══════════════════════════════════════════════ -->
+      <header class="mb-14">
+        <div class="mid gap-2 mb-4">
+          <a href="./index.html" class="tiny text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Home</a>
+          <span class="tiny text-graphite-300 dark:text-graphite-600">/</span>
+          <a href="./a.html" class="tiny text-graphite-500 dark:text-graphite-400 hover:text-graphite-950 dark:hover:text-white smooth">Docs</a>
+          <span class="tiny text-graphite-300 dark:text-graphite-600">/</span>
+          <span class="tiny text-graphite-950 dark:text-white font-medium">Intent layer</span>
+        </div>
+
+        <h1 class="hero-vercel leading-[0.98]">
+          <span class="block text-4xl md:text-5xl">The intent layer</span>
+          <span class="block gradient-text text-4xl md:text-5xl">340+ shorthands, seven families.</span>
+        </h1>
+
+        <p class="lead text-graphite-600 dark:text-graphite-400 leading-relaxed mt-6">
+          An intent is a class that names a <em>goal</em>, not a declaration.
+          <code class="inline-code">mid</code> is an intent — you read it and immediately know
+          the element is centered on both axes. <code class="inline-code">apart-mid</code> means
+          "spaced apart and vertically centered." <code class="inline-code">rise</code> means
+          "elevated with a shadow." The engine expands each one at build time.
+        </p>
+
+        <div class="mid gap-3 mt-6 tiny flex-wrap">
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-iris-500"></span>
+            <span>340+ intents · 7 families</span>
+          </div>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <div class="mid gap-1.5 text-graphite-500 dark:text-graphite-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-honey-500"></span>
+            <span>13 Indian-inspired</span>
+          </div>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="text-graphite-500 dark:text-graphite-400">Updated October 2026</span>
+        </div>
+      </header>
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 01 — OVERVIEW
+           ═══════════════════════════════════════════════ -->
+      <section id="overview" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 01</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Overview</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">What is an intent?</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          An intent is a class that names a <em>goal</em> rather than a declaration. It sits above
+          the primitive layer (which names components: <code class="inline-code">card</code>,
+          <code class="inline-code">btn</code>) and the utility layer (which names single CSS
+          properties: <code class="inline-code">p-4</code>, <code class="inline-code">bg-iris-500</code>).
+        </p>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Intents don't take configuration. There are no props, no variants to remember, no
+          nested objects. If you want a different result, you write a different class. The
+          vocabulary <em>is</em> the API.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="tiny uppercase tracking-wider font-semibold text-graphite-500 dark:text-graphite-400">The utility way</div>
+            <code class="inline-code tiny">flex items-center justify-between</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400 leading-relaxed">
+              Three classes, three properties to remember. Works, but reads like a spec.
+            </p>
+          </div>
+          <div class="p-4 rounded-lg border border-iris-500/40 bg-iris-500/[0.06] stack-3">
+            <div class="tiny uppercase tracking-wider font-semibold text-iris-600 dark:text-iris-400">The intent way</div>
+            <code class="inline-code tiny">apart-mid</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400 leading-relaxed">
+              One class, one intent. Reads like a description of the layout.
+            </p>
+          </div>
+        </div>
+
+        <div class="code-window">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">expansion — what the engine emits</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-comment">/* apart-mid */</span>
+.apart-mid { display:flex; align-items:center; justify-content:space-between; }
+
+<span class="syn-comment">/* rise */</span>
+.rise { box-shadow: var(--garur-shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1)); }
+
+<span class="syn-comment">/* namaste */</span>
+.namaste { display:flex; flex-direction:column; align-items:center;
+           text-align:center; padding:3rem 1.5rem; gap:1.5rem; }</code></pre>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 02 — PHILOSOPHY
+           ═══════════════════════════════════════════════ -->
+      <section id="philosophy" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 02</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Philosophy</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Philosophy</h2>
+
+        <div class="stack-3">
+          <div class="p-5 rounded-xl bg-bone-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+            <h3 class="body font-semibold mb-2">Say what you mean</h3>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              <code class="inline-code">apart-mid</code> is faster to read than
+              <code class="inline-code">flex items-center justify-between</code>, and it describes
+              the same outcome in fewer words. The engine expands the shorthand at build time.
+            </p>
+          </div>
+          <div class="p-5 rounded-xl bg-bone-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+            <h3 class="body font-semibold mb-2">Compose, don't configure</h3>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Intents don't take configuration. There are no props, no variants to remember,
+              no nested objects. If you want a different result, you write a different class.
+            </p>
+          </div>
+          <div class="p-5 rounded-xl bg-bone-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+            <h3 class="body font-semibold mb-2">Never override</h3>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Every intent is registered with <code class="inline-code">entry().or_insert_with()</code>
+              in the engine. That means an intent <em>never</em> silently overrides an existing class.
+              Adding new intents is always safe — the framework is fully additive.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 03 — FAMILIES
+           ═══════════════════════════════════════════════ -->
+      <section id="families" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 03</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Families</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Three sources, one namespace</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Intents come from three places in the engine. They all live in the same namespace —
+          the difference is how they were authored and who they're for.
+        </p>
+
+        <div class="stack-3">
+          <div class="p-5 rounded-xl border border-iris-500/30 bg-iris-500/[0.04] stack-3">
+            <div class="apart-mid">
+              <div class="mid gap-3">
+                <span class="w-7 h-7 rounded-lg bg-iris-500/15 mid text-iris-600 dark:text-iris-400 text-sm font-bold">1</span>
+                <h3 class="body font-semibold">Core intents</h3>
+              </div>
+              <span class="chip tiny font-mono">signature.rs</span>
+            </div>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Layout, position, visual, feedback, content, form, and Indian-inspired intents.
+              These are the ones you reach for daily.
+            </p>
+            <div class="chips">
+              <span class="chip tiny">mid</span>
+              <span class="chip tiny">apart-mid</span>
+              <span class="chip tiny">rise</span>
+              <span class="chip tiny">clickable</span>
+              <span class="chip tiny">namaste</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-plum-500/30 bg-plum-500/[0.04] stack-3">
+            <div class="apart-mid">
+              <div class="mid gap-3">
+                <span class="w-7 h-7 rounded-lg bg-plum-500/15 mid text-plum-600 dark:text-plum-400 text-sm font-bold">2</span>
+                <h3 class="body font-semibold">Tier B — production components</h3>
+              </div>
+              <span class="chip tiny font-mono">signature.rs</span>
+            </div>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Higher-level UI patterns built on top of the core intents — status dots, menus,
+              drawers, search, ratings, prices, comments, testimonials.
+            </p>
+            <div class="chips">
+              <span class="chip tiny">menu</span>
+              <span class="chip tiny">drawer</span>
+              <span class="chip tiny">search</span>
+              <span class="chip tiny">rating</span>
+              <span class="chip tiny">price</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-jade-500/30 bg-jade-500/[0.04] stack-3">
+            <div class="apart-mid">
+              <div class="mid gap-3">
+                <span class="w-7 h-7 rounded-lg bg-jade-500/15 mid text-jade-600 dark:text-jade-400 text-sm font-bold">3</span>
+                <h3 class="body font-semibold">Signature kit — premium effects</h3>
+              </div>
+              <span class="chip tiny font-mono">signature.rs</span>
+            </div>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              The visual identity of GarurSaili — spotlights, gradient borders, animated
+              backgrounds, colored glows, terminal styling, hover effects.
+            </p>
+            <div class="chips">
+              <span class="chip tiny">spotlight</span>
+              <span class="chip tiny">gradient-text</span>
+              <span class="chip tiny">border-beam</span>
+              <span class="chip tiny">glow-iris</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 p-5 rounded-lg bg-iris-50 dark:bg-iris-500/[0.06] border border-iris-100 dark:border-iris-500/20">
+          <div class="small">
+            <span class="font-medium text-iris-700 dark:text-iris-300">Layers compose freely.</span>
+            <span class="text-graphite-700 dark:text-graphite-300"> There is no rule preventing you from writing <code class="inline-code">mid card p-8 hover:lift</code>. Utilities win the cascade where they overlap, so <code class="inline-code">mid p-2</code> overrides the default padding on any element.</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 04 — LAYOUT INTENTS
+           ═══════════════════════════════════════════════ -->
+      <section id="flex" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 04</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Layout intents</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Flex containers</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Flexbox is the foundation of almost every layout. These intents cover the arrangements
+          you reach for 90% of the time.
+        </p>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-8">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">mid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · centered both axes</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">mid-x</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · justify-center</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">mid-y</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · items-center</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">mid-screen</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">mid + min-height: 100vh</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">apart</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · justify-between</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">apart-mid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · justify-between · items-center</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">even</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · justify-evenly</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">around</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex · justify-around</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">row-tight</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Row flex with no gap</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">stack-tight</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Column flex with no gap</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">chips</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Flex-wrap · gap-2 · items-center</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Live preview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">apart-mid</code>
+            <div class="apart-mid p-2 rounded bg-graphite-50 dark:bg-white/[0.02] h-16">
+              <span class="w-6 h-6 rounded bg-iris-500"></span>
+              <span class="w-6 h-6 rounded bg-plum-500"></span>
+              <span class="w-6 h-6 rounded bg-jade-500"></span>
+            </div>
+          </div>
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">even</code>
+            <div class="flex justify-evenly items-center p-2 rounded bg-graphite-50 dark:bg-white/[0.02] h-16">
+              <span class="w-6 h-6 rounded bg-iris-500"></span>
+              <span class="w-6 h-6 rounded bg-plum-500"></span>
+              <span class="w-6 h-6 rounded bg-jade-500"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── GAPPED FLEX ─── -->
+      <section id="gapped" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Gapped flex</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Four families share the same numbering scheme. Available N values:
+          <code class="inline-code">0</code>, <code class="inline-code">1</code>,
+          <code class="inline-code">2</code>, <code class="inline-code">3</code>,
+          <code class="inline-code">4</code>, <code class="inline-code">5</code>,
+          <code class="inline-code">6</code>, <code class="inline-code">8</code>,
+          <code class="inline-code">10</code>, <code class="inline-code">12</code>.
+          Each N × 0.25rem.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">row-N</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Horizontal flex with gap.</p>
+            <div class="row-3">
+              <span class="w-6 h-6 rounded bg-iris-500"></span>
+              <span class="w-6 h-6 rounded bg-plum-500"></span>
+              <span class="w-6 h-6 rounded bg-jade-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">stack-N</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Vertical flex with gap.</p>
+            <div class="stack-2">
+              <span class="h-3 w-16 rounded bg-iris-500"></span>
+              <span class="h-3 w-16 rounded bg-plum-500"></span>
+              <span class="h-3 w-16 rounded bg-jade-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">wrap-N</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Flex-wrap with gap.</p>
+            <div class="wrap-2">
+              <span class="w-8 h-6 rounded bg-iris-500"></span>
+              <span class="w-8 h-6 rounded bg-plum-500"></span>
+              <span class="w-8 h-6 rounded bg-jade-500"></span>
+              <span class="w-8 h-6 rounded bg-honey-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">centered-N</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Both axes centered, with gap.</p>
+            <div class="centered-2 h-20">
+              <span class="w-4 h-4 rounded bg-iris-500"></span>
+              <span class="w-4 h-4 rounded bg-plum-500"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── GRID ─── -->
+      <section id="grid" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Grid intents</h2>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-48">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">cols-1</code> … <code class="inline-code">cols-12</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Grid with N equal columns</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">auto-grid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">auto-fit grid · minmax(16rem, 1fr) · gap-4</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">masonry-lite</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">CSS columns:3 · gap-4 · break-inside: avoid</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+          <code class="inline-code tiny">cols-3</code>
+          <div class="cols-3 gap-2">
+            <span class="h-12 rounded bg-iris-500/30"></span>
+            <span class="h-12 rounded bg-iris-500/60"></span>
+            <span class="h-12 rounded bg-iris-500"></span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── RHYTHM ─── -->
+      <section id="rhythm" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Section rhythm</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Vertical rhythm intents for full-page sections. They set padding and sometimes
+          min-height so pages feel consistent without manual tuning.
+        </p>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">jumbo</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Column · centered · 6rem × 1.5rem padding · gap-6</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">section-air</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">5rem vertical padding · 1.5rem horizontal</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">section-tight</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">2rem vertical padding · 1.5rem horizontal</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+          <code class="inline-code tiny">jumbo</code>
+          <div class="jumbo h-40 rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+            <span class="title">Hero content</span>
+            <span class="small text-graphite-500 dark:text-graphite-400">Centered both axes · 6rem padding</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── POSITION ─── -->
+      <section id="position" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Positioning intents</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Positioning intents name where an element sits. You don't write
+          <code class="inline-code">position: fixed; top: 0; left: 0; right: 0</code> — you
+          write <code class="inline-code">docked-top</code>.
+        </p>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-44">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">pinned</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">sticky · top:0 · z-40</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">pinned-blur</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">pinned + backdrop-blur + 80% surface tint</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">pinned-bottom</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">sticky · bottom:0 · z-40</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">docked-top</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">fixed · top:0 · left:0 · right:0 · z-50</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">docked-bottom</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">fixed · bottom:0 · left:0 · right:0 · z-50</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">docked-left</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">fixed · top:0 · bottom:0 · left:0 · z-50</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">docked-right</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">fixed · top:0 · bottom:0 · right:0 · z-50</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">tucked</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">absolute · top-right · 1rem inset</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">tucked-tl</code> / <code class="inline-code">-bl</code> / <code class="inline-code">-br</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">absolute · other corners</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">centered-abs</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">absolute · top:50% left:50% translate(-50%,-50%)</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">overlay-full</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">absolute · inset:0</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">overlay-screen</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">fixed · inset:0</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">overlay-dim</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">fixed · inset:0 · 50% black + 4px blur</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">above</code> · <code class="inline-code">above-all</code> · <code class="inline-code">behind</code></td><td class="px-4 py-2.5 tiny font-mono text-graphite-600 dark:text-graphite-400">z-index · 10 · 9999 · -1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 05 — VISUAL INTENTS
+           ═══════════════════════════════════════════════ -->
+      <section id="elevation" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 05</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Visual</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Elevation</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">flat</code>
+            <div class="h-12 rounded-md bg-white dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">no shadow</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">rise-sm</code>
+            <div class="h-12 rounded-md bg-white dark:bg-[#0f0f0f] rise-sm"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">small</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">rise</code>
+            <div class="h-12 rounded-md bg-white dark:bg-[#0f0f0f] rise"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">large</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">rise-lg</code>
+            <div class="h-12 rounded-md bg-white dark:bg-[#0f0f0f] rise-lg"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">extra-large</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">sunken</code>
+            <div class="h-12 rounded-md sunken"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">inset</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── OPACITY ─── -->
+      <section id="opacity" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Opacity</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">solid</code>
+            <div class="h-12 rounded-md bg-iris-500"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">opacity: 1</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">dim</code>
+            <div class="h-12 rounded-md bg-iris-500 dim"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">0.75</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">faded</code>
+            <div class="h-12 rounded-md bg-iris-500 faded"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">0.5</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">ghosted</code>
+            <div class="h-12 rounded-md bg-iris-500 ghosted"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">0.25</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── MOTION ─── -->
+      <section id="motion" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Motion</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Motion intents set a transition duration and curve. Hover any of the swatches below
+          to see the difference.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code tiny">quick</code>
+              <span class="tag-note tiny">100ms</span>
+            </div>
+            <div class="h-12 rounded-md bg-iris-500 quick hover:bg-plum-500"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Snappy — for hover states.</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code tiny">smooth</code>
+              <span class="tag-note tiny">300ms</span>
+            </div>
+            <div class="h-12 rounded-md bg-iris-500 smooth hover:bg-plum-500"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Balanced — the default.</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code tiny">lazy</code>
+              <span class="tag-note tiny">600ms</span>
+            </div>
+            <div class="h-12 rounded-md bg-iris-500 lazy hover:bg-plum-500"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Slow — for expressive reveals.</div>
+          </div>
+        </div>
+
+        <p class="small text-graphite-500 dark:text-graphite-400 mt-4">
+          Also: <code class="inline-code">tandava</code> (dramatic 400ms) ·
+          <code class="inline-code">lasya</code> (graceful 600ms)
+        </p>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── HOVER ─── -->
+      <section id="hover" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Hover behaviours</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Hover any of the cards below to see the effect in action.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">lift</code>
+            <div class="h-16 rounded-md bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] mid">
+              <span class="small text-graphite-500 dark:text-graphite-400">Hover me</span>
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">translateY(-2px) + large shadow</div>
+          </div>
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">grow</code>
+            <div class="h-16 rounded-md bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] mid">
+              <span class="small text-graphite-500 dark:text-graphite-400">Hover me</span>
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">scale(1.03)</div>
+          </div>
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">shrink</code>
+            <div class="h-16 rounded-md bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] mid">
+              <span class="small text-graphite-500 dark:text-graphite-400">Hover me</span>
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">scale(0.97)</div>
+          </div>
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">glow-up</code>
+            <div class="h-16 rounded-md bg-iris-500 mid">
+              <span class="small text-white">Hover me</span>
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Iris glow on hover</div>
+          </div>
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">press</code>
+            <div class="h-16 rounded-md bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] mid">
+              <span class="small text-graphite-500 dark:text-graphite-400">Click me</span>
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">active: scale(0.97)</div>
+          </div>
+          <div class="p-5 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">clickable</code>
+            <div class="h-16 rounded-md bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] mid">
+              <span class="small text-graphite-500 dark:text-graphite-400">Hover me</span>
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Pointer + hover bg</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── BORDERS ─── -->
+      <section id="borders" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Borders & backgrounds</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
+          <div class="p-5 rounded-lg stack-3 outlined">
+            <code class="inline-code tiny">outlined</code>
+            <div class="h-12 rounded-md mid faded small">solid border</div>
+          </div>
+          <div class="p-5 rounded-lg stack-3 dashed">
+            <code class="inline-code tiny">dashed</code>
+            <div class="h-12 rounded-md mid faded small">dashed border</div>
+          </div>
+          <div class="p-5 rounded-lg stack-3 dotted">
+            <code class="inline-code tiny">dotted</code>
+            <div class="h-12 rounded-md mid faded small">dotted border</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-5 rounded-lg stack-3 bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+            <code class="inline-code tiny">aurora</code>
+            <div class="h-16 rounded-md aurora"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Diagonal gradient: primary → accent → warning</div>
+          </div>
+          <div class="p-5 rounded-lg stack-3 bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+            <code class="inline-code tiny">mist</code>
+            <div class="h-16 rounded-md mist bg-graphite-950"></div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Vertical fade: surface → transparent</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 06 — CONTENT INTENTS
+           ═══════════════════════════════════════════════ -->
+      <section id="type" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 06</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Content</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Type scale</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Named sizes that describe a role in the hierarchy, not a numeric size. When you write
+          <code class="inline-code">headline</code> you're saying "this is a section heading" —
+          the engine decides the actual pixel values.
+        </p>
+
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] divide-y divide-graphite-100 dark:divide-white/[0.06]">
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">tiny</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">0.75rem · 1rem</span>
+            </div>
+            <span class="tiny">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">small</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">0.875rem</span>
+            </div>
+            <span class="small">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">body</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">1rem</span>
+            </div>
+            <span class="body">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">lead</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">1.125rem</span>
+            </div>
+            <span class="lead">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">title</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">1.25rem · semibold</span>
+            </div>
+            <span class="title">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">headline</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">1.5rem · bold</span>
+            </div>
+            <span class="headline">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">display</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">2.25rem · tight</span>
+            </div>
+            <span class="display">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <div class="stack-1">
+              <span class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-semibold">banner</span>
+              <span class="tiny font-mono text-graphite-400 dark:text-graphite-500">3rem · extrabold</span>
+            </div>
+            <span class="banner">The quick</span>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── OVERFLOW ─── -->
+      <section id="overflow" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Overflow</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">clip</code>
+            <div class="clip small">
+              This is a long line that will be truncated with an ellipsis at the end.
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Single-line ellipsis</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">fit-2</code>
+            <div class="fit-2 small">
+              This is a longer paragraph clamped to exactly two lines and then hidden behind an ellipsis character.
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Multi-line clamp</div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">balance</code>
+            <div class="balance headline leading-tight">
+              Headings look better balanced
+            </div>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Even out line lengths</div>
+          </div>
+        </div>
+
+        <p class="small text-graphite-500 dark:text-graphite-400 mt-4">
+          Also: <code class="inline-code">fit-3</code> through <code class="inline-code">fit-6</code> · <code class="inline-code">pretty</code>
+        </p>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── EMPHASIS ─── -->
+      <section id="emphasis" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Emphasis</h2>
+
+        <div class="rounded-lg border border-graphite-200 dark:border-white/[0.06] divide-y divide-graphite-100 dark:divide-white/[0.06]">
+          <div class="p-5 apart-mid gap-6">
+            <code class="inline-code tiny">quiet</code>
+            <span class="quiet">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <code class="inline-code tiny">subtle-text</code>
+            <span class="subtle-text">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <code class="inline-code tiny">strong</code>
+            <span class="strong">The quick brown fox</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <code class="inline-code tiny">ghost</code>
+            <span class="ghost">The quick brown fox</span>
+            <span class="tiny text-graphite-400 dark:text-graphite-500">(screen-reader only)</span>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <code class="inline-code tiny">hr</code>
+            <div class="flex-1 max-w-[200px] hr"></div>
+          </div>
+          <div class="p-5 apart-mid gap-6">
+            <code class="inline-code tiny">hr-text</code>
+            <div class="flex-1 max-w-[240px] hr-text">OR</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── STATES ─── -->
+      <section id="states" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Interaction states</h2>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06]">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Behaviour</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-32">Live</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">clickable</code></td>
+                <td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">Pointer + hover background</td>
+                <td class="px-4 py-2.5"><button class="clickable chip">Hover me</button></td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">tappable</code></td>
+                <td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">Pointer + active scale(0.97)</td>
+                <td class="px-4 py-2.5"><button class="tappable chip">Tap me</button></td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">locked</code></td>
+                <td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">not-allowed + faded + no pointer events</td>
+                <td class="px-4 py-2.5"><button class="locked chip" disabled>Locked</button></td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">draggable</code></td>
+                <td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">grab cursor, grabbing on active</td>
+                <td class="px-4 py-2.5"><span class="draggable chip">Drag me</span></td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="inline-code">busy</code></td>
+                <td class="px-4 py-2.5 tiny text-graphite-600 dark:text-graphite-400">wait cursor + no pointer events</td>
+                <td class="px-4 py-2.5"><span class="busy chip">Working…</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── INDICATORS ─── -->
+      <section id="indicators" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Status indicators</h2>
+
+        <h3 class="body font-semibold mb-3">Status dots</h3>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] centered-3 stack-2">
+            <span class="status-online"></span>
+            <code class="inline-code tiny">status-online</code>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] centered-3 stack-2">
+            <span class="status-away"></span>
+            <code class="inline-code tiny">status-away</code>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] centered-3 stack-2">
+            <span class="status-busy"></span>
+            <code class="inline-code tiny">status-busy</code>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] centered-3 stack-2">
+            <span class="status-offline"></span>
+            <code class="inline-code tiny">status-offline</code>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] centered-3 stack-2">
+            <span class="status-alive"></span>
+            <code class="inline-code tiny">status-alive</code>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Trailing dots</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 mb-4">
+          These use <code class="inline-code">::after</code> to append a small dot to the element
+          itself. Useful for avatars and list items.
+        </p>
+        <div class="chips gap-3">
+          <span class="alive inline-block w-10 h-10 rounded-full bg-iris-500"></span>
+          <span class="dead inline-block w-10 h-10 rounded-full bg-ash-400"></span>
+          <span class="busy-dot inline-block w-10 h-10 rounded-full bg-honey-500"></span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── TAGS & TRENDS ─── -->
+      <section id="tags" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Tags & trends</h2>
+
+        <h3 class="body font-semibold mb-3">Semantic tags</h3>
+        <div class="chips gap-2 mb-8">
+          <span class="tag-ok">tag-ok</span>
+          <span class="tag-warn">tag-warn</span>
+          <span class="tag-err">tag-err</span>
+          <span class="tag-note">tag-note</span>
+          <span class="tag-hint">tag-hint</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Trends</h3>
+        <div class="chips gap-4">
+          <span class="trend-up">↑ 12.5%</span>
+          <span class="trend-down">↓ 3.2%</span>
+          <span class="trend-flat">— 0.0%</span>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 07 — FORM INTENTS
+           ═══════════════════════════════════════════════ -->
+      <section id="form" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 07</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Forms</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Form state intents</h2>
+
+        <div class="overflow-hidden rounded-lg border border-graphite-200 dark:border-white/[0.06] mb-6">
+          <table class="w-full small">
+            <thead class="bg-graphite-50 dark:bg-white/[0.03] border-b border-graphite-200 dark:border-white/[0.06]">
+              <tr>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5 w-40">Class</th>
+                <th class="text-left font-medium text-graphite-500 dark:text-graphite-400 px-4 py-2.5">Effect</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-graphite-100 dark:divide-white/[0.06]">
+              <tr><td class="px-4 py-2.5"><code class="inline-code">invalid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Danger border + danger focus ring</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">valid</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Success border + success focus ring</td></tr>
+              <tr><td class="px-4 py-2.5"><code class="inline-code">field-ro</code></td><td class="px-4 py-2.5 tiny text-graphite-700 dark:text-graphite-300">Muted surface · not-allowed cursor · 70% opacity</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div class="stack-2">
+            <code class="inline-code tiny">invalid</code>
+            <input class="tiny w-full px-2 py-1.5 rounded border border-graphite-200 dark:border-white/[0.06] bg-transparent outline-none invalid" value="bad@" />
+          </div>
+          <div class="stack-2">
+            <code class="inline-code tiny">valid</code>
+            <input class="tiny w-full px-2 py-1.5 rounded border border-graphite-200 dark:border-white/[0.06] bg-transparent outline-none valid" value="good@example.com" />
+          </div>
+          <div class="stack-2">
+            <code class="inline-code tiny">field-ro</code>
+            <input class="tiny w-full px-2 py-1.5 rounded border border-graphite-200 dark:border-white/[0.06] bg-transparent outline-none field-ro" value="read-only" readonly />
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ─── CTA ─── -->
+      <section id="cta" class="mb-14 scroll-mt-20">
+        <h2 class="headline tracking-tight mb-5">Call to action</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">cta</code>
+            <button class="cta w-full">Get started</button>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Primary bg + subtle lift on hover</div>
+          </div>
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">cta-soft</code>
+            <button class="cta-soft w-full">Learn more</button>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">12% primary tint + primary text</div>
+          </div>
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">cta-ghost</code>
+            <button class="cta-ghost w-full">Cancel</button>
+            <div class="tiny text-graphite-500 dark:text-graphite-400">Transparent + muted hover</div>
+          </div>
+        </div>
+
+        <div class="mt-6 p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+          <code class="inline-code tiny">textfield</code>
+          <input class="textfield" placeholder="Enter your email" />
+          <div class="tiny text-graphite-500 dark:text-graphite-400">Full-width input with primary focus ring</div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 08 — INDIAN-INSPIRED
+           ═══════════════════════════════════════════════ -->
+      <section id="indian" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 08</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Indian-inspired</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Indian-inspired intents</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Thirteen intents named after the things their visual patterns resemble. They're part
+          of the engine — not decoration. Each carries a story, and the story helps you remember
+          what the class does.
+        </p>
+
+        <!-- Layout group -->
+        <h3 class="body font-semibold mb-3">Layout</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">namaste</code>
+              <span class="chip tiny font-mono">नमस्ते</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Centered greeting stack — column, both axes centered, generous padding.
+              For hero greetings and welcome screens.
+            </p>
+            <div class="namaste rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] py-4">
+              <span class="title">Welcome</span>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">Stacked, centered</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">lotus</code>
+              <span class="chip tiny font-mono">कमल</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Grid with <code class="inline-code">place-items: center</code>. A single symmetric
+              composition — the flower that grows in still water.
+            </p>
+            <div class="lotus h-24 rounded-lg bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06]">
+              <span class="w-10 h-10 rounded-full bg-gradient-to-br from-plum-500 to-iris-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">banyan</code>
+              <span class="chip tiny font-mono">बरगद</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Sticky header with blur. Holds its ground like the banyan tree — roots above,
+              shade below.
+            </p>
+            <div class="banyan rounded-lg overflow-hidden">
+              <span class="small font-semibold">Sticky nav</span>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">scrolls into place</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">rangoli</code>
+              <span class="chip tiny font-mono">रंगोली</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Balanced 4-column grid, gap-4, centered items. Geometric symmetry — the powder
+              pattern at the doorway.
+            </p>
+            <div class="rangoli">
+              <span class="w-6 h-6 rounded-full bg-iris-500"></span>
+              <span class="w-6 h-6 rounded-full bg-plum-500"></span>
+              <span class="w-6 h-6 rounded-full bg-honey-500"></span>
+              <span class="w-6 h-6 rounded-full bg-jade-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">ghat</code>
+              <span class="chip tiny font-mono">घाट</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Descending steps — each child indented 1rem more than the last. The riverbank
+              steps of Varanasi.
+            </p>
+            <div class="ghat">
+              <span class="h-2 w-24 rounded bg-iris-500/30"></span>
+              <span class="h-2 w-24 rounded bg-iris-500/50"></span>
+              <span class="h-2 w-24 rounded bg-iris-500/70"></span>
+              <span class="h-2 w-24 rounded bg-iris-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">mehndi</code>
+              <span class="chip tiny font-mono">मेहंदी</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Double primary border with 1rem padding — ornamental frame. The intricate
+              henna patterns of celebration.
+            </p>
+            <div class="mehndi rounded-lg">
+              <span class="small font-medium">Ornamental frame</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Motion & ornament -->
+        <h3 class="body font-semibold mb-3">Motion & ornament</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">chakra</code>
+              <span class="chip tiny font-mono">चक्र</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Spinning loader — the wheel of Sudarshana.
+            </p>
+            <div class="mid h-16">
+              <span class="chakra w-8 h-8 text-iris-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">diya</code>
+              <span class="chip tiny font-mono">दीया</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              A warm radial glow behind the element — the small clay lamp that lights the room.
+            </p>
+            <div class="mid h-16">
+              <span class="diya w-8 h-8 rounded-full bg-honey-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="apart-mid">
+              <code class="inline-code">tilak</code>
+              <span class="chip tiny font-mono">तिलक</span>
+            </div>
+            <p class="tiny text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              Vertical 2×16px primary mark — the sacred mark on the forehead.
+            </p>
+            <div class="mid h-16">
+              <span class="tilak"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Motion easing & colors -->
+        <h3 class="body font-semibold mb-3">Motion & colors</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">tandava</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">400ms dramatic curve (Shiva's dance).</p>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">lasya</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">600ms graceful curve (Parvati's grace).</p>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">monsoon</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Cool blue-gray palette scheme.</p>
+            <div class="monsoon rounded px-2 py-1 tiny font-medium">Rainy season</div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-2">
+            <code class="inline-code tiny">saffron</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Warm amber call-out box.</p>
+            <div class="saffron rounded px-2 py-1 tiny font-medium">Warm</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 09 — TIER B — PRODUCTION COMPONENTS
+           ═══════════════════════════════════════════════ -->
+      <section id="tier-b" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 09</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Tier B</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Tier B — production components</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Higher-level UI patterns built on top of the core intents. Each replaces a whole
+          component's worth of class names with a semantic system.
+        </p>
+
+        <!-- Menu -->
+        <h3 id="tier-b-nav" class="body font-semibold mb-3 scroll-mt-20">Menus</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">menu</code>
+            <div class="menu">
+              <div class="menu-label">Actions</div>
+              <a href="#" class="menu-item">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                New file
+              </a>
+              <a href="#" class="menu-item menu-item-active">Open...</a>
+              <a href="#" class="menu-item">Save</a>
+              <div class="menu-divider"></div>
+              <a href="#" class="menu-item">Export</a>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">search</code>
+            <div class="search w-full max-w-xs">
+              <svg class="w-4 h-4 search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input class="search-input" placeholder="Search..." />
+            </div>
+          </div>
+        </div>
+
+        <!-- Status & data -->
+        <h3 id="tier-b-data" class="body font-semibold mb-3 scroll-mt-20">Data components</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">rating</code>
+            <div class="rating">
+              <span class="rating-stars">★★★★★</span>
+              <span class="rating-value">4.8</span>
+              <span class="rating-count">(2,847)</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">price</code>
+            <div class="mid gap-2">
+              <span class="price-old">$79</span>
+              <span class="price-lg">$49</span>
+              <span class="price-discount">-38%</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">notify-wrap</code>
+            <div class="notify-wrap">
+              <span class="w-10 h-10 rounded-md bg-graphite-100 dark:bg-white/[0.04] mid">
+                <svg class="w-5 h-5 text-graphite-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </span>
+              <span class="notification-badge">5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comment & testimonial -->
+        <h3 class="body font-semibold mb-3">Comments & testimonials</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">comment</code>
+            <div class="stack-1">
+              <article class="comment">
+                <div class="comment-avatar mid bg-iris-500 text-white tiny font-bold">AK</div>
+                <div class="comment-body">
+                  <div class="mid gap-2">
+                    <span class="comment-author">Arjun Kapoor</span>
+                    <span class="comment-time">2h ago</span>
+                  </div>
+                  <p class="comment-text">
+                    <code class="inline-code">apart-mid</code> is worth the price of admission alone.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">testimonial</code>
+            <div class="testimonial">
+              <p class="testimonial-quote">
+                "The type scale names read like design terms, not CSS."
+              </p>
+              <div class="testimonial-author">
+                <div class="avatar avatar-sm bg-plum-500 text-white tiny font-bold">PS</div>
+                <div>
+                  <div class="testimonial-name">Priya Sharma</div>
+                  <div class="testimonial-role">Staff Engineer</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Media & loaders -->
+        <h3 id="tier-b-media" class="body font-semibold mb-3 scroll-mt-20">Media & loaders</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">video-wrapper</code>
+            <div class="video-wrapper">
+              <div class="mid h-full">
+                <span class="small faded">16:9 video</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">loader</code>
+            <div class="mid h-20">
+              <span class="loader text-iris-500"></span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">loading-dots</code>
+            <div class="mid h-20">
+              <span class="loading-dots text-iris-500">
+                <span></span><span></span><span></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- States -->
+        <h3 class="body font-semibold mb-3">States</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">empty-state-icon</code>
+            <div class="empty-state-icon">
+              <svg class="icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 13V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7m16 0v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-5m16 0h-2.586a1 1 0 0 0-.707.293l-2.414 2.414a1 1 0 0 1-.707.293h-3.172a1 1 0 0 1-.707-.293l-2.414-2.414A1 1 0 0 0 6.586 13H4"/></svg>
+              <span class="small font-medium">No items yet</span>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">Get started by adding your first item.</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">error-state</code>
+            <div class="error-state">
+              <span class="w-10 h-10 rounded-full bg-ruby-500/15 mid text-ruby-500 text-xl font-bold">!</span>
+              <span class="small font-medium">Something went wrong</span>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">Please try again.</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">success-state</code>
+            <div class="success-state">
+              <span class="w-10 h-10 rounded-full bg-jade-500/15 mid text-jade-500 text-xl font-bold">✓</span>
+              <span class="small font-medium">Payment complete</span>
+              <span class="tiny text-graphite-500 dark:text-graphite-400">Check your email for the receipt.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 10 — WEB KIT
+           ═══════════════════════════════════════════════ -->
+      <section id="web-kit" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 10</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Web kit</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Web kit</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          The building blocks of a modern marketing site. Orbs, mesh backgrounds, gradient
+          text, hero buttons, code windows, marquees, FAQ accordions.
+        </p>
+
+        <h3 class="body font-semibold mb-3">Backgrounds & orbs</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">mesh-bg</code>
+            <div class="h-16 rounded-md mesh-bg"></div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">grid-bg</code>
+            <div class="h-16 rounded-md grid-bg bg-graphite-950"></div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">dot-grid</code>
+            <div class="h-16 rounded-md dot-grid bg-graphite-950"></div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">aurora-bg</code>
+            <div class="h-16 rounded-md aurora-bg bg-graphite-950"></div>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Typography & buttons</h3>
+        <div class="p-6 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-5 mb-8">
+          <div class="stack-2">
+            <code class="inline-code tiny">gradient-text</code>
+            <span class="display-section gradient-text">Animated gradient headline</span>
+          </div>
+          <div class="stack-2">
+            <code class="inline-code tiny">hero-vercel</code>
+            <span class="hero-vercel">Hero scale</span>
+          </div>
+          <div class="stack-2">
+            <code class="inline-code tiny">btn-hero-primary</code>
+            <div class="mid gap-2 flex-wrap">
+              <button class="btn-hero btn-hero-primary shine">Primary</button>
+              <button class="btn-hero btn-hero-secondary">Secondary</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Code window</h3>
+        <div class="code-window mb-8">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500">example.tsx</span>
+          </div>
+          <pre class="code-body small"><code><span class="syn-punc">import</span> { <span class="syn-attr">build</span> } <span class="syn-punc">from</span> <span class="syn-str">'garursaili-css'</span>;
+
+<span class="syn-punc">const</span> css = <span class="syn-attr">build</span>(<span class="syn-str">'mid card-glass'</span>);
+<span class="syn-comment">// → compiled at build time, zero runtime</span></code></pre>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Marquee & fade-edges</h3>
+        <div class="p-6 rounded-xl border border-graphite-200 dark:border-white/[0.06] mb-8 fade-edges overflow-hidden">
+          <div class="marquee">
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">React</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Vue</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Svelte</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Next.js</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Astro</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Solid</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">React</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Vue</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Svelte</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Next.js</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Astro</span>
+            <span class="small font-bold text-graphite-400 dark:text-graphite-600 whitespace-nowrap">Solid</span>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Bento grid</h3>
+        <div class="bento mb-4">
+          <div class="bento-8 p-4 rounded-lg bg-iris-500/10 border border-iris-500/20 stack-2">
+            <span class="small font-medium">bento-8</span>
+            <span class="tiny text-graphite-500 dark:text-graphite-400">8 columns</span>
+          </div>
+          <div class="bento-4 p-4 rounded-lg bg-plum-500/10 border border-plum-500/20 stack-2">
+            <span class="small font-medium">bento-4</span>
+          </div>
+          <div class="bento-4 p-4 rounded-lg bg-jade-500/10 border border-jade-500/20 stack-2">
+            <span class="small font-medium">bento-4</span>
+          </div>
+          <div class="bento-8 p-4 rounded-lg bg-honey-500/10 border border-honey-500/20 stack-2">
+            <span class="small font-medium">bento-8</span>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">FAQ</h3>
+        <div class="stack-2">
+          <details class="faq-item" open>
+            <summary class="faq-q">What are intents?</summary>
+            <p class="faq-a">Single classes that expand to a multi-property combination at build time. <code class="inline-code">mid</code> becomes <code class="inline-code">display:flex; align-items:center; justify-content:center</code>.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">Can I mix intents with utilities?</summary>
+            <p class="faq-a">Yes. Intents and utilities use the same namespace. Utilities win the cascade where they overlap.</p>
+          </details>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 11 — PREMIUM KIT
+           ═══════════════════════════════════════════════ -->
+      <section id="premium" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 11</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Premium kit</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Premium kit — signature effects</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          The visual identity of GarurSaili. Cursor-tracking spotlights, gradient borders,
+          terminal prompts, colored glows, and animated backgrounds.
+        </p>
+
+        <h3 class="body font-semibold mb-3">Spotlight (cursor-following)</h3>
+        <p class="small text-graphite-700 dark:text-graphite-300 leading-relaxed mb-4">
+          Move your cursor over the card below. It reads <code class="inline-code">--mx</code>
+          and <code class="inline-code">--my</code> custom properties (updated via a one-line
+          mousemove listener) and paints a radial gradient under the cursor.
+        </p>
+
+        <div class="relative overflow-hidden rounded-2xl bg-bone-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-iris-500/20 p-8 shadow-sm dark:shadow-none spotlight" data-spotlight>
+          <div class="stack-4">
+            <div class="apart-mid">
+              <code class="inline-code tiny">spotlight</code>
+              <span class="chip tiny">data-spotlight</span>
+            </div>
+            <h4 class="title">Cursor-following light</h4>
+            <p class="small text-graphite-600 dark:text-graphite-400 leading-relaxed">
+              The gradient is a radial that tracks the cursor. Combine with
+              <code class="inline-code">spotlight-sm</code>, <code class="inline-code">spotlight-lg</code>,
+              <code class="inline-code">spotlight-white</code>, or <code class="inline-code">spotlight-pink</code>
+              for different radii and colors.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Gradient borders</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+          <div class="p-5 rounded-xl border-gradient stack-3">
+            <code class="inline-code tiny">border-gradient</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Subtle white gradient frame.</p>
+          </div>
+          <div class="p-5 rounded-xl border-gradient-hover stack-3">
+            <code class="inline-code tiny">border-gradient-hover</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Iris → plum gradient on hover.</p>
+          </div>
+          <div class="p-5 rounded-xl border-gradient-iris stack-3">
+            <code class="inline-code tiny">border-gradient-iris</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Iris-tinted frame.</p>
+          </div>
+          <div class="p-5 rounded-xl border-beam stack-3">
+            <code class="inline-code tiny">border-beam</code>
+            <p class="tiny text-graphite-500 dark:text-graphite-400">Animated rotating conic gradient.</p>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Colored glows</h3>
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-6">
+          <div class="h-14 rounded-lg bg-iris-500 glow-iris"></div>
+          <div class="h-14 rounded-lg bg-plum-500 glow-pink"></div>
+          <div class="h-14 rounded-lg bg-sky-500 glow-blue"></div>
+          <div class="h-14 rounded-lg bg-forest-500 glow-emerald"></div>
+          <div class="h-14 rounded-lg bg-honey-500 glow-amber"></div>
+          <div class="h-14 rounded-lg bg-ruby-600 glow-ruby"></div>
+        </div>
+
+        <div class="chips">
+          <span class="chip tiny">glow-iris</span>
+          <span class="chip tiny">glow-pink</span>
+          <span class="chip tiny">glow-blue</span>
+          <span class="chip tiny">glow-emerald</span>
+          <span class="chip tiny">glow-amber</span>
+          <span class="chip tiny">glow-ruby</span>
+          <span class="chip tiny">glow-white</span>
+          <span class="chip tiny">glow-soft</span>
+          <span class="chip tiny">glow-inner-iris</span>
+          <span class="chip tiny">text-glow-iris</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Terminal styling</h3>
+        <div class="code-window mb-6">
+          <div class="window-header">
+            <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+            <span class="ml-3 tiny font-mono text-graphite-500 dark:text-graphite-400">terminal</span>
+          </div>
+          <pre class="code-body small"><code><span class="terminal-prompt">$</span> garur ssc ./src
+<span class="terminal-ok">✓</span> Compiled in <span class="terminal-ok">28ms</span>
+<span class="terminal-warn">⚠</span> 3 unused classes
+<span class="terminal-err">✗</span> Nothing else<span class="terminal-cursor">▍</span></code></pre>
+        </div>
+
+        <div class="chips mb-6">
+          <span class="chip tiny">terminal-prompt</span>
+          <span class="chip tiny">terminal-ok</span>
+          <span class="chip tiny">terminal-warn</span>
+          <span class="chip tiny">terminal-err</span>
+          <span class="chip tiny">terminal-dim</span>
+          <span class="chip tiny">terminal-cursor</span>
+          <span class="chip tiny">cursor-blink</span>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Hover effects</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">hover-glow</code>
+            <div class="h-12 rounded-md bg-iris-500 hover-glow smooth"></div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">hover-lift</code>
+            <div class="h-12 rounded-md bg-plum-500 hover-lift"></div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">hover-scale</code>
+            <div class="h-12 rounded-md bg-jade-500 hover-scale"></div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">hover-bright</code>
+            <div class="h-12 rounded-md bg-honey-500 hover-bright"></div>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3 mt-8">Animated backgrounds</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">aurora-bg</code>
+            <div class="h-16 rounded-md aurora-bg bg-graphite-950"></div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">beam</code>
+            <div class="h-16 rounded-md bg-graphite-950 relative">
+              <div class="beam left-1/2"></div>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">scan-line</code>
+            <div class="h-16 rounded-md bg-graphite-950 relative overflow-hidden">
+              <div class="scan-line top-1/2"></div>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">spot-glow</code>
+            <div class="h-16 mid spot-glow">
+              <span class="w-8 h-8 rounded-full bg-iris-500"></span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="body font-semibold mb-3">Shine sweep</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">shine</code>
+            <button class="cta shine w-full">Hover me</button>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">shine-always</code>
+            <button class="cta shine-always w-full">Looping</button>
+          </div>
+          <div class="p-4 rounded-xl border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <code class="inline-code tiny">shine-border</code>
+            <button class="cta-ghost shine-border w-full">Reveal</button>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           SECTION 12 — COMPAT SHORTHANDS
+           ═══════════════════════════════════════════════ -->
+      <section id="compat" class="mb-14 scroll-mt-20">
+        <div class="mid gap-2 mb-3">
+          <span class="tiny uppercase tracking-wider font-bold text-graphite-500 dark:text-graphite-400">Section 12</span>
+          <span class="text-graphite-300 dark:text-graphite-600">·</span>
+          <span class="tiny text-graphite-500 dark:text-graphite-400">Compat</span>
+        </div>
+
+        <h2 class="headline tracking-tight mb-5">Compat shorthands</h2>
+
+        <p class="body text-graphite-700 dark:text-graphite-300 leading-relaxed mb-6">
+          Aliases for UnoCSS and WindiCSS conventions. Migrating projects get instant
+          familiarity. These are covered in full detail on the
+          <a href="./shorthand.html" class="link">shorthands reference →</a>
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="tiny uppercase tracking-wider font-semibold text-graphite-500 dark:text-graphite-400">Display</div>
+            <div class="chips">
+              <span class="chip tiny">iblock</span>
+              <span class="chip tiny">iflex</span>
+              <span class="chip tiny">igrid</span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="tiny uppercase tracking-wider font-semibold text-graphite-500 dark:text-graphite-400">Flexbox</div>
+            <div class="chips">
+              <span class="chip tiny">jc-center</span>
+              <span class="chip tiny">jc-between</span>
+              <span class="chip tiny">ai-center</span>
+              <span class="chip tiny">fx-1</span>
+              <span class="chip tiny">gx-4</span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="tiny uppercase tracking-wider font-semibold text-graphite-500 dark:text-graphite-400">Sizing & Grid</div>
+            <div class="chips">
+              <span class="chip tiny">sz-8</span>
+              <span class="chip tiny">maxw-xl</span>
+              <span class="chip tiny">minh-screen</span>
+              <span class="chip tiny">gc-3</span>
+              <span class="chip tiny">cs-2</span>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] stack-3">
+            <div class="tiny uppercase tracking-wider font-semibold text-graphite-500 dark:text-graphite-400">Effects & Misc</div>
+            <div class="chips">
+              <span class="chip tiny">sh-md</span>
+              <span class="chip tiny">op-75</span>
+              <span class="chip tiny">dur-300</span>
+              <span class="chip tiny">cur-pointer</span>
+              <span class="chip tiny">ar-video</span>
+              <span class="chip tiny">ob-cover</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr-text" />
+
+      <!-- ═══════════════════════════════════════════════
+           CLOSING CTA
+           ═══════════════════════════════════════════════ -->
+      <section class="mb-14">
+        <div class="jumbo bg-graphite-50 dark:bg-white/[0.02] border border-graphite-200 dark:border-white/[0.06] rounded-2xl">
+          <h2 class="headline">Write what you mean.</h2>
+          <p class="lead text-graphite-600 dark:text-graphite-400 max-w-md">
+            340+ intents across seven families. Every one is a named goal, not a
+            property. Install GarurSaili and start composing descriptions instead
+            of declarations.
+          </p>
+          <div class="mid gap-2.5 flex-wrap">
+            <a href="#" class="btn-hero btn-hero-primary shine">Install GarurSaili →</a>
+            <a href="./utility.html" class="btn-hero btn-hero-secondary">Utility layer →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+           PREV / NEXT
+           ═══════════════════════════════════════════════ -->
+      <nav class="grid grid-cols-2 gap-3 pt-8 border-t border-graphite-200 dark:border-white/[0.06]">
+        <a href="./colour.html" class="block p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] hover:border-graphite-300 dark:hover:border-white/[0.15] smooth stack-1">
+          <div class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-medium">← Previous</div>
+          <div class="small font-medium">Color palette</div>
+        </a>
+        <a href="./utility.html" class="block p-4 rounded-lg border border-graphite-200 dark:border-white/[0.06] hover:border-graphite-300 dark:hover:border-white/[0.15] smooth stack-1 text-right">
+          <div class="tiny uppercase tracking-wider text-graphite-500 dark:text-graphite-400 font-medium">Next →</div>
+          <div class="small font-medium">Utility layer</div>
+        </a>
+      </nav>
+
+      <!-- ═══════════════════════════════════════════════
+           FEEDBACK
+           ═══════════════════════════════════════════════ -->
+      <div class="mt-12 pt-8 border-t border-graphite-200 dark:border-white/[0.06]">
+        <div class="apart-mid flex-wrap gap-4">
+          <span class="small text-graphite-500 dark:text-graphite-400">Was this page helpful?</span>
+          <div class="mid gap-2">
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white smooth border border-graphite-200 dark:border-white/[0.06]" aria-label="Helpful">👍</button>
+            <button type="button" class="w-8 h-8 rounded-md mid text-graphite-500 dark:text-graphite-400 hover:bg-graphite-100 dark:hover:bg-white/[0.06] hover:text-graphite-950 dark:hover:text-white smooth border border-graphite-200 dark:border-white/[0.06]" aria-label="Not helpful">👎</button>
+          </div>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ═══ RIGHT SIDEBAR — ON THIS PAGE ═══ -->
+  <aside class="hidden lg:block lg:col-span-2 border-l border-graphite-200 dark:border-white/[0.06]">
+    <div class="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto p-6">
+      <div class="menu-label mb-3">On this page</div>
+      <nav id="toc" class="stack-1 small border-l border-graphite-200 dark:border-white/[0.06]">
+        <a href="#overview" class="block pl-3 py-1 font-medium border-l-2 border-iris-500 -ml-px">What is intent?</a>
+        <a href="#philosophy" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Philosophy</a>
+        <a href="#families" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Families</a>
+        <a href="#flex" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Flex containers</a>
+        <a href="#gapped" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Gapped flex</a>
+        <a href="#grid" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Grid</a>
+        <a href="#rhythm" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Section rhythm</a>
+        <a href="#position" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Position</a>
+        <a href="#elevation" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Elevation</a>
+        <a href="#opacity" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Opacity</a>
+        <a href="#motion" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Motion</a>
+        <a href="#hover" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Hover</a>
+        <a href="#borders" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Borders</a>
+        <a href="#type" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Type scale</a>
+        <a href="#overflow" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Overflow</a>
+        <a href="#emphasis" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Emphasis</a>
+        <a href="#states" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Interaction</a>
+        <a href="#indicators" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Indicators</a>
+        <a href="#tags" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Tags & trends</a>
+        <a href="#form" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Form states</a>
+        <a href="#cta" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Call to action</a>
+        <a href="#indian" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Indian-inspired</a>
+        <a href="#tier-b" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Tier B</a>
+        <a href="#web-kit" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Web kit</a>
+        <a href="#premium" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Premium kit</a>
+        <a href="#compat" class="block pl-3 py-1 text-graphite-500 dark:text-graphite-400 border-l-2 border-transparent -ml-px smooth">Compat</a>
+      </nav>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('garur-theme', isDark ? 'dark' : 'light'); } catch (_) {}
+  });
+
+  const drawer = document.getElementById('drawer');
+  const menuBtn = document.getElementById('menu-btn');
+  const openDrawer = () => { drawer.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+  const closeDrawer = () => { drawer.classList.add('hidden'); document.body.style.overflow = ''; };
+  menuBtn?.addEventListener('click', openDrawer);
+  document.querySelectorAll('[data-drawer-close]').forEach(el => el.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+  // Cursor-following spotlight for demo cards
+  document.querySelectorAll('[data-spotlight]').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+    });
+  });
+
+  // TOC active tracking
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('#toc a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => {
+          const active = link.getAttribute('href') === '#' + entry.target.id;
+          link.classList.toggle('text-graphite-950', active);
+          link.classList.toggle('dark:text-white', active);
+          link.classList.toggle('font-medium', active);
+          link.classList.toggle('border-iris-500', active);
+          link.classList.toggle('border-transparent', !active);
+          link.classList.toggle('text-graphite-500', !active);
+          link.classList.toggle('dark:text-graphite-400', !active);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Left sidebar active tracking
+  const sideLinks = document.querySelectorAll('aside nav a.menu-item');
+  const sideObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        sideLinks.forEach(link => {
+          const active = link.getAttribute('href') === '#' + entry.target.id;
+          link.classList.toggle('menu-item-active', active);
+        });
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px' });
+  sections.forEach(s => sideObserver.observe(s));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
